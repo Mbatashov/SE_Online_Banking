@@ -17,9 +17,12 @@ public class BankAutomated
                         NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
 
 
-    public BankAutomated(boolean Test){
 
-    }
+    /*
+     * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
+     * This prevents the people.ser file from interfering with the test case results
+     */
+    public BankAutomated(boolean Test){}
     
     /*
      * Constructor for the BankAutomated class
@@ -640,6 +643,9 @@ public class BankAutomated
         double timePassedSeconds = (endTime - startTime) / 1000.0;
 
         System.out.println("Uploaded " + customerAccounts.size() + " customer objects. In: " + timePassedSeconds + "s");
+
+        // IMPORTANT: REMOVE THIS LATER THIS IS FOR RUNNING PURPOSES
+        clearPeopleFile();
 
         executor.shutdown();
 
