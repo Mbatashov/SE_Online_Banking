@@ -116,7 +116,7 @@ public class BankTransferPage extends JFrame implements ActionListener
         this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 

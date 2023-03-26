@@ -153,6 +153,35 @@ public class HomePage extends JFrame implements ActionListener
         savingsButton.addActionListener(this);
         this.add(savingsButton);
 
+        cheqAmountButton = new JButton("$ " + cheqAmount + "   ");
+        cheqAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
+        cheqAmountButton.setBorder(BorderFactory.createEmptyBorder());
+        cheqAmountButton.setContentAreaFilled(false);
+        cheqAmountButton.setOpaque(true);
+        cheqAmountButton.setFocusPainted(false);
+        cheqAmountButton.setBackground(Color.white);
+        cheqAmountButton.setForeground(Color.black);
+        cheqAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cheqAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        cheqAmountButton.setVerticalAlignment(SwingConstants.CENTER);
+        cheqAmountButton.setBounds(610, 250, 630, 150);
+        cheqAmountButton.addActionListener(this);
+        this.add(cheqAmountButton);
+
+        savAmountButton = new JButton("$ " + savAmount + "   ");
+        savAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
+        savAmountButton.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY));
+        savAmountButton.setContentAreaFilled(false);
+        savAmountButton.setOpaque(true);
+        savAmountButton.setFocusPainted(false);
+        savAmountButton.setBackground(Color.white);
+        savAmountButton.setForeground(Color.black);
+        savAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        savAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        savAmountButton.setBounds(610, 400, 630, 150);
+        savAmountButton.addActionListener(this);
+        this.add(savAmountButton);
+
         JLabel thanks = new JLabel("Thank you for using BCS.");
         thanks.setBackground(Color.white);
         accLabel.setBorder(emptyBorder);
@@ -198,35 +227,6 @@ public class HomePage extends JFrame implements ActionListener
         g2.setFont(regFont);
         g2.setColor(new Color(250, 185, 60));
         g2.drawString("Welcome Back, " + custName, 25, 110);
-
-        cheqAmountButton = new JButton("$ " + cheqAmount + "   ");
-        cheqAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
-        cheqAmountButton.setBorder(BorderFactory.createEmptyBorder());
-        cheqAmountButton.setContentAreaFilled(false);
-        cheqAmountButton.setOpaque(true);
-        cheqAmountButton.setFocusPainted(false);
-        cheqAmountButton.setBackground(Color.white);
-        cheqAmountButton.setForeground(Color.black);
-        cheqAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        cheqAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        cheqAmountButton.setVerticalAlignment(SwingConstants.CENTER);
-        cheqAmountButton.setBounds(610, 250, 630, 150);
-        cheqAmountButton.addActionListener(this);
-        this.add(cheqAmountButton);
-
-        savAmountButton = new JButton("$ " + savAmount + "   ");
-        savAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
-        savAmountButton.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY));
-        savAmountButton.setContentAreaFilled(false);
-        savAmountButton.setOpaque(true);
-        savAmountButton.setFocusPainted(false);
-        savAmountButton.setBackground(Color.white);
-        savAmountButton.setForeground(Color.black);
-        savAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        savAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        savAmountButton.setBounds(610, 400, 630, 150);
-        savAmountButton.addActionListener(this);
-        this.add(savAmountButton);
     }
 
     @Override
