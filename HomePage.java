@@ -17,24 +17,21 @@ public class HomePage extends JFrame implements ActionListener
     private final JButton findUsButton;
     private final JButton logoutButton;
     private final JButton chequingButton;
-    private JButton cheqAmountButton;
+    private final JButton cheqAmountButton;
     private final JButton savingsButton;
-    private JButton savAmountButton;
+    private final JButton savAmountButton;
 
     BankAutomated BA;
     CA customer;
     LoginPage previous;
-
-    private final double savAmount;
-    private final double cheqAmount;
 
     public HomePage(LoginPage previous, BankAutomated BA, CA customer)
     {
         this.setTitle("Account Home");
         this.setLayout(null);
         custName = customer.firstName;
-        cheqAmount = customer.getChequing();
-        savAmount = customer.getSavings();
+        double cheqAmount = customer.getChequing();
+        double savAmount = customer.getSavings();
        
         this.previous = previous;
         this.BA = BA;
@@ -278,14 +275,14 @@ public class HomePage extends JFrame implements ActionListener
         else if(e.getSource() == contactUSButton)
         {
             
-            String[] options = new String[] {"Request a Meeting", "Make a Report", "Cancel"};
+            String[] options = new String[] {"Make a Request", "Report Suspicious Activity", "Cancel"};
             int response = JOptionPane.showOptionDialog(this, "Select contact option:",
                     "Ways to Contact", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
                     options[0]);
             if (response == 0)
             {
                 this.setVisible(false);
-                RequestMeetingPage requestPage = new RequestMeetingPage(BA,this, customer);
+                MakeRequestPage requestPage = new MakeRequestPage(BA,this, customer);
                 requestPage.setVisible(true);
             }
             else if (response == 1)
@@ -311,27 +308,33 @@ public class HomePage extends JFrame implements ActionListener
             if (response == 0)
             {
                 this.setVisible(false);
-                NotificationSettingPage notifPage = new NotificationSettingPage(this, customer);
-                notifPage.setVisible(true);
+                NotificationSettingPage notificationPage = new NotificationSettingPage(this, customer);
+                notificationPage.setVisible(true);
             }
             else if (response == 1)
             {
                 this.setVisible(false);
-                ProfileSettingPage profPage = new ProfileSettingPage(this, customer);
-                profPage.setVisible(true);
+                ProfileSettingPage profilePage = new ProfileSettingPage(this, customer);
+                profilePage.setVisible(true);
             }
             else if (response == 2)
             {
                 this.setVisible(false);
-                PrivacySettingPage privPage = new PrivacySettingPage(this, customer);
-                privPage.setVisible(true);
+                PrivacySettingPage privacyPage = new PrivacySettingPage(this, customer);
+                privacyPage.setVisible(true);
             }
         }
         else if(e.getSource() == savAmountButton || e.getSource() == savingsButton)
         {
+            this.setVisible(false);
+            ChequingHistoryPage chequingHistoryPage = new ChequingHistoryPage();
+            chequingHistoryPage.setVisible(true);
         }
         else if (e.getSource() == chequingButton || e.getSource() == cheqAmountButton)
         {
+            this.setVisible(false);
+            SavingsHistoryPage savingsHistoryPage = new SavingsHistoryPage();
+            savingsHistoryPage.setVisible(true);
         }
     }
 }

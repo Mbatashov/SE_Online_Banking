@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-public class RequestMeetingPage extends JFrame implements ActionListener
+public class MakeRequestPage extends JFrame implements ActionListener
 {
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
@@ -13,7 +13,7 @@ public class RequestMeetingPage extends JFrame implements ActionListener
     BankAutomated BA;
     HomePage home;
     CA customer;
-    public RequestMeetingPage(BankAutomated BA, HomePage home, CA customer)
+    public MakeRequestPage(BankAutomated BA, HomePage home, CA customer)
     {
         this.setTitle("Account Home");
         this.setLayout(null);
