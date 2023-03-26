@@ -20,14 +20,14 @@ public class People implements Serializable
         this.phoneNum = phoneNum;
     }
     // Setter for first name
-    public void setFirstName()
+    public void setFirstName(String firstName)
     {
         this.firstName = firstName;
 
     }
     
     // Setter for first name
-    public void setLastName()
+    public void setLastName(String lastName)
     {
         this.lastName =  lastName;
     }

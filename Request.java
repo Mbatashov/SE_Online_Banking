@@ -39,5 +39,35 @@ public class Request implements Serializable
     {
         this.type = type;
     }
+
+    //Getter and setter for Admin (AD)
+    public AD getAdmin()
+    {
+        return admin;
+    }
+    public void setAdmin(AD admin)
+    {
+        this.admin = admin;
+    }
+
+    //Getter and setter for Maintenance Team (MT)
+    public MT getMT()
+    {
+        return mt;
+    }
+    public void setMT(MT mt)
+    {
+        this.mt = mt;
+    }
+
+    // Getter and setter for Customer Service Representative (CSR)
+    public CSR getCSR()
+    {
+        return csr;
+    }
+    public void setCSR(CSR csr)
+    {
+        this.csr = csr;
+    }
 }
 
