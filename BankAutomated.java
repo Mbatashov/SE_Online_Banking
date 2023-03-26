@@ -449,13 +449,17 @@ public class BankAutomated
     //  returns 1 if bank number is not 5 digits,
     //  returns 2 if chequing balance is too low for transfer amount,
     //  returns 3 if no valid receiver account is found with bankNumber receiverAcc is within BCS, i.e. external transfer.
-    public int bankTransfer(int amount, String receiverAcc, CA customer)
+    public int bankTransfer(int amount, String receiverAcc, CA customer, String accountFrom)
     {
         if (receiverAcc.length() != 5)
         {
             return 1;
         }
-        if (amount > customer.getChequing())
+        else if (accountFrom.equals("Chequing") && amount > customer.getChequing())
+        {
+            return 2;
+        }
+        else if (accountFrom.equals("Savings") && amount > customer.getSavings())
         {
             return 2;
         }
@@ -464,7 +468,7 @@ public class BankAutomated
         // Loop through the accounts in the hashmap to find matching
         for (CA account : customerHash.values())
         {
-            if (account.getBankNumber() == receiverAcc)
+            if (account.getBankNumber().equals(receiverAcc))
             {
                 receiver = account;
                 break;
@@ -473,12 +477,28 @@ public class BankAutomated
 
         if (receiver != null)
         {
-            receiver.setChequing(receiver.getChequing() + amount);
-            customer.setChequing(customer.getChequing() - amount);
+            if (accountFrom.equals("Chequing"))
+            {
+                receiver.setChequing(receiver.getChequing() + amount);
+                customer.setChequing(customer.getChequing() - amount);
+            }
+            else if (accountFrom.equals("Savings"))
+            {
+                receiver.setChequing(receiver.getChequing() + amount);
+                customer.setSavings(customer.getSavings() - amount);
+            }
             return 0;
         }
         else 
         {
+            if (accountFrom.equals("Chequing"))
+            {
+                customer.setChequing(customer.getChequing() - amount);
+            }
+            else if (accountFrom.equals("Savings"))
+            {
+                customer.setSavings(customer.getSavings() - amount);
+            }
             return 3;
         }
 

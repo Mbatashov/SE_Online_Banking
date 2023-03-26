@@ -228,14 +228,14 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.bankTransfer(5000, "12345", john) == 0);
+        assert(BA.bankTransfer(5000, "12345", john, "Chequing") == 0);
         assert(john.getChequing() == 5000);
         assert(jane.getChequing() == 15000);
 
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.bankTransfer(5000, "54321", jane) == 0);
+        assert(BA.bankTransfer(5000, "54321", jane, "Chequing") == 0);
         assert(jane.getChequing() == 5000);
         assert(john.getChequing() == 15000);
 
@@ -244,18 +244,18 @@ public class TestCase {
         jane.setChequing(10000);
 
         // Invalid bank number adress (returns code 1)
-        assert(BA.bankTransfer(500, "123456789", jane) == 1);
+        assert(BA.bankTransfer(500, "123456789", jane, "Chequing") == 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
 
         // Insufficient funds (returns code 2)
-        assert(BA.bankTransfer(10001, "54321", jane) == 2);
+        assert(BA.bankTransfer(10001, "54321", jane, "Chequing") == 2);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
         // Email not found (returns code 3)
-        assert(BA.bankTransfer(500, "98765", jane) == 3);
+        assert(BA.bankTransfer(500, "98765", jane, "Chequing") == 3);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
