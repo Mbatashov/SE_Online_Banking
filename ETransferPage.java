@@ -13,11 +13,14 @@ public class ETransferPage extends JFrame implements ActionListener
     BankAutomated BA;
     HomePage home;
     CA customer;
+    LoginPage login;
     private final JButton backToHome;
     private final JTextField emailField;
     private final JTextField amountField;
     private final JComboBox<String> selectAccount;
-    public ETransferPage(BankAutomated BA, HomePage home, CA customer)
+    private final JButton completeButton;
+
+    public ETransferPage(BankAutomated BA, HomePage home, CA customer, LoginPage login)
     {
         this.setTitle("Make an E-transfer");
         this.setLayout(null);
@@ -62,13 +65,23 @@ public class ETransferPage extends JFrame implements ActionListener
         account.setBounds(350,450,300,40);
         this.add(account);
 
-        String[] accounts = {"Chequing", "Savings"};
+        String[] accounts = {"Select Account", "Chequing", "Savings"};
         selectAccount = new JComboBox<>(accounts);
         selectAccount.setFont(new Font("Arial", Font.PLAIN, 20));
         selectAccount.setBounds(650, 450, 350, 40);
         selectAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectAccount.addActionListener(this);
         this.add(selectAccount);
+
+        completeButton = new JButton("Complete Transaction");
+        completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
+        completeButton.setBounds(475, 525, 350, 40);
+        completeButton.setBackground(Color.black);
+        completeButton.setForeground(Color.white);
+        completeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        completeButton.setBorder(emptyBorder);
+        completeButton.addActionListener(this);
+        this.add(completeButton);
 
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
@@ -99,9 +112,10 @@ public class ETransferPage extends JFrame implements ActionListener
             }
         });
         this.getContentPane().setBackground(Color.white);
+        this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(false);
+        this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -130,6 +144,57 @@ public class ETransferPage extends JFrame implements ActionListener
         {
             this.setVisible(false);
             home.setVisible(true);
+        }
+        else if (e.getSource() == completeButton)
+        {
+            String email = emailField.getText();
+            String amount = amountField.getText();
+            String accountFrom = String.valueOf(selectAccount.getSelectedItem());
+            if (email.equals("") || amount.equals("") || selectAccount.getSelectedIndex() == 0)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: All fields are required.");
+                return;
+            }
+            else if (!BA.onlyNumericDouble(amount))
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: Amount needs to be a digit (can include decimal).");
+                return;
+            }
+
+            int result = BA.etransfer(Double.parseDouble(amount), email, customer, accountFrom);
+            if (result == 1)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: Invalid email.");
+            }
+            else if (result == 2)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: You do not have sufficient funds in selected account.");
+            }
+            else if (result == 3)
+            {
+                JOptionPane.showMessageDialog(this, "SUCCESS: You transferred " + amount +
+                        " to user with email " + email + ".\n This is an external transfer (i.e., user is not a part of BCS).");
+                this.setVisible(false);
+                home = new HomePage(login, BA, customer);
+                home.setVisible(true);
+            }
+            else if (result == 4)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: E-transfer limit is $1,000.");
+            }
+            else if (result == 0)
+            {
+                JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
+                        " to user with email " + email + ".\n This user has an account with BCS, and the funds will " +
+                        "be auto-deposited to their chequing account.");
+                this.setVisible(false);
+                home = new HomePage(login, BA, customer);
+                home.setVisible(true);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "An error occurred.");
+            }
         }
     }
 }

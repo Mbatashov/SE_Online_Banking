@@ -190,6 +190,30 @@ public class BankAutomated
         return true;
     }
 
+    public boolean onlyNumericDouble(String str)
+    {
+        int dotCount = 0;
+        for(int i = 0; i < str.length(); i++)
+        {
+            if (!Character.isDigit(str.charAt(i)))
+            {
+                if (dotCount >= 1)
+                {
+                    return false;
+                }
+                else if (str.charAt(i) == '.')
+                {
+                    dotCount += 1;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // Checks if the CVV of the card is valid.
     public boolean validCVV(String cvv)
     {
@@ -372,19 +396,28 @@ public class BankAutomated
 
     // Allow users to etransfer from their account to another user with using the receiver's email
     // RETURN CODES:
-    //  returns 0 if successful
+    //  returns 0 if successful transfer within BCS accounts
     //  returns 1 if email is not valid
     //  returns 2 if customer has insufficient funds
     //  returns 3 if receiverEmail is not found, i.e. external e-transfer (any valid email accepts e-transfers)
+    //  returns 4 if amount > 1000, e-transfer limit of 1000 set.
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom)
     {
         if (!validEmail(receiverEmail))
         {
             return 1;
         }
-        else if (amount > customer.getChequing())
+        else if (accountFrom.equals("Chequing") && amount > customer.getChequing())
         {
             return 2;
+        }
+        else if (accountFrom.equals("Savings") && amount > customer.getSavings())
+        {
+            return 2;
+        }
+        else if (amount > 1000)
+        {
+            return 4;
         }
 
         CA receiver = customerHash.get(receiverEmail);
@@ -411,9 +444,11 @@ public class BankAutomated
 
     // Allow users to make a bank transfer from their account to another user using the receiver's
     // bank account number
-    // ERROR CODES: returns 0 if successful, returns 1 if bank number is not 5 digits,
-    // returns 2 if chequing balance is too low for transfer amount, 
-    // returns 3 if no valid receiver account is found with bankNumber receiverAcc
+    // RETURN CODES:
+    //  returns 0 if successful transfer within BCS accounts
+    //  returns 1 if bank number is not 5 digits,
+    //  returns 2 if chequing balance is too low for transfer amount,
+    //  returns 3 if no valid receiver account is found with bankNumber receiverAcc is within BCS, i.e. external transfer.
     public int bankTransfer(int amount, String receiverAcc, CA customer)
     {
         if (receiverAcc.length() != 5)

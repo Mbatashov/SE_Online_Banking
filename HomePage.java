@@ -17,23 +17,24 @@ public class HomePage extends JFrame implements ActionListener
     private final JButton findUsButton;
     private final JButton logoutButton;
     private final JButton chequingButton;
-    private final JButton cheqAmountButton;
+    private JButton cheqAmountButton;
     private final JButton savingsButton;
-    private final JButton savAmountButton;
+    private JButton savAmountButton;
 
     BankAutomated BA;
     CA customer;
     LoginPage previous;
-    
+
+    private final double savAmount;
+    private final double cheqAmount;
 
     public HomePage(LoginPage previous, BankAutomated BA, CA customer)
     {
         this.setTitle("Account Home");
         this.setLayout(null);
         custName = customer.firstName;
-        double cheqAmount = customer.getChequing();
-        double savAmount = customer.getSavings();
-
+        cheqAmount = customer.getChequing();
+        savAmount = customer.getSavings();
        
         this.previous = previous;
         this.BA = BA;
@@ -138,21 +139,6 @@ public class HomePage extends JFrame implements ActionListener
         chequingButton.addActionListener(this);
         this.add(chequingButton);
 
-        cheqAmountButton = new JButton("$ " + cheqAmount + "   ");
-        cheqAmountButton.setFont(labels);
-        cheqAmountButton.setBorder(emptyBorder);
-        cheqAmountButton.setContentAreaFilled(false);
-        cheqAmountButton.setOpaque(true);
-        cheqAmountButton.setFocusPainted(false);
-        cheqAmountButton.setBackground(Color.white);
-        cheqAmountButton.setForeground(Color.black);
-        cheqAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        cheqAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        cheqAmountButton.setVerticalAlignment(SwingConstants.CENTER);
-        cheqAmountButton.setBounds(610, 250, 630, 150);
-        cheqAmountButton.addActionListener(this);
-        this.add(cheqAmountButton);
-
         savingsButton = new JButton("   Savings");
         savingsButton.setFont(labels);
         savingsButton.setBorder(topBorder);
@@ -166,20 +152,6 @@ public class HomePage extends JFrame implements ActionListener
         savingsButton.setBounds(25, 400, 612, 150);
         savingsButton.addActionListener(this);
         this.add(savingsButton);
-
-        savAmountButton = new JButton("$ " + savAmount + "   ");
-        savAmountButton.setFont(labels);
-        savAmountButton.setBorder(topBorder);
-        savAmountButton.setContentAreaFilled(false);
-        savAmountButton.setOpaque(true);
-        savAmountButton.setFocusPainted(false);
-        savAmountButton.setBackground(Color.white);
-        savAmountButton.setForeground(Color.black);
-        savAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        savAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        savAmountButton.setBounds(610, 400, 630, 150);
-        savAmountButton.addActionListener(this);
-        this.add(savAmountButton);
 
         JLabel thanks = new JLabel("Thank you for using BCS.");
         thanks.setBackground(Color.white);
@@ -207,7 +179,7 @@ public class HomePage extends JFrame implements ActionListener
         this.getContentPane().setBackground(bg);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -226,6 +198,35 @@ public class HomePage extends JFrame implements ActionListener
         g2.setFont(regFont);
         g2.setColor(new Color(250, 185, 60));
         g2.drawString("Welcome Back, " + custName, 25, 110);
+
+        cheqAmountButton = new JButton("$ " + cheqAmount + "   ");
+        cheqAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
+        cheqAmountButton.setBorder(BorderFactory.createEmptyBorder());
+        cheqAmountButton.setContentAreaFilled(false);
+        cheqAmountButton.setOpaque(true);
+        cheqAmountButton.setFocusPainted(false);
+        cheqAmountButton.setBackground(Color.white);
+        cheqAmountButton.setForeground(Color.black);
+        cheqAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cheqAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        cheqAmountButton.setVerticalAlignment(SwingConstants.CENTER);
+        cheqAmountButton.setBounds(610, 250, 630, 150);
+        cheqAmountButton.addActionListener(this);
+        this.add(cheqAmountButton);
+
+        savAmountButton = new JButton("$ " + savAmount + "   ");
+        savAmountButton.setFont(new Font("Raleway", Font.BOLD, 25));
+        savAmountButton.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY));
+        savAmountButton.setContentAreaFilled(false);
+        savAmountButton.setOpaque(true);
+        savAmountButton.setFocusPainted(false);
+        savAmountButton.setBackground(Color.white);
+        savAmountButton.setForeground(Color.black);
+        savAmountButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        savAmountButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        savAmountButton.setBounds(610, 400, 630, 150);
+        savAmountButton.addActionListener(this);
+        this.add(savAmountButton);
     }
 
     @Override
@@ -257,15 +258,15 @@ public class HomePage extends JFrame implements ActionListener
             {
                 
                 this.setVisible(false);
-                ETransferPage etranPage = new ETransferPage(BA, this, customer);
-                etranPage.setVisible(true);
+                ETransferPage eTransferPage = new ETransferPage(BA, this, customer, previous);
+                eTransferPage.setVisible(true);
             }
             else if (response == 1)
             {
                 
                 this.setVisible(false);
-                TransferFundsPage FundtranPage = new TransferFundsPage(BA,this, customer);
-                FundtranPage.setVisible(true);
+                TransferFundsPage fundTransferPage = new TransferFundsPage(BA,this, customer);
+                fundTransferPage.setVisible(true);
             }
             else if (response == 2)
             {
