@@ -682,7 +682,7 @@ public class TestCase {
         // Test setter and getter for Admins (AD)
         
         
-        admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Report>(), new ArrayList<Request>());
+        admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>(), new ArrayList<>());
         
 
         assertEquals(105, admin.getId());
@@ -700,7 +700,7 @@ public class TestCase {
 
 
         // Test setter and getters for Maintenance Teams (MT)
-        MT mt = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Request>());
+        MT mt = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>());
 
         assertEquals(105, mt.getId());
 
@@ -715,7 +715,7 @@ public class TestCase {
 
 
         // Test setter and getters for CSRs
-        CSR csr = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Request>());
+        CSR csr = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>());
 
         assertEquals(105, csr.getId());
 
@@ -730,6 +730,4 @@ public class TestCase {
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
     }
-    // Future test cases for test and integration phase
-        
 }

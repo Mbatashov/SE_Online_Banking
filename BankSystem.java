@@ -14,7 +14,7 @@ public class BankSystem
             ETransferPage ETP = new ETransferPage(BA, HP, test, LP);
             BankTransferPage BTP = new BankTransferPage(BA, HP, test, LP);
             TransferFundsPage TFP = new TransferFundsPage(BA, HP, test, LP);
-            TFP.setVisible(true);
+            HP.setVisible(true);
         }
         catch (Exception e)
         {
