@@ -211,7 +211,7 @@ public class TestCase {
         john.setSavings(10000);
         jane.setChequing(10000);
         assert(BA.etransfer(500, "janedoe@example.com", john, "Savings") == 0);
-        assert(john.getChequing() == 9500);
+        assert(john.getSavings() == 9500);
         assert(jane.getChequing() == 10500); 
 
         // Error code tests
@@ -237,7 +237,7 @@ public class TestCase {
         john.setChequing(10000);
         jane.setSavings(10000);
         assert(BA.etransfer(5000, "johndoe@example.com", jane, "Savings") == 4);
-        assert(jane.getChequing() == 10000);
+        assert(jane.getSavings() == 10000);
         assert(john.getChequing() == 10000);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testETransfer", JOptionPane.INFORMATION_MESSAGE);
