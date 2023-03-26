@@ -39,10 +39,10 @@ public class CA extends People
         this.savings = savings;
         this.bankNumber = bankNumber;
 
-        chequingHist = new ArrayList<Transaction>();
-        savingsHist = new ArrayList<Transaction>();
-        reportSus = new ArrayList<Report>();
-        requests = new ArrayList<Request>();
+        chequingHist = new ArrayList<>();
+        savingsHist = new ArrayList<>();
+        reportSus = new ArrayList<>();
+        requests = new ArrayList<>();
     }
 
     public void setBankNumber(String num)

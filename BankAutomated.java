@@ -13,8 +13,8 @@ public class BankAutomated
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @SuppressWarnings("SpellCheckingInspection")
-    public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
-                        NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
+    public enum State {FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
+                        EDITNOTIFSET, PRIVSET, EDITPROF, SETTINGS}
 
     public BankAutomated() {
         // Email -> Account, thread safe Hash map
@@ -369,7 +369,9 @@ public class BankAutomated
     }
 
     // Allow users to transfer between chequing and savings accounts
-    // ERROR CODES: returns 0 if successful, 1 if insufficient funds
+    // RETURN CODES:
+    //  returns 0 if successful
+    //  returns 1 if insufficient funds
     public int transferFunds(double transferAmount, String fromAccount, CA customer)
     {
         if (fromAccount.equals("Chequing"))
@@ -380,7 +382,6 @@ public class BankAutomated
             }
             customer.setChequing(customer.getChequing() - transferAmount);
             customer.setSavings(customer.getSavings() + transferAmount);
-            return 0;
         }
         else
         {
@@ -390,8 +391,8 @@ public class BankAutomated
             }
             customer.setChequing(customer.getChequing() + transferAmount);
             customer.setSavings(customer.getSavings() - transferAmount);
-            return 0;
         }
+        return 0;
     }
 
     // Allow users to etransfer from their account to another user with using the receiver's email
@@ -468,8 +469,6 @@ public class BankAutomated
 
         for (CA cust : customerAccounts)
         {
-            cust.print();
-            System.out.println(cust.getBankNumber());
             if (cust.getBankNumber().equals(receiverAcc))
             {
                 receiver = cust;
