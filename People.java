@@ -12,6 +12,15 @@ public class People implements Serializable
     String lastName;
     String email;
     String phoneNum;
+
+    /*
+     * Constructor for the People class
+     * @param firstName the first name of the person
+     * @param lastName the last name of the person
+     * @param email the email of the person
+     * @param phoneNum the phone number of the person
+     * 
+     */
     public People(String firstName, String lastName, String email, String phoneNum)
     {
         this.firstName = firstName;
@@ -19,46 +28,93 @@ public class People implements Serializable
         this.email = email;
         this.phoneNum = phoneNum;
     }
-    // Setter for first name
-    public void setFirstName(String firstName)
-    {
+    
+    /*
+     * Sets the first name of the person
+     * @param firstName the first name of the person
+     * 
+     */
+    public void setFirstName(String firstName) {
+
         this.firstName = firstName;
 
     }
     
-    // Setter for first name
-    public void setLastName(String lastName)
-    {
+    /* 
+     * Sets the last name of the person
+     * @param lastName the last name of the person
+     * 
+     */
+    public void setLastName(String lastName) {
+
         this.lastName =  lastName;
+
     }
     
-    // Getter and setter for email
-    public String getEmail()
-    {
+    /*
+     * Gets the first name of the person
+     * @return the first name of the person
+     * 
+     */
+    public String getEmail() {
+
         return email;
+
     }
-    public void setEmail(String email)
-    {
+
+    /*
+     * Sets the email of the person
+     * @param email the email of the person
+     * 
+     */
+    public void setEmail(String email) {
+
         this.email = email;
+
     }
 
-    // Getter and setter for phoneNum
-    public String getPhoneNum()
-    {
+    /*
+     * Gets the phone number of the person
+     * @return the phone number of the person
+     * 
+     */
+    public String getPhoneNum() {
+
         return phoneNum;
-    }
-    public void setPhoneNum(String phoneNum)
-    {
-        this.phoneNum = phoneNum;
+
     }
 
-    // Getter for remaining variables
-    public String getFirstName()
-    {
+    /*
+     * Sets the phone number of the person
+     * @param phoneNum the phone number of the person
+     * 
+     */
+    public void setPhoneNum(String phoneNum) {
+
+        this.phoneNum = phoneNum;
+
+    }
+
+    /*
+     * Gets the first name of the person
+     * @return the first name of the person
+     * 
+     */
+    public String getFirstName() {
+
         return firstName;
+
     }
-    public String getLastName()
-    {
+
+    /*
+     * Gets the last name of the person
+     * @return the last name of the person
+     * 
+     */
+    public String getLastName() {
+
         return lastName;
+
     }
+
 }

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -9,16 +9,23 @@ import java.util.concurrent.*;
 public class BankAutomated
 {
     List<CA> customerAccounts = Collections.synchronizedList(new ArrayList<CA>());
-    private final ConcurrentHashMap<String, CA> customerHash;
+    private final ConcurrentHashMap<String, CA> customerHash = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @SuppressWarnings("SpellCheckingInspection")
-    public enum State {FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
-                        EDITNOTIFSET, PRIVSET, EDITPROF, SETTINGS}
+    public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
+                        NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
 
+
+    public BankAutomated(boolean Test){
+
+    }
+    
+    /*
+     * Constructor for the BankAutomated class
+     * NOTE: DO NOT TOUCH
+     */
     public BankAutomated() {
-        // Email -> Account, thread safe Hash map
-        this.customerHash = new ConcurrentHashMap<>();
 
         System.out.println("Loading customer objects...");
 
@@ -77,18 +84,19 @@ public class BankAutomated
         System.out.println("Loaded " + customerAccounts.size() + " customer objects. In: " + timePassedSeconds + "s");
     }
 
-    // Clear the People.ser file
+    /* 
+     * Clears the People.ser file
+     * NOTE: This will delete all customer accounts DO NOT TOUCH
+     * 
+     */
     public void clearPeopleFile() {
         try {
 
             // Delete the file
-            Path of = Path.of("People.ser");
-            Files.deleteIfExists(of);
-            customerAccounts.clear();
-            customerHash.clear();
+            Files.deleteIfExists(Paths.get("People.ser"));
     
             // Create a new empty file
-            Files.createFile(of);
+            Files.createFile(Paths.get("People.ser"));
             
             // Print a message
             System.out.println("Cleared People.ser file");
@@ -101,7 +109,12 @@ public class BankAutomated
         }
     }
 
-    // Validate email format
+    /*
+     * Checks if the email is valid
+     * @param email The email to check
+     * @return True if the email is valid, false otherwise
+     * 
+     */
     public boolean validEmail(String email)
     {
         if (email.contains("@"))
@@ -116,13 +129,23 @@ public class BankAutomated
                 ( (email.indexOf(".com") - email.indexOf("@") >= 2) || (email.indexOf(".ca") - email.indexOf("@") >= 2) );
     }
 
-    //Checks if email already exists
+    /*
+     * Checks if the email is already in use
+     * @param email The email to check
+     * @return True if the email is already in use, false otherwise
+     * 
+     */
     public boolean existingEmail(String email)
     {
         return customerHash.containsKey(email);
     }
 
-    // Validate password format
+    /*
+     * Checks if the password is valid
+     * @param password The password to check
+     * @return True if the password is valid, false otherwise
+     * 
+     */
     public boolean validPassword(String password)
     {
         if (password.length() < 8)
@@ -161,7 +184,14 @@ public class BankAutomated
         return lowerCharCount > 0 && upperCharCount > 0 && numCount > 0 && specialCount > 0;
     }
 
-    // This allows a CA to log in to the system, and authenticates this user
+    /*
+     * Creates a new customer account
+     * @param email The email of the customer
+     * @param password The password of the customer
+     * @return The customer account if it was created successfully, null otherwise
+     * NOTE: DO NOT TOUCH THIS METHOD
+     *
+     */
     public CA loginAccount(String email, String password)
     {
         System.out.println("Logging in customer with email: " + email);
@@ -176,7 +206,12 @@ public class BankAutomated
         return null;
     }
 
-    // Checks if the string contains numbers only
+    /*
+     * Checks if the string contains numbers only
+     * @param str The string to check
+     * @return True if the string contains numbers only, false otherwise
+     * 
+     */
     public boolean onlyNumeric(String str)
     {
         for(int i = 0; i < str.length(); i++)
@@ -190,31 +225,34 @@ public class BankAutomated
         return true;
     }
 
-    public boolean onlyNumericDouble(String str)
-    {
+    /*
+     * Checks if the string contains numbers only
+     * @param str The string to check
+     * @return True if the string contains numbers only, false otherwise
+     * 
+     */
+    public boolean onlyNumericDouble(String str) {
         int dotCount = 0;
-        for(int i = 0; i < str.length(); i++)
-        {
-            if (!Character.isDigit(str.charAt(i)))
-            {
-                if (dotCount >= 1)
-                {
+        char[] chars = str.toCharArray();
+        for (char c : chars) {
+            if (c == '.') {
+                dotCount++;
+                if (dotCount > 1) {
                     return false;
                 }
-                else if (str.charAt(i) == '.')
-                {
-                    dotCount += 1;
-                }
-                else
-                {
-                    return false;
-                }
+            } else if (c < '0' || c > '9') {
+                return false;
             }
         }
         return true;
     }
 
-    // Checks if the CVV of the card is valid.
+    /*
+     * Checks if the credit card number is valid
+     * @param ccNum The credit card number
+     * @return True if the credit card number is valid, false otherwise
+     *
+     */
     public boolean validCVV(String cvv)
     {
         if (onlyNumeric(cvv))
@@ -225,7 +263,14 @@ public class BankAutomated
         return false;
     }
 
-    // Checks if the date of birth is valid
+    /*
+     * Checks if the date of birth is valid
+     * @param month The month of the date of birth
+     * @param day The day of the date of birth
+     * @param year The year of the date of birth
+     * @return True if the date of birth is valid, false otherwise
+     * 
+     */
     public boolean validDOB(String month, String day, String year)
     {
         int numYear = Integer.parseInt(year);
@@ -248,100 +293,71 @@ public class BankAutomated
         }
     }
 
-    //Checks for the validity of the card number by various measures, i.e. length, starting digit, Luhn's algorithm
-    public boolean validCard(String cardNum)
-    {
-        // If the length is not between 13 and 19 digits, then the card number is invalid
-        // If input was not all digits, then cardNum is invalid
-        // Card numbers only start with 4 (Visa), 3 (American Express), 2 or 5 (Mastercard)
-
-        if (cardNum.length() < 13 || cardNum.length() > 19 || !onlyNumeric(cardNum) ||
-                !(cardNum.charAt(0) == '4' || cardNum.charAt(0) == '3' || cardNum.charAt(0) == '2' || cardNum.charAt(0) == '5'))
-        {
-            return false;
-        }
-
-        // Luhn's algorithm to check if the card number is valid
-        int sum = 0;
-        boolean alternate = false;
-
-        // Loop through the card number backwards
-        for (int i = cardNum.length() - 1; i >= 0; i--)
-        {
-
-            // Get the digit at the current index
-            int n = cardNum.charAt(i) - '0';
-
-            // If the current digit is the second digit from the right, then double it
-            if (alternate)
-            {
-                n = n*2;
-            }
-
-            // If the current digit is greater than 9, then add the two digits together
-            if (n>9)
-            {
-                sum += (n/10);
-                sum += n%10;
-            }
-
-            // Else, add the current digit to the sum
-            else
-            {
+    /*
+     * Checks if the credit card number is valid
+     * @param cardNum The credit card number
+     * @return True if the card number is valid, false otherwise
+     * 
+     */
+    public boolean validCard(String cardNum) {
+        boolean valid = true;
+    
+        // Check length, starting digit, and only numeric
+        if (!(cardNum.length() >= 13 && cardNum.length() <= 19 && onlyNumeric(cardNum) &&
+            (cardNum.charAt(0) == '4' || cardNum.charAt(0) == '3' || cardNum.charAt(0) == '2' || cardNum.charAt(0) == '5'))) {
+            valid = false;
+        } else {
+            int sum = 0;
+            boolean alternate = false;
+    
+            // Luhn's algorithm
+            for (int i = cardNum.length() - 1; i >= 0; i--) {
+                int n = cardNum.charAt(i) - '0';
+                if (alternate) {
+                    n *= 2;
+                    if (n > 9) {
+                        n -= 9;
+                    }
+                }
                 sum += n;
+                alternate = !alternate;
             }
-
-            // Alternate between true and false
-            alternate = !alternate;
+            valid = sum % 10 == 0;
         }
-
-        // If the sum is divisible by 10, then the card number is valid
-        return sum % 10 == 0;
+    
+        return valid;
     }
 
-    // This function returns
-
-    // This allows a new client to register for an account by inputting their details
+    /*
+     * This function creates a new customer account, and returns the new account if it was created successfully.
+     * If the account was not created successfully, then it returns null.
+     * The account is not created successfully if the email is already in use, if the email is not valid, if the password is not valid,
+     * or if the card number is not valid.
+     * @param String firstName The first name of the customer
+     * @param String lastName The last name of the customer
+     * @param String phoneNum The phone number of the customer
+     * @param String address The address of the customer
+     * @param String gender Gender of the customer
+     * @param String dob Date of birth of the customer
+     * @param String email Email of the customer
+     * @param String password Password of the customer
+     * @param String cardNum Card number of the customer
+     * @param String cardExpiry Expiry date of the card
+     * @param String cvv CVV of the card
+     * @return CA The new customer account if it was created successfully, null otherwise
+     * 
+     */
     public CA createAccount(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
                             String email, String password, String cardNum, String cardExpiry, String cvv)
     {
-        // Check if email already exists in the ConcurrentHashMap
-        if (existingEmail(email))
-        {
-            System.out.println("Email already exists");
+
+        // Check if the email is already in use, if the email is valid, if the password is valid, and if the card number is valid
+        if (existingEmail(email) || !validEmail(email) || !validPassword(password) || !validCard(cardNum)) {
             return null;
         }
-
-        // Check if email is valid
-        if (!validEmail(email))
-        {
-            System.out.println("Email is invalid");
-            return null;
-        }
-
-        // Check if password is valid
-        if (!validPassword(password))
-        {
-            System.out.println("Password is invalid");
-            return null;
-        }
-
-        // Check if card number is valid
-        if (!validCard(cardNum))
-        {
-            System.out.println("Card Number is invalid");
-            return null;
-        }
-
-        //Generate a random amount between 0 and 10,000 for chequing, savings, and bankNumber
-        Random rand = new Random();
-        double randCheq = rand.nextDouble()*10000;
-        double randSav = rand.nextDouble()*10000;
-        String bankNum = String.valueOf(rand.nextInt(99999));
 
         // Create and return new CA object
-        CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, cardNum, cardExpiry,
-                             cvv, randCheq, randSav, bankNum);
+        CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, cardNum, cardExpiry, cvv);
 
         // Add the new account to the customerAccounts list and customerHash map
         customerAccounts.add(customer);
@@ -368,156 +384,207 @@ public class BankAutomated
 
     }
 
-    // Allow users to transfer between chequing and savings accounts
-    // RETURN CODES:
-    //  returns 0 if successful
-    //  returns 1 if insufficient funds
-    public int transferFunds(double transferAmount, String fromAccount, CA customer)
-    {
-        if (fromAccount.equals("Chequing"))
-        {
-            if (transferAmount > customer.getChequing())
-            {
+    /*
+     * Allows users to transfer money between their chequing and savings accounts
+     * @param transferAmount: amount of money to transfer
+     * @param fromAccount: account to transfer money from
+     * @param customer: customer object
+     * @return 0 if transfer is successful, 1 if transfer is unsuccessful
+     * 
+     */
+    public int transferFunds(double transferAmount, String fromAccount, CA customer) {
+
+        // If the transfer amount is negative, then return 1
+        if (fromAccount.equals("Chequing")) {
+
+            if (transferAmount > customer.getChequing()) {
+
                 return 1;
+
             }
+
             customer.setChequing(customer.getChequing() - transferAmount);
             customer.setSavings(customer.getSavings() + transferAmount);
-        }
-        else
-        {
-            if (transferAmount > customer.getSavings())
-            {
+            return 0;
+
+        } else {
+
+            if (transferAmount > customer.getSavings()) {
+
                 return 1;
+                
             }
+
             customer.setChequing(customer.getChequing() + transferAmount);
             customer.setSavings(customer.getSavings() - transferAmount);
+            return 0;
+
         }
-        return 0;
+
     }
 
-    // Allow users to etransfer from their account to another user with using the receiver's email
-    // RETURN CODES:
-    //  returns 0 if successful transfer within BCS accounts
-    //  returns 1 if email is not valid
-    //  returns 2 if customer has insufficient funds
-    //  returns 3 if receiverEmail is not found, i.e. external e-transfer (any valid email accepts e-transfers)
-    //  returns 4 if amount > 1000, e-transfer limit of 1000 set.
-    public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom)
-    {
-        if (!validEmail(receiverEmail))
-        {
+    /*
+     * Allows users to transfer money to other users of the bank (if they have an account)
+     * @param amount: amount of money to transfer
+     * @param receiverEmail: email of the receiver
+     * @param customer: the customer who is sending the money
+     * @param accountFrom: the account the money is being sent from
+     * @return 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
+     * @return 4 if amount is greater than 1000
+     * 
+     */
+    public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
+
+        CA receiverAccount = customerHash.get(receiverEmail);
+        
+        // Check if receiver has an account
+        if (receiverAccount == null){
+
             return 1;
+
         }
-        else if (accountFrom.equals("Chequing") && amount > customer.getChequing())
-        {
+
+        // Check if the sender has enough money to send
+        if (accountFrom.equals("Chequing") && amount > customer.getChequing()) {
+
             return 2;
-        }
-        else if (accountFrom.equals("Savings") && amount > customer.getSavings())
-        {
+
+        // Check if the sender has enough money to send
+        } else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
+
             return 2;
-        }
-        else if (amount > 1000)
-        {
-            return 4;
-        }
 
-        CA receiver = customerHash.get(receiverEmail);
+        // Check if the amount is negative
+        } else if (amount <= 0) {
 
-        if (accountFrom.equals("Chequing"))
-        {
-            customer.setChequing(customer.getChequing() - amount);
-        }
-        else if (accountFrom.equals("Savings"))
-        {
-            customer.setSavings(customer.getSavings() - amount);
-        }
-
-        if (receiver == null)
-        {
             return 3;
+
+        // Check if the amount is greater than 1000
+        } else if (amount > 1000) {
+
+            return 4;
+
+        // If all checks pass, transfer the money and receiver's account exists
+        } else if (receiverAccount != null) {
+
+            if (accountFrom.equals("Chequing")) {
+
+                customer.setChequing(customer.getChequing() - amount);
+                receiverAccount.setChequing(receiverAccount.getChequing() + amount);
+
+            } else {
+
+                customer.setSavings(customer.getSavings() - amount);
+                receiverAccount.setSavings(receiverAccount.getSavings() + amount);
+
+            }
+
         }
-        else
-        {
-            receiver.setChequing(receiver.getChequing() + amount);
-        }
+
         return 0;
     }
 
-    // Allow users to make a bank transfer from their account to another user using the receiver's
-    // bank account number
-    // RETURN CODES:
-    //  returns 0 if successful transfer within BCS accounts
-    //  returns 1 if bank number is not 5 digits,
-    //  returns 2 if chequing balance is too low for transfer amount,
-    //  returns 3 if no valid receiver account is found with bankNumber receiverAcc is within BCS, i.e. external transfer.
-    public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom)
-    {
-        if (receiverAcc.length() != 5)
-        {
+
+    /*
+     * This function allows users to transfer money to another user's account using their bank number
+     * @param amount: the amount to be transferred
+     * @param receiverAcc: the receiver's bank number
+     * @param customer: the customer who is transferring the money
+     * @param accountFrom: the account the customer is transferring from
+     * @return 0 if successful, 1 if receiver account is invalid, 2 if customer has insufficient funds
+     * @return 3 if receiver account is not found
+     * 
+     */
+    public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom) {
+        
+
+        // Check if receiver account is valid
+        if (receiverAcc.length() != 5) {
+
             return 1;
-        }
-        else if (accountFrom.equals("Chequing") && amount > customer.getChequing())
-        {
-            return 2;
-        }
-        else if (accountFrom.equals("Savings") && amount > customer.getSavings())
-        {
-            return 2;
-        }
 
+        // Check if customer has sufficient funds in chequing
+        } else if (accountFrom.equals("Chequing") && amount > customer.getChequing()) {
+
+            return 2;
+
+        // Check if customer has sufficient funds in savings
+        } else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
+
+            return 2;
+
+        }
+    
         CA receiver = null;
+    
+        // Find the receiver account
+        for (CA cust : customerAccounts) {
+            //cust.print();
+            System.out.println(cust.getBankNumber());
 
-        for (CA cust : customerAccounts)
-        {
-            if (cust.getBankNumber().equals(receiverAcc))
-            {
+            if (cust.getBankNumber().equals(receiverAcc)) {
+
                 receiver = cust;
+
             }
         }
+    
+        // Subtract the amount from the customer's account and add it to the receiver's account (chequing / savings)
+        if (receiver != null){
 
-        if (accountFrom.equals("Chequing"))
-        {
-            customer.setChequing(customer.getChequing() - amount);
-        }
-        else if (accountFrom.equals("Savings"))
-        {
-            customer.setSavings(customer.getSavings() - amount);
-        }
+            // Subtract the amount from the customer's account (chequing)
+            if (accountFrom.equals("Chequing")) {
 
-        if (receiver == null)
-        {
-            return 3;
-        }
-        else
-        {
+                customer.setChequing(customer.getChequing() - amount);
+
+            // Add the amount to the receiver's account (savings)
+            } else if (accountFrom.equals("Savings")) {
+
+                customer.setSavings(customer.getSavings() - amount);
+
+            }
+
             receiver.setChequing(receiver.getChequing() + amount);
+
+            return 0;
+
         }
-        return 0;
+
+        // If the receiver account is not found, return 3
+        return 3;
+
     }
 
     // Change the customer's details in the settings tab. Customers can change their address, email,
     // and phone number
-    public void changeSettings(CA customer)
-    {
+    public void changeSettings(CA customer) {
 
     }
-    //returns all the required addresses for findUs
-    public ArrayList<String> addresses()
-    {
-        ArrayList<String> lst = new ArrayList<String>();
 
+    /*
+     * This method is used to return a list of addresses for the customer to 
+     * choose from when visiting a branch.
+     * 
+     */
+    public ArrayList<String> addresses() {
+        ArrayList<String> locationList = new ArrayList<String>();
 
-        lst.add("10153 King George Blvd, Vancouver, BC");
-        lst.add("255 Yonge Street, Toronto, ON");
-        lst.add("2210 Bank Street, Ottawa, ON");
-        lst.add("1955 Chandler Road, New York City, NY");
-        lst.add("21 Lovecraft Lane, Montreal, QC");
-        lst.add("1965 Herbert Blvd, Halifax, NS");
+        locationList.add("10153 King George Blvd, Vancouver, BC");
+        locationList.add("255 Yonge Street, Toronto, ON");
+        locationList.add("2210 Bank Street, Ottawa, ON");
+        locationList.add("1955 Chandler Road, New York City, NY");
+        locationList.add("21 Lovecraft Lane, Montreal, QC");
+        locationList.add("1965 Herbert Blvd, Halifax, NS");
 
-        return lst; 
+        return locationList; 
     }
-    public void logout()
-    {
+
+    /*
+     * This method is used for logout. It is used to save the customer accounts to a file.
+     * It will save the customer accounts to a file called People.ser, DO NOT TOUCH THIS METHOD.
+     * 
+     */
+    public void logout() {
 
         long startTime = System.currentTimeMillis();
 
