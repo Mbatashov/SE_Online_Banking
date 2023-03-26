@@ -512,6 +512,224 @@ public class TestCase {
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    @Test
+    public void testSetterGetter() {
+
+        // Test setters and getters for People objects
+        People test = new People("John", "Doe", "johndoe@example.com", "416-123-4567");
+
+        assertEquals("John", test.getFirstName());
+        assertEquals("Doe", test.getLastName());
+        assertEquals("johndoe@example.com", test.getEmail());
+        assertEquals("416-123-4567", test.getPhoneNum());
+
+        test.setFirstName("Jane");
+        test.setLastName("Smith");
+        test.setEmail("janesmith@example.ca");
+        test.setPhoneNum("647-987-6543");
+
+        assertEquals("Jane", test.getFirstName());
+        assertEquals("Smith", test.getLastName());
+        assertEquals("janesmith@example.ca", test.getEmail());
+        assertEquals("647-987-6543", test.getPhoneNum());
+
+
+
+
+        // Test setter and getters for CA objects
+        dummy = new CA("John", "Doe", "647-123-4567", "123 Example St.", 
+                "Male", "01/01/2000", "john@example.com", "Password123@", 
+                "4417123456789012", "01/01/2030", "123", 500, 1000, "12345");
+
+        // Test getters for constructor attributes
+        assertEquals("John", dummy.getFirstName());
+        assertEquals("Doe", dummy.getLastName());
+        assertEquals("647-123-4567", dummy.getPhoneNum());
+        assertEquals("123 Example St.", dummy.getAddress());
+        assertEquals("Male", dummy.getGender());
+        assertEquals("01/01/2000", dummy.getDob());
+        assertEquals("john@example.com", dummy.getEmail());
+        assertEquals("Password123@", dummy.getPassword());
+        assertEquals("4417123456789012", dummy.getCardNum());
+        assertEquals("01/01/2030", dummy.getCardExpiry());
+        assertEquals("123", dummy.getCvv());
+        assert(500 == dummy.getChequing());
+        assert(1000 == dummy.getSavings());
+        assertEquals("12345", dummy.getBankNumber());
+
+        // Test setters by setting a new value, and using getter to check if value is changed
+        dummy.setFirstName("Jane");
+        dummy.setLastName("Smith");
+        dummy.setPhoneNum("416-987-6543");
+        dummy.setAddress("321 Bakers St.");
+        dummy.setGender("Female");
+        dummy.setDob("02/02/2001");
+        dummy.setEmail("jane@example.ca");
+        dummy.setPassword("123Password@");
+        dummy.setCardNum("4417987654321098");
+        dummy.setCardExpiry("02/02/2029");
+        dummy.setCvv("789");
+        dummy.setChequing(1200);
+        dummy.setSavings(900);
+        dummy.setBankNumber("98765");
+
+        // Use getters to see if values were changed
+        assertEquals("Jane", dummy.getFirstName());
+        assertEquals("Smith", dummy.getLastName());
+        assertEquals("416-987-6543", dummy.getPhoneNum());
+        assertEquals("321 Bakers St.", dummy.getAddress());
+        assertEquals("Female", dummy.getGender());
+        assertEquals("02/02/2001", dummy.getDob());
+        assertEquals("jane@example.ca", dummy.getEmail());
+        assertEquals("123Password@", dummy.getPassword());
+        assertEquals("4417987654321098", dummy.getCardNum());
+        assertEquals("02/02/2029", dummy.getCardExpiry());
+        assertEquals("789", dummy.getCvv());
+        assert(1200 == dummy.getChequing());
+        assert(900 == dummy.getSavings());
+        assertEquals("98765", dummy.getBankNumber());
+
+        // Add transactions, reports, and requests to respective array lists
+        // Then use getters to check if value changed to check that both
+        // setters and getters are working
+        AD admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null, null);
+        
+        Transaction chequing = new Transaction("Chequing", "Savings", 500, 201);
+        Transaction savings = new Transaction("Savings", "Chequing", 600, 205);
+        Report report = new Report("Jane", "Doe", "jane@example.ca", "4417987654321098");
+        Request request = new Request("RM", admin);
+
+        dummy.addChequing(chequing);
+        dummy.addSaving(savings);
+        dummy.addReport(report);
+        dummy.addRequests(request);
+
+        // Use getters to test if setters correctly added values (also
+        // tests if getters work correctly)
+        assertEquals(chequing, dummy.getChequingHist().get(0));
+        assertEquals(savings, dummy.getSavingsHist().get(0));
+        assertEquals(report, dummy.getReportSus().get(0));
+        assertEquals(request, dummy.getRequests().get(0));
+        
+
+        
+
+        // Test setters and getters for transactions
+        Transaction transactionTest = new Transaction("Chequing", "Savings", 500, 12345);
+
+        assertEquals("Chequing", transactionTest.getSender());
+        assertEquals("Savings", transactionTest.getReceiver());
+        assert(500 == transactionTest.getAmount());
+        assert(12345 == transactionTest.getId());
+
+        transactionTest.setSender("Current");
+        transactionTest.setReceiver("johndoe@example.com");
+        transactionTest.setAmount(1000);
+        transactionTest.setId(98765);
+
+        assertEquals("Current", transactionTest.getSender());
+        assertEquals("johndoe@example.com", transactionTest.getReceiver());
+        assert(1000 == transactionTest.getAmount());
+        assert(98765 == transactionTest.getId());
+
+
+
+
+        // Test setter and getters for reports
+        Report reportTest = new Report("John", "Doe", "johndoe@example.com", "4417123456789012");
+
+        assertEquals("John", reportTest.getFirstName());
+        assertEquals("Doe", reportTest.getLastName());
+        assertEquals("johndoe@example.com", reportTest.getEmail());
+        assertEquals("4417123456789012", reportTest.getCardNum());
+
+        reportTest.setFirstName("Jane");
+        reportTest.setLastName("Smith");
+        reportTest.setEmail("janesmith@example.ca");
+        reportTest.setCardNum("4417210987654321");
+
+        assertEquals("Jane", reportTest.getFirstName());
+        assertEquals("Smith", reportTest.getLastName());
+        assertEquals("janesmith@example.ca", reportTest.getEmail());
+        assertEquals("4417210987654321", reportTest.getCardNum());
+
+
+
+
+        // Test setters and getters for requests
+        MT mtTest = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null);
+        CSR csrTest = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null);
+        Request requestTest = new Request("RSC", new MT("1", "2", "3", "4", 5, null));
+
+        requestTest.setMT(mtTest);
+
+        assertEquals("RSC", requestTest.getType());
+        assertEquals(mtTest, requestTest.getMT());
+
+        requestTest.setType("RM");
+        requestTest.setAdmin(admin);
+
+        assertEquals("RM", requestTest.getType());
+        assertEquals(admin, requestTest.getAdmin());
+
+        requestTest.setCSR(csrTest);
+        assertEquals(csrTest, requestTest.getCSR());
+
+
+
+
+        // Test setter and getter for Admins (AD)
+        
+        
+        admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Report>(), new ArrayList<Request>());
+        
+
+        assertEquals(105, admin.getId());
+
+        // Use reportTest and requestTest objects from respective getter/setter tests
+        admin.setId(205);
+        admin.addCustomerReports(reportTest);
+        admin.addMeetingRequests(requestTest);
+
+        assertEquals(205, admin.getId());
+        assertEquals(reportTest, admin.getCustomerReports().get(0));
+        assertEquals(requestTest, admin.getMeetingRequests().get(0));
+
+
+
+
+        // Test setter and getters for Maintenance Teams (MT)
+        MT mt = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Request>());
+
+        assertEquals(105, mt.getId());
+
+        // Use requestTest object from request getter/setter test
+        mt.addSysRequest(requestTest);
+        mt.setId(205);
+
+        assertEquals(205, mt.getId());
+        assertEquals(requestTest, mt.getSysChangeRequests().get(0));
+
+
+
+
+        // Test setter and getters for CSRs
+        CSR csr = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<Request>());
+
+        assertEquals(105, csr.getId());
+
+        // Use requestTest object from request getter/setter test
+        csr.addRequest(requestTest);
+        csr.setId(205);
+
+        assertEquals(205, csr.getId());
+        assertEquals(requestTest, csr.getAssistanceRequests().get(0));
+
+
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
+    }
     // Future test cases for test and integration phase
         
 }

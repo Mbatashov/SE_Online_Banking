@@ -5,9 +5,9 @@ public class Report implements Serializable
     String firstName;
     String lastName;
     String email;
-    int cardNum;
+    String cardNum;
 
-    public Report(String firstName, String lastName, String email, int cardNum)
+    public Report(String firstName, String lastName, String email, String cardNum)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,9 +45,13 @@ public class Report implements Serializable
         this.email = email;
     }
 
-    //Getter for cardNum
-    public int getCardNum()
+    //Getter and setter for cardNum
+    public String getCardNum()
     {
         return cardNum;
+    }
+    public void setCardNum(String cardNum)
+    {
+        this.cardNum = cardNum;
     }
 }

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class AD extends People
 {
+    int id;
     ArrayList<Report> customerReports;
     ArrayList<Request> meetingRequests;
 
@@ -9,8 +10,18 @@ public class AD extends People
               ArrayList<Report> customerReports, ArrayList<Request> meetingRequests)
     {
         super(firstName, lastName, email, phoneNum);
+        this.id = id;
         this.customerReports = customerReports;
         this.meetingRequests = meetingRequests;
+    }
+
+    public int getId() 
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public ArrayList<Report> getCustomerReports()
