@@ -174,16 +174,9 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(5000, "janedoe@example.com", john, "Chequing") == 4);
-        assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 10000);
-
-        // Test 2
-        john.setChequing(10000);
-        jane.setChequing(10000);
-        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 4);
-        assert(jane.getChequing() == 10000);
-        assert(john.getChequing() == 10000);
+        assert(BA.etransfer(500, "janedoe@example.com", john, "Chequing") == 0);
+        assert(john.getChequing() == 9500);
+        assert(jane.getChequing() == 10500);        
 
         // Error code tests
         john.setChequing(10000);
@@ -193,7 +186,6 @@ public class TestCase {
         assert(BA.etransfer(500, "johndoe", jane, "Chequing") == 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
-
 
         // Insufficient funds (returns code 2)
         assert(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing") == 2);
@@ -205,7 +197,50 @@ public class TestCase {
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 9500);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testTransferFunds", JOptionPane.INFORMATION_MESSAGE);
+        // Transfer amount too large (> 1000) (returns code 4)
+        john.setChequing(10000);
+        jane.setChequing(10000);
+        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 4);
+        assert(jane.getChequing() == 10000);
+        assert(john.getChequing() == 10000);
+
+
+        // Tests for savings transfers
+
+        // Test 1
+        john.setSavings(10000);
+        jane.setChequing(10000);
+        assert(BA.etransfer(500, "janedoe@example.com", john, "Savings") == 0);
+        assert(john.getChequing() == 9500);
+        assert(jane.getChequing() == 10500); 
+
+        // Error code tests
+        john.setChequing(10000);
+        jane.setSavings(10000);
+
+        // Invalid Email adress (returns code 1)
+        assert(BA.etransfer(500, "johndoe", jane, "Savings") == 1);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 10000);
+
+        // Insufficient funds (returns code 2)
+        assert(BA.etransfer(10001, "johndoe@example.com", jane, "Savings") == 2);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 10000);
+
+        // Email not found (returns code 3) and does an external transaction
+        assert(BA.etransfer(500, "test@example.com", jane, "Savings") == 3);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 9500);
+
+        // Transfer amount too large (> 1000) (returns code 4)
+        john.setChequing(10000);
+        jane.setSavings(10000);
+        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Savings") == 4);
+        assert(jane.getChequing() == 10000);
+        assert(john.getChequing() == 10000);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testETransfer", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Test
@@ -253,12 +288,48 @@ public class TestCase {
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
-        // Email not found (returns code 3), and transfers money to external account
+        // Bank Number not found (returns code 3), and transfers money to external account
         assert(BA.bankTransfer(500, "98765", jane, "Chequing") == 3);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 9500);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testTransferFunds", JOptionPane.INFORMATION_MESSAGE);
+
+        // Test transfer from savings
+
+        john.setSavings(10000);
+        jane.setChequing(10000);
+        assert(BA.bankTransfer(5000, "12345", john, "Savings") == 0);
+        assert(john.getSavings() == 5000);
+        assert(jane.getChequing() == 15000);
+
+        // Test 2
+        john.setChequing(10000);
+        jane.setSavings(10000);
+        assert(BA.bankTransfer(5000, "54321", jane, "Savings") == 0);
+        assert(jane.getSavings() == 5000);
+        assert(john.getChequing() == 15000);
+
+        // Error code tests
+        john.setChequing(10000);
+        jane.setSavings(10000);
+
+        // Invalid bank number address (returns code 1)
+        assert(BA.bankTransfer(500, "123456789", jane, "Savings") == 1);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 10000);
+
+
+        // Insufficient funds (returns code 2)
+        assert(BA.bankTransfer(10001, "54321", jane, "Savings") == 2);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 10000);
+
+        // Email not found (returns code 3), and transfers money to external account
+        assert(BA.bankTransfer(500, "98765", jane, "Savings") == 3);
+        assert(john.getChequing() == 10000);
+        assert(jane.getSavings() == 9500);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testBankTransfer", JOptionPane.INFORMATION_MESSAGE);
     }
     
     @Test
