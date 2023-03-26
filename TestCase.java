@@ -460,7 +460,7 @@ public class TestCase {
     public void testChequingHistory() {
 
         BankAutomated BA = new BankAutomated();
-        ArrayList<Transaction> chequingHist = new ArrayList<Transaction>();
+        ArrayList<Transaction> chequingHist = new ArrayList<>();
 
         chequingHist.add(new Transaction("Person 1", "test", 500,1));
         chequingHist.add(new Transaction("test", "Person 2", 115,2));
@@ -489,7 +489,7 @@ public class TestCase {
     public void testSavingsHistory() {
 
         BankAutomated BA = new BankAutomated();
-        ArrayList<Transaction> savingsHist = new ArrayList<Transaction>();
+        ArrayList<Transaction> savingsHist = new ArrayList<>();
 
         savingsHist.add(new Transaction("Person 1", "test", 500,1));
         savingsHist.add(new Transaction("test", "Person 2", 115,2));
