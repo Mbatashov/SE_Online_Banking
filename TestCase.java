@@ -1,11 +1,10 @@
 import org.junit.Test;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class TestCase {
     CA dummy;
@@ -175,14 +174,14 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(5000, "janedoe@example.com", john) == 0);
+        assert(BA.etransfer(5000, "janedoe@example.com", john, "Chequing") == 0);
         assert(john.getChequing() == 5000);
         assert(jane.getChequing() == 15000);
 
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(5000, "johndoe@example.com", jane) == 0);
+        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 0);
         assert(jane.getChequing() == 5000);
         assert(john.getChequing() == 15000);
 
@@ -191,18 +190,18 @@ public class TestCase {
         jane.setChequing(10000);
 
         // Invalid Email adress (returns code 1)
-        assert(BA.etransfer(500, "johndoe", jane) == 1);
+        assert(BA.etransfer(500, "johndoe", jane, "Chequing") == 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
 
         // Insufficient funds (returns code 2)
-        assert(BA.etransfer(10001, "johndoe@example.com", jane) == 2);
+        assert(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing") == 2);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
         // Email not found (returns code 3)
-        assert(BA.etransfer(500, "test@example.com", jane) == 3);
+        assert(BA.etransfer(500, "test@example.com", jane, "Chequing") == 3);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
@@ -464,17 +463,17 @@ public class TestCase {
         BankAutomated BA = new BankAutomated();
         ArrayList<Transaction> chequingHist = new ArrayList<Transaction>();
 
-        chequingHist.add(new Transaction("Person 1", "test", 500));
-        chequingHist.add(new Transaction("test", "Person 2", 115));
-        chequingHist.add(new Transaction("Person 3", "test", 200));
+        chequingHist.add(new Transaction("Person 1", "test", 500,1));
+        chequingHist.add(new Transaction("test", "Person 2", 115,2));
+        chequingHist.add(new Transaction("Person 3", "test", 200,3));
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
                 "4417123456789113", "01/01/2027", "555");
         
-        dummy.addChequing(new Transaction("Person 1", "test", 500));
-        dummy.addChequing(new Transaction("test", "Person 2", 115));
-        dummy.addChequing(new Transaction("Person 3", "test", 200));
+        dummy.addChequing(new Transaction("Person 1", "test", 500,4));
+        dummy.addChequing(new Transaction("test", "Person 2", 115,5));
+        dummy.addChequing(new Transaction("Person 3", "test", 200,6));
 
         for (int i = 0; i < chequingHist.size(); i++)
         {
@@ -493,17 +492,17 @@ public class TestCase {
         BankAutomated BA = new BankAutomated();
         ArrayList<Transaction> savingsHist = new ArrayList<Transaction>();
 
-        savingsHist.add(new Transaction("Person 1", "test", 500));
-        savingsHist.add(new Transaction("test", "Person 2", 115));
-        savingsHist.add(new Transaction("Person 3", "test", 200));
+        savingsHist.add(new Transaction("Person 1", "test", 500,1));
+        savingsHist.add(new Transaction("test", "Person 2", 115,2));
+        savingsHist.add(new Transaction("Person 3", "test", 200,3));
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
                 "4417123456789113", "01/01/2027", "555");
         
-        dummy.addSaving(new Transaction("Person 1", "test", 500));
-        dummy.addSaving(new Transaction("test", "Person 2", 115));
-        dummy.addSaving(new Transaction("Person 3", "test", 200));
+        dummy.addSaving(new Transaction("Person 1", "test", 500,4));
+        dummy.addSaving(new Transaction("test", "Person 2", 115,5));
+        dummy.addSaving(new Transaction("Person 3", "test", 200,6));
 
         for (int i = 0; i < savingsHist.size(); i++)
         {

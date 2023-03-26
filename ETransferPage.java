@@ -13,19 +13,75 @@ public class ETransferPage extends JFrame implements ActionListener
     BankAutomated BA;
     HomePage home;
     CA customer;
+    private final JButton backToHome;
+    private final JTextField emailField;
+    private final JTextField amountField;
+    private final JComboBox<String> selectAccount;
     public ETransferPage(BankAutomated BA, HomePage home, CA customer)
     {
-        this.setTitle("Account Home");
+        this.setTitle("Make an E-transfer");
         this.setLayout(null);
         this.home = home;
         this.customer = customer;
         this.BA = BA;
 
-        Font labels = new Font("Raleway", Font.BOLD, 25);
+        Font labels = new Font("Raleway", Font.BOLD, 30);
         Border emptyBorder = BorderFactory.createEmptyBorder();
-        Border topBorder = BorderFactory.createMatteBorder(1,0,0,0,Color.GRAY);
-        Color bg = new Color(214, 215, 215);
-        Color buttonColor = Color.BLACK;
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+
+        JLabel contact = new JLabel("Receiver's Email:");
+        contact.setFont(labels);
+        contact.setBorder(emptyBorder);
+        contact.setForeground(Color.black);
+        contact.setBounds(350,200,300,40);
+        this.add(contact);
+
+        emailField = new JTextField(150);
+        emailField.setFont(new Font("Arial", Font.PLAIN, 20));
+        emailField.setBorder(border);
+        emailField.setBounds(650, 200, 350, 40);
+        this.add(emailField);
+
+        JLabel amount = new JLabel("Amount (in CAD):");
+        amount.setFont(labels);
+        amount.setBorder(emptyBorder);
+        amount.setForeground(Color.black);
+        amount.setBounds(350,325,300,40);
+        this.add(amount);
+
+        amountField = new JTextField(150);
+        amountField.setFont(new Font("Arial", Font.PLAIN, 20));
+        amountField.setBorder(border);
+        amountField.setBounds(650, 325, 350, 40);
+        this.add(amountField);
+
+        JLabel account = new JLabel("Account from:");
+        account.setFont(labels);
+        account.setBorder(emptyBorder);
+        account.setForeground(Color.black);
+        account.setBounds(350,450,300,40);
+        this.add(account);
+
+        String[] accounts = {"Chequing", "Savings"};
+        selectAccount = new JComboBox<>(accounts);
+        selectAccount.setFont(new Font("Arial", Font.PLAIN, 20));
+        selectAccount.setBounds(650, 450, 350, 40);
+        selectAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectAccount.addActionListener(this);
+        this.add(selectAccount);
+
+        backToHome = new JButton("Back to Home");
+        backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
+        backToHome.setBounds(475, 600, 350, 50);
+        backToHome.setBackground(Color.white);
+        backToHome.setForeground(new Color(57, 107, 170));
+        backToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        backToHome.setContentAreaFilled(false);
+        backToHome.setFocusPainted(false);
+        backToHome.setBorder(emptyBorder);
+        backToHome.setContentAreaFilled(false);
+        backToHome.addActionListener(this);
+        this.add(backToHome);
 
         this.addWindowListener(new WindowEventHandler() {
             @Override
@@ -42,7 +98,7 @@ public class ETransferPage extends JFrame implements ActionListener
                 System.exit(0);
             }
         });
-        this.getContentPane().setBackground(bg);
+        this.getContentPane().setBackground(Color.white);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false);
@@ -70,6 +126,10 @@ public class ETransferPage extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
+        if (e.getSource() == backToHome)
+        {
+            this.setVisible(false);
+            home.setVisible(true);
+        }
     }
 }

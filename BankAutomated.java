@@ -1,5 +1,3 @@
-import static org.junit.Assume.assumeNotNull;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -373,9 +371,12 @@ public class BankAutomated
     }
 
     // Allow users to etransfer from their account to another user with using the receiver's email
-    // ERROR CODES: returns 0 if successful, returns 1 if email is not valid, returns 2 if 
-    // customer has insufficient funds, returns 3 if recieverEmail is not found
-    public int etransfer(double amount, String receiverEmail, CA customer)
+    // RETURN CODES:
+    //  returns 0 if successful
+    //  returns 1 if email is not valid
+    //  returns 2 if customer has insufficient funds
+    //  returns 3 if receiverEmail is not found, i.e. external e-transfer (any valid email accepts e-transfers)
+    public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom)
     {
         if (!validEmail(receiverEmail))
         {
@@ -385,15 +386,26 @@ public class BankAutomated
         {
             return 2;
         }
+
         CA receiver = customerHash.get(receiverEmail);
+
+        if (accountFrom.equals("Chequing"))
+        {
+            customer.setChequing(customer.getChequing() - amount);
+        }
+        else if (accountFrom.equals("Savings"))
+        {
+            customer.setSavings(customer.getChequing() - amount);
+        }
 
         if (receiver == null)
         {
             return 3;
         }
-
-        receiver.setChequing(receiver.getChequing() + amount);
-        customer.setChequing(customer.getChequing() - amount);
+        else
+        {
+            receiver.setChequing(receiver.getChequing() + amount);
+        }
         return 0;
     }
 

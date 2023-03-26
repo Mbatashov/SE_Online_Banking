@@ -10,7 +10,7 @@ public class BankSystem
                                 "01/02/2003", "this2@gmail.com", "Hello@World1",
                             "4417123456789113", "0521", "111");
             new HomePage(new LoginPage(BA), BA, test);
-            //new LoginPage(BA);
+//            new LoginPage(BA);
         }
         catch (Exception e)
         {
