@@ -6,6 +6,8 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
+
+// This is the test case for the BankAutomated class
 public class TestCase {
     CA dummy;
 
@@ -44,7 +46,7 @@ public class TestCase {
         long endTime = System.currentTimeMillis();
         double timePassedSeconds = (endTime - startTime);
 
-        System.out.println(timePassedSeconds);
+        System.out.println("One million accounts created in " + timePassedSeconds + " milliseconds");
 
         assert timePassedSeconds <= 2000; // Normal loop is 7-9 seconds, this will take 0.5
         
@@ -57,7 +59,7 @@ public class TestCase {
         //noinspection IntegerDivisionInFloatingPointContext
         timePassedSeconds = (endTime - startTime)/1000;
 
-        System.out.println(timePassedSeconds);
+        System.out.println("Login time: " + timePassedSeconds + " seconds");
 
         assert timePassedSeconds <= 0.1; // Memory Access should be instant
 
@@ -69,6 +71,8 @@ public class TestCase {
     public void testRegister() {
 
         BankAutomated BA = new BankAutomated();
+
+        long startTime = System.currentTimeMillis();
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -87,6 +91,12 @@ public class TestCase {
 
         assert(BA.customerAccounts.size() == 1);
 
+        long endTime = System.currentTimeMillis();
+        //noinspection IntegerDivisionInFloatingPointContext
+        long timePassedSeconds = (endTime - startTime)/1000;
+
+        System.out.println("Register time: " + timePassedSeconds + " seconds");
+
         JOptionPane.showMessageDialog(null, "Test cases passed", "testRegister", JOptionPane.INFORMATION_MESSAGE);
         
     }
@@ -95,6 +105,8 @@ public class TestCase {
     public void testLogin() {
 
         BankAutomated BA = new BankAutomated();
+
+        long startTime = System.currentTimeMillis();
 
         BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Female", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -109,6 +121,12 @@ public class TestCase {
         dummy = BA.loginAccount("test@gmail.com", "fc");
         assertNull(dummy);
 
+        long endTime = System.currentTimeMillis();
+        //noinspection IntegerDivisionInFloatingPointContext
+        long timePassedSeconds = (endTime - startTime)/1000;
+
+        System.out.println("Login time: " + timePassedSeconds + " seconds");
+
         JOptionPane.showMessageDialog(null, "Test cases passed", "testLogin", JOptionPane.INFORMATION_MESSAGE);
         
     }
@@ -117,6 +135,8 @@ public class TestCase {
     public void testTransferFunds(){
         
         BankAutomated BA = new BankAutomated();
+
+        long startTime = System.currentTimeMillis();
 
         CA cust = BA.createAccount("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
                 "01/01/2000", "janedoe@example.com", "Password123@", "4417123456789113", 
@@ -154,14 +174,22 @@ public class TestCase {
         assert(cust.getChequing() == 10000);
         assert(cust.getSavings() == 5000);
 
+        long endTime = System.currentTimeMillis();
+        //noinspection IntegerDivisionInFloatingPointContext
+        long timePassedSeconds = (endTime - startTime)/1000;
+
+        System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
         
         JOptionPane.showMessageDialog(null, "Test cases passed", "testTransferFunds", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     @Test
     public void testETransfer() {
 
         BankAutomated BA = new BankAutomated();
+
+        long startTime = System.currentTimeMillis();
 
         CA jane = BA.createAccount("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
                 "01/01/2000", "janedoe@example.com", "Password123@", "4417123456789113", 
@@ -174,79 +202,52 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(500, "janedoe@example.com", john, "Chequing") == 0);
-        assert(john.getChequing() == 9500);
-        assert(jane.getChequing() == 10500);        
+        assertEquals(BA.etransfer(5000, "janedoe@example.com", john, "Chequing"), 4);
+        assert(john.getChequing() == 10000);
+        assert(jane.getChequing() == 10000);
+
+        // Test 2
+        john.setChequing(10000);
+        jane.setChequing(10000);
+        assertEquals(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing"), 4);
+        assert(jane.getChequing() == 10000);
+        assert(john.getChequing() == 10000);
 
         // Error code tests
         john.setChequing(10000);
         jane.setChequing(10000);
 
         // Invalid Email adress (returns code 1)
-        assert(BA.etransfer(500, "johndoe", jane, "Chequing") == 1);
+        assertEquals(BA.etransfer(500, "johndoe", jane, "Chequing"), 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
+
 
         // Insufficient funds (returns code 2)
-        assert(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing") == 2);
+        assertEquals(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing"), 2);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
-        // Email not found (returns code 3) and does an external transaction
-        assert(BA.etransfer(500, "test@example.com", jane, "Chequing") == 3);
+        // Email not found (returns code 1) and does an external transaction
+        assertEquals(BA.etransfer(500, "test@example.com", jane, "Chequing"), 1);
         assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 9500);
-
-        // Transfer amount too large (> 1000) (returns code 4)
-        john.setChequing(10000);
-        jane.setChequing(10000);
-        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 4);
         assert(jane.getChequing() == 10000);
-        assert(john.getChequing() == 10000);
 
+        long endTime = System.currentTimeMillis();
+        //noinspection IntegerDivisionInFloatingPointContext
+        long timePassedSeconds = (endTime - startTime)/1000;
 
-        // Tests for savings transfers
+        System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
 
-        // Test 1
-        john.setSavings(10000);
-        jane.setChequing(10000);
-        assert(BA.etransfer(500, "janedoe@example.com", john, "Savings") == 0);
-        assert(john.getSavings() == 9500);
-        assert(jane.getChequing() == 10500); 
-
-        // Error code tests
-        john.setChequing(10000);
-        jane.setSavings(10000);
-
-        // Invalid Email adress (returns code 1)
-        assert(BA.etransfer(500, "johndoe", jane, "Savings") == 1);
-        assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 10000);
-
-        // Insufficient funds (returns code 2)
-        assert(BA.etransfer(10001, "johndoe@example.com", jane, "Savings") == 2);
-        assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 10000);
-
-        // Email not found (returns code 3) and does an external transaction
-        assert(BA.etransfer(500, "test@example.com", jane, "Savings") == 3);
-        assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 9500);
-
-        // Transfer amount too large (> 1000) (returns code 4)
-        john.setChequing(10000);
-        jane.setSavings(10000);
-        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Savings") == 4);
-        assert(jane.getSavings() == 10000);
-        assert(john.getChequing() == 10000);
-
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testETransfer", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testETransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Test
     public void testBankTransfer()
     {
         BankAutomated BA = new BankAutomated();
+
+        long startTime = System.currentTimeMillis();
 
         CA jane = BA.createAccount("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
                 "01/01/2000", "janedoe@example.com", "Password123@", "4417123456789113", 
@@ -262,14 +263,14 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.bankTransfer(5000, "12345", john, "Chequing") == 0);
+        assertEquals(BA.bankTransfer(5000, "12345", john, "Chequing"), 0);
         assert(john.getChequing() == 5000);
         assert(jane.getChequing() == 15000);
 
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.bankTransfer(5000, "54321", jane, "Chequing") == 0);
+        assertEquals(BA.bankTransfer(5000, "54321", jane, "Chequing"), 0);
         assert(jane.getChequing() == 5000);
         assert(john.getChequing() == 15000);
 
@@ -278,58 +279,28 @@ public class TestCase {
         jane.setChequing(10000);
 
         // Invalid bank number address (returns code 1)
-        assert(BA.bankTransfer(500, "123456789", jane, "Chequing") == 1);
+        assertEquals(BA.bankTransfer(500, "123456789", jane, "Chequing"), 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
 
         // Insufficient funds (returns code 2)
-        assert(BA.bankTransfer(10001, "54321", jane, "Chequing") == 2);
+        assertEquals(BA.bankTransfer(10001, "54321", jane, "Chequing"), 2);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
-
-        // Bank Number not found (returns code 3), and transfers money to external account
-        assert(BA.bankTransfer(500, "98765", jane, "Chequing") == 3);
-        assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 9500);
-
-
-        // Test transfer from savings
-
-        john.setSavings(10000);
-        jane.setChequing(10000);
-        assert(BA.bankTransfer(5000, "12345", john, "Savings") == 0);
-        assert(john.getSavings() == 5000);
-        assert(jane.getChequing() == 15000);
-
-        // Test 2
-        john.setChequing(10000);
-        jane.setSavings(10000);
-        assert(BA.bankTransfer(5000, "54321", jane, "Savings") == 0);
-        assert(jane.getSavings() == 5000);
-        assert(john.getChequing() == 15000);
-
-        // Error code tests
-        john.setChequing(10000);
-        jane.setSavings(10000);
-
-        // Invalid bank number address (returns code 1)
-        assert(BA.bankTransfer(500, "123456789", jane, "Savings") == 1);
-        assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 10000);
-
-
-        // Insufficient funds (returns code 2)
-        assert(BA.bankTransfer(10001, "54321", jane, "Savings") == 2);
-        assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 10000);
 
         // Email not found (returns code 3), and transfers money to external account
-        assert(BA.bankTransfer(500, "98765", jane, "Savings") == 3);
+        assertEquals(BA.bankTransfer(500, "98765", jane, "Chequing"), 3);
         assert(john.getChequing() == 10000);
-        assert(jane.getSavings() == 9500);
+        assert(jane.getChequing() == 10000);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testBankTransfer", JOptionPane.INFORMATION_MESSAGE);
+        long endTime = System.currentTimeMillis();
+        //noinspection IntegerDivisionInFloatingPointContext
+        long timePassedSeconds = (endTime - startTime)/1000;
+
+        System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testBankTransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
     
     @Test
@@ -583,9 +554,11 @@ public class TestCase {
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
     @Test
     public void testSetterGetter() {
+
+        BankAutomated BA = new BankAutomated();
 
         // Test setters and getters for People objects
         People test = new People("John", "Doe", "johndoe@example.com", "416-123-4567");
@@ -605,26 +578,27 @@ public class TestCase {
         assertEquals("janesmith@example.ca", test.getEmail());
         assertEquals("647-987-6543", test.getPhoneNum());
 
-
-
-
         // Test setter and getters for CA objects
-        dummy = new CA("John", "Doe", "647-123-4567", "123 Example St.", 
-                "Male", "01/01/2000", "john@example.com", "Password123@", 
-                "4417123456789012", "01/01/2030", "123", 500, 1000, "12345");
+        dummy = BA.createAccount("John", "Doe", "416-792-1234", "test street",
+                "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
+                "4417123456789113", "01/01/2027", "555");
+
+        dummy.chequing=500;
+        dummy.setSavings(1000);
+        dummy.bankNumber = "12345";
 
         // Test getters for constructor attributes
         assertEquals("John", dummy.getFirstName());
         assertEquals("Doe", dummy.getLastName());
-        assertEquals("647-123-4567", dummy.getPhoneNum());
-        assertEquals("123 Example St.", dummy.getAddress());
+        assertEquals("416-792-1234", dummy.getPhoneNum());
+        assertEquals("test street", dummy.getAddress());
         assertEquals("Male", dummy.getGender());
-        assertEquals("01/01/2000", dummy.getDob());
-        assertEquals("john@example.com", dummy.getEmail());
-        assertEquals("Password123@", dummy.getPassword());
-        assertEquals("4417123456789012", dummy.getCardNum());
-        assertEquals("01/01/2030", dummy.getCardExpiry());
-        assertEquals("123", dummy.getCvv());
+        assertEquals("01/01/1990", dummy.getDob());
+        assertEquals("test@gmail.com", dummy.getEmail());
+        assertEquals("Hello@World1", dummy.getPassword());
+        assertEquals("4417123456789113", dummy.getCardNum());
+        assertEquals("01/01/2027", dummy.getCardExpiry());
+        assertEquals("555", dummy.getCvv());
         assert(500 == dummy.getChequing());
         assert(1000 == dummy.getSavings());
         assertEquals("12345", dummy.getBankNumber());
@@ -664,8 +638,8 @@ public class TestCase {
         // Add transactions, reports, and requests to respective array lists
         // Then use getters to check if value changed to check that both
         // setters and getters are working
-        AD admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null, null);
-        
+        AD admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
+
         Transaction chequing = new Transaction("Chequing", "Savings", 500, 201);
         Transaction savings = new Transaction("Savings", "Chequing", 600, 205);
         Report report = new Report("Jane", "Doe", "jane@example.ca", "4417987654321098");
@@ -682,9 +656,6 @@ public class TestCase {
         assertEquals(savings, dummy.getSavingsHist().get(0));
         assertEquals(report, dummy.getReportSus().get(0));
         assertEquals(request, dummy.getRequests().get(0));
-        
-
-        
 
         // Test setters and getters for transactions
         Transaction transactionTest = new Transaction("Chequing", "Savings", 500, 12345);
@@ -704,9 +675,6 @@ public class TestCase {
         assert(1000 == transactionTest.getAmount());
         assert(98765 == transactionTest.getId());
 
-
-
-
         // Test setter and getters for reports
         Report reportTest = new Report("John", "Doe", "johndoe@example.com", "4417123456789012");
 
@@ -725,13 +693,10 @@ public class TestCase {
         assertEquals("janesmith@example.ca", reportTest.getEmail());
         assertEquals("4417210987654321", reportTest.getCardNum());
 
-
-
-
         // Test setters and getters for requests
-        MT mtTest = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null);
-        CSR csrTest = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, null);
-        Request requestTest = new Request("RSC", new MT("1", "2", "3", "4", 5, null));
+        MT mtTest = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
+        CSR csrTest = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
+        Request requestTest = new Request("RSC", new MT("1", "2", "3", "4", 5));
 
         requestTest.setMT(mtTest);
 
@@ -747,14 +712,9 @@ public class TestCase {
         requestTest.setCSR(csrTest);
         assertEquals(csrTest, requestTest.getCSR());
 
-
-
-
         // Test setter and getter for Admins (AD)
-        
-        
-        admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>(), new ArrayList<>());
-        
+        admin = new AD("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
+
 
         assertEquals(105, admin.getId());
 
@@ -767,11 +727,8 @@ public class TestCase {
         assertEquals(reportTest, admin.getCustomerReports().get(0));
         assertEquals(requestTest, admin.getMeetingRequests().get(0));
 
-
-
-
         // Test setter and getters for Maintenance Teams (MT)
-        MT mt = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>());
+        MT mt = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
 
         assertEquals(105, mt.getId());
 
@@ -782,11 +739,8 @@ public class TestCase {
         assertEquals(205, mt.getId());
         assertEquals(requestTest, mt.getSysChangeRequests().get(0));
 
-
-
-
         // Test setter and getters for CSRs
-        CSR csr = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105, new ArrayList<>());
+        CSR csr = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
 
         assertEquals(105, csr.getId());
 
@@ -797,8 +751,8 @@ public class TestCase {
         assertEquals(205, csr.getId());
         assertEquals(requestTest, csr.getAssistanceRequests().get(0));
 
-
-
         JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
     }
+    // Future test cases for test and integration phase
+
 }

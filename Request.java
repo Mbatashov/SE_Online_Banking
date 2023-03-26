@@ -1,73 +1,137 @@
 import java.io.Serializable;
 
-public class Request implements Serializable
-{
+// Request class, between CA and AD, MT, CSR
+public class Request implements Serializable {
     String type;
     MT mt;
     AD admin;
     CSR csr;
 
-    // Three types of request:
+    /*
+     * Constructor for Request (type 1) 
+     * @param type the type of request
+     * @param mt the maintenance team
+     * 
+     */
+    public Request(String type, MT mt) {
 
-    // 1- Request system changes (RSC) from Maintenance Team (MT)
-    public Request(String type, MT mt)
-    {
         this.type = type;
         this.mt = mt;
+
     }
 
-    // 2- Request a meeting (RM) from Admin (AD)
-    public Request(String type, AD admin)
-    {
+    /*
+     * Constructor for Request (type 2)
+     * @param type the type of request
+     * @param admin the admin
+     * 
+     */
+    public Request(String type, AD admin) {
+
         this.type = type;
         this.admin = admin;
+
     }
 
-    // 3- Request assistance (RA) to Customer Service Representative (CSR)
-    public Request(String type, CSR csr)
-    {
+    /*
+     * Constructor for Request (type 3)
+     * @param type the type of request
+     * @param csr the customer service representative
+     * 
+     */
+    public Request(String type, CSR csr) {
+
         this.type = type;
         this.csr = csr;
+
     }
 
-    //Getter and setter for type of request
-    public String getType()
-    {
+    /*
+     * Gets the type of request
+     * @return the type of request
+     * 
+     */
+    public String getType() {
+
         return type;
+
     }
-    public void setType(String type)
-    {
+
+    /*
+     * Sets the type of request
+     * @param type the type of request
+     * 
+     */
+    public void setType(String type) {
+
         this.type = type;
+
     }
 
-    //Getter and setter for Admin (AD)
-    public AD getAdmin()
-    {
+    /*
+     * Gets the admin
+     * @return the admin
+     * 
+     */
+    public AD getAdmin() {
         return admin;
+
     }
-    public void setAdmin(AD admin)
-    {
+
+    /*
+     * Sets the admin
+     * @param admin the admin
+     * 
+     */
+    public void setAdmin(AD admin) {
+
         this.admin = admin;
+
     }
 
-    //Getter and setter for Maintenance Team (MT)
-    public MT getMT()
-    {
+    /*
+     * Gets the maintenance team
+     * @return the maintenance team
+     * 
+     */
+    public MT getMT() {
+
         return mt;
-    }
-    public void setMT(MT mt)
-    {
-        this.mt = mt;
+
     }
 
-    // Getter and setter for Customer Service Representative (CSR)
-    public CSR getCSR()
-    {
+    /*
+     * Sets the maintenance team
+     * @param mt the maintenance team
+     * 
+     */
+    public void setMT(MT mt) {
+
+        this.mt = mt;
+
+    }
+
+    /*
+     * Gets the customer service representative
+     * @return the customer service representative
+     * 
+     */
+    public CSR getCSR() {
+
         return csr;
+
     }
-    public void setCSR(CSR csr)
-    {
+
+    /*
+     * Sets the customer service representative
+     * @param csr the customer service representative
+     * 
+     */
+    public void setCSR(CSR csr) {
+
         this.csr = csr;
+
     }
+
 }
 
