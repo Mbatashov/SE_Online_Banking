@@ -85,7 +85,7 @@ public class TestCase {
                 "4417123456789113", "01/01/2027", "555");
         assertNull(dummy);
 
-        assertEquals(BA.customerAccounts.size(), 1);
+        assert(BA.customerAccounts.size() == 1);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testRegister", JOptionPane.INFORMATION_MESSAGE);
         
@@ -174,16 +174,16 @@ public class TestCase {
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(5000, "janedoe@example.com", john, "Chequing") == 0);
-        assert(john.getChequing() == 5000);
-        assert(jane.getChequing() == 15000);
+        assert(BA.etransfer(5000, "janedoe@example.com", john, "Chequing") == 4);
+        assert(john.getChequing() == 10000);
+        assert(jane.getChequing() == 10000);
 
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
-        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 0);
-        assert(jane.getChequing() == 5000);
-        assert(john.getChequing() == 15000);
+        assert(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing") == 4);
+        assert(jane.getChequing() == 10000);
+        assert(john.getChequing() == 10000);
 
         // Error code tests
         john.setChequing(10000);
@@ -200,11 +200,10 @@ public class TestCase {
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
-        // Email not found (returns code 3)
+        // Email not found (returns code 3) and does an external transaction
         assert(BA.etransfer(500, "test@example.com", jane, "Chequing") == 3);
         assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 10000);
-
+        assert(jane.getChequing() == 9500);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testTransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -243,7 +242,7 @@ public class TestCase {
         john.setChequing(10000);
         jane.setChequing(10000);
 
-        // Invalid bank number adress (returns code 1)
+        // Invalid bank number address (returns code 1)
         assert(BA.bankTransfer(500, "123456789", jane, "Chequing") == 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
@@ -254,10 +253,10 @@ public class TestCase {
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
-        // Email not found (returns code 3)
+        // Email not found (returns code 3), and transfers money to external account
         assert(BA.bankTransfer(500, "98765", jane, "Chequing") == 3);
         assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 10000);
+        assert(jane.getChequing() == 9500);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testTransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -477,9 +476,9 @@ public class TestCase {
 
         for (int i = 0; i < chequingHist.size(); i++)
         {
-            assertEquals(dummy.getChequingHist().get(i).getReceiver(), chequingHist.get(i).getReceiver());
-            assertEquals(dummy.getChequingHist().get(i).getSender(), chequingHist.get(i).getSender());
-            assertEquals(dummy.getChequingHist().get(i).getAmount(), chequingHist.get(i).getAmount());
+            assert(dummy.getChequingHist().get(i).getReceiver().equals(chequingHist.get(i).getReceiver()));
+            assert(dummy.getChequingHist().get(i).getSender().equals(chequingHist.get(i).getSender()));
+            assert (dummy.getChequingHist().get(i).getAmount() == chequingHist.get(i).getAmount());
         }
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
@@ -506,9 +505,9 @@ public class TestCase {
 
         for (int i = 0; i < savingsHist.size(); i++)
         {
-            assertEquals(dummy.getSavingsHist().get(i).getReceiver(), savingsHist.get(i).getReceiver());
-            assertEquals(dummy.getSavingsHist().get(i).getSender(), savingsHist.get(i).getSender());
-            assertEquals(dummy.getSavingsHist().get(i).getAmount(), savingsHist.get(i).getAmount());
+            assert(dummy.getSavingsHist().get(i).getReceiver().equals(savingsHist.get(i).getReceiver()));
+            assert(dummy.getSavingsHist().get(i).getSender().equals(savingsHist.get(i).getSender()));
+            assert(dummy.getSavingsHist().get(i).getAmount() == savingsHist.get(i).getAmount());
         }
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);

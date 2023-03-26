@@ -337,7 +337,7 @@ public class BankAutomated
         Random rand = new Random();
         double randCheq = rand.nextDouble()*10000;
         double randSav = rand.nextDouble()*10000;
-        String bankNum = String.valueOf(rand.nextInt(10000));
+        String bankNum = String.valueOf(rand.nextInt(99999));
 
         // Create and return new CA object
         CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, cardNum, cardExpiry,
@@ -428,7 +428,7 @@ public class BankAutomated
         }
         else if (accountFrom.equals("Savings"))
         {
-            customer.setSavings(customer.getChequing() - amount);
+            customer.setSavings(customer.getSavings() - amount);
         }
 
         if (receiver == null)
@@ -465,44 +465,35 @@ public class BankAutomated
         }
 
         CA receiver = null;
-        // Loop through the accounts in the hashmap to find matching
-        for (CA account : customerHash.values())
+
+        for (CA cust : customerAccounts)
         {
-            if (account.getBankNumber().equals(receiverAcc))
+            cust.print();
+            System.out.println(cust.getBankNumber());
+            if (cust.getBankNumber().equals(receiverAcc))
             {
-                receiver = account;
-                break;
+                receiver = cust;
             }
         }
 
-        if (receiver != null)
+        if (accountFrom.equals("Chequing"))
         {
-            if (accountFrom.equals("Chequing"))
-            {
-                receiver.setChequing(receiver.getChequing() + amount);
-                customer.setChequing(customer.getChequing() - amount);
-            }
-            else if (accountFrom.equals("Savings"))
-            {
-                receiver.setChequing(receiver.getChequing() + amount);
-                customer.setSavings(customer.getSavings() - amount);
-            }
-            return 0;
+            customer.setChequing(customer.getChequing() - amount);
         }
-        else 
+        else if (accountFrom.equals("Savings"))
         {
-            if (accountFrom.equals("Chequing"))
-            {
-                customer.setChequing(customer.getChequing() - amount);
-            }
-            else if (accountFrom.equals("Savings"))
-            {
-                customer.setSavings(customer.getSavings() - amount);
-            }
+            customer.setSavings(customer.getSavings() - amount);
+        }
+
+        if (receiver == null)
+        {
             return 3;
         }
-
-
+        else
+        {
+            receiver.setChequing(receiver.getChequing() + amount);
+        }
+        return 0;
     }
 
     // Change the customer's details in the settings tab. Customers can change their address, email,
