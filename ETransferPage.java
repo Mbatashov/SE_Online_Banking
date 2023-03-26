@@ -27,6 +27,7 @@ public class ETransferPage extends JFrame implements ActionListener
         this.home = home;
         this.customer = customer;
         this.BA = BA;
+        this.login = login;
 
         Font labels = new Font("Raleway", Font.BOLD, 30);
         Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -115,7 +116,7 @@ public class ETransferPage extends JFrame implements ActionListener
         this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -133,9 +134,8 @@ public class ETransferPage extends JFrame implements ActionListener
         Font regFont = new Font("Raleway", Font.BOLD, 60);
         g2.setFont(regFont);
         g2.setColor(new Color(250, 185, 60));
-        g2.drawString("E-Transfer to contact", 25, 110);
+        g2.drawString("E-Transfer to Contact", 25, 110);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -172,7 +172,7 @@ public class ETransferPage extends JFrame implements ActionListener
             }
             else if (result == 3)
             {
-                JOptionPane.showMessageDialog(this, "SUCCESS: You transferred " + amount +
+                JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
                         " to user with email " + email + ".\n This is an external transfer (i.e., user is not a part of BCS).");
                 this.setVisible(false);
                 home = new HomePage(login, BA, customer);

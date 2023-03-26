@@ -265,14 +265,14 @@ public class HomePage extends JFrame implements ActionListener
             {
                 
                 this.setVisible(false);
-                TransferFundsPage fundTransferPage = new TransferFundsPage(BA,this, customer);
-                fundTransferPage.setVisible(true);
+                BankTransferPage bankTransferPage = new BankTransferPage(BA,this, customer, previous);
+                bankTransferPage.setVisible(true);
             }
             else if (response == 2)
             {
                 this.setVisible(false);
-                NotificationSettingPage notifPage = new NotificationSettingPage(this, customer);
-                notifPage.setVisible(true);
+                TransferFundsPage fundTransferPage = new TransferFundsPage(BA,this, customer);
+                fundTransferPage.setVisible(true);
             }
         }
         else if(e.getSource() == contactUSButton)
@@ -295,7 +295,7 @@ public class HomePage extends JFrame implements ActionListener
                 reportPage.setVisible(true);
             }
         }
-        else if(e.getSource() ==findUsButton)
+        else if(e.getSource() == findUsButton)
         {
             FindUsPage fuss = new FindUsPage(BA, this);
             this.setVisible(false);

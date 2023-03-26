@@ -10,7 +10,7 @@ public class BankSystem
                                 "01/02/2003", "this2@gmail.com", "Hello@World1",
                             "4417123456789113", "0521", "111");
             LoginPage prev = new LoginPage(BA);
-            new ETransferPage(BA, new HomePage(prev, BA, test), test, prev);
+            new BankTransferPage(BA, new HomePage(prev, BA, test), test, prev);
 //            new LoginPage(BA);
         }
         catch (Exception e)

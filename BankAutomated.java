@@ -449,7 +449,7 @@ public class BankAutomated
     //  returns 1 if bank number is not 5 digits,
     //  returns 2 if chequing balance is too low for transfer amount,
     //  returns 3 if no valid receiver account is found with bankNumber receiverAcc is within BCS, i.e. external transfer.
-    public int bankTransfer(int amount, String receiverAcc, CA customer, String accountFrom)
+    public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom)
     {
         if (receiverAcc.length() != 5)
         {
