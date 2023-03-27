@@ -26,10 +26,10 @@ public class Request implements Serializable {
      * @param admin: the admin
      * @param date: the date requested by the customer
      */
-    public Request(String type, AD admin, String date) {
+    public Request(String type, AD admin, String details) {
         this.type = type;
         this.admin = admin;
-        this.details = date;
+        this.details = details;
     }
 
     /*
