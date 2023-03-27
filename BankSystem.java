@@ -12,7 +12,7 @@ public class BankSystem
             HomePage HP = new HomePage(LP, BA, test);
             ETransferPage ETP = new ETransferPage(BA, HP, test, LP);
             BankTransferPage BTP = new BankTransferPage(BA, HP, test, LP);
-            TransferFundsPage TFP = new TransferFundsPage(BA, HP, test);
+            TransferFundsPage TFP = new TransferFundsPage(BA, HP, test, LP);
             MakeReportPage MRP = new MakeReportPage(BA, HP, test);
             RequestsPage RP = new RequestsPage(BA, HP, test);
             RP.setVisible(true);

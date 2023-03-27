@@ -271,7 +271,7 @@ public class HomePage extends JFrame implements ActionListener
             else if (response == 2)
             {
                 this.setVisible(false);
-                TransferFundsPage fundTransferPage = new TransferFundsPage(BA,this, customer);
+                TransferFundsPage fundTransferPage = new TransferFundsPage(BA,this, customer, previous);
                 fundTransferPage.setVisible(true);
             }
         }
