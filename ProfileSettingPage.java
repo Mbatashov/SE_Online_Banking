@@ -70,7 +70,7 @@ public class ProfileSettingPage extends JFrame implements ActionListener
         addressField.setBorder(border);
         this.add(addressField);
 
-        completeButton = new JButton("Complete Transaction");
+        completeButton = new JButton("Complete Change");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
         completeButton.setBounds(475, 525, 350, 40);
         completeButton.setBackground(Color.black);
