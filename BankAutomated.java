@@ -448,7 +448,7 @@ public class BankAutomated
      * @return boolean True if the request was made successfully, false otherwise
      * 
      */
-    public boolean makeRequest(CA customer, String type) {
+    public boolean makeRequest(CA customer, String type, String str) {
 
         Request request;
 
@@ -459,19 +459,19 @@ public class BankAutomated
             case "1": // Maintenance
                 randIndex = rand.nextInt(maintenanceTeam.size()-1);
                 MT maintenance = maintenanceTeam.get(randIndex);
-                request = new Request(type, maintenance);
+                request = new Request(type, maintenance, str);
                 maintenance.addSysRequest(request);
                 break;
             case "2": // Technical
                 randIndex = rand.nextInt(admins.size()-1);
                 AD admin = admins.get(randIndex);
-                request = new Request(type, admin);
+                request = new Request(type, admin, str);
                 admin.addMeetingRequests(request);
                 break;
             case "3": // Customer Service
                 randIndex = rand.nextInt(customerService.size()-1);
                 CSR csr = customerService.get(randIndex);
-                request = new Request(type, csr);
+                request = new Request(type, csr, str);
                 csr.addRequest(request);
                 break;
             default:

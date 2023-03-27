@@ -15,7 +15,7 @@ public class RequestsPage extends JFrame implements ActionListener
     CA customer;
     public RequestsPage(BankAutomated BA, HomePage home, CA customer)
     {
-        this.setTitle("Account Home");
+        this.setTitle("Make a Request");
         this.setLayout(null);
         this.home = home;
         this.customer = customer;

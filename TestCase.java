@@ -694,7 +694,7 @@ public class TestCase {
         Transaction chequing = new Transaction("Chequing", "Savings", 500, 201);
         Transaction savings = new Transaction("Savings", "Chequing", 600, 205);
         Report report = new Report(dummy, admin, "test");
-        Request request = new Request("RM", admin);
+        Request request = new Request("RM", admin, "10/10/2022");
 
         dummy.addChequing(chequing);
         dummy.addSaving(savings);
@@ -750,7 +750,7 @@ public class TestCase {
         // Test setters and getters for requests
         MT mtTest = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
         CSR csrTest = new CSR("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
-        Request requestTest = new Request("RSC", new MT("1", "2", "3", "4", 5));
+        Request requestTest = new Request("RSC", new MT("1", "2", "3", "4", 5), "test");
 
         requestTest.setMT(mtTest);
 
