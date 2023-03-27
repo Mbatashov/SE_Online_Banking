@@ -555,7 +555,7 @@ public class BankAutomated
      * @param String receiverEmail: email of the receiver
      * @param CA customer: the customer who is sending the money
      * @param String accountFrom: the account the money is being sent from
-     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
+     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if receiver is not in BCS,
      * @return int 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5)
      * 
      */
@@ -581,8 +581,7 @@ public class BankAutomated
         } else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
 
             return 2;
-
-        // Check if the amount is negative
+        // check if receiver doesn't exist, i.e. it is an external transfer
         } else if (receiverAccount == null) {
             if (accountFrom.equals("Chequing"))
             {
@@ -696,6 +695,22 @@ public class BankAutomated
 
             return 0;
 
+        }
+        else
+        {
+            // Subtract the amount from the customer's account (chequing)
+            if (accountFrom.equals("Chequing")) {
+
+                customer.setChequing(customer.getChequing() - amount);
+                customer.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
+
+                // Add the amount to the receiver's account (savings)
+            } else if (accountFrom.equals("Savings")) {
+
+                customer.setSavings(customer.getSavings() - amount);
+                customer.addSaving(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,4));
+
+            }
         }
 
         // If the receiver account is not found, return 3
