@@ -806,6 +806,24 @@ public class TestCase {
         assertEquals(requestTest, csr.getAssistanceRequests().get(0));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
+
+        //Test setters and getters for notification settings
+        CA tcus = new CA("John", "Doe", "416-792-1234", "test street","Male", "01/01/1990", "test@gmail.com", "Hello@World1","4417123456789113", "01/01/2027", "555");
+
+        tcus.setReportReplies(2);
+        tcus.setRequestReplies(4);
+        tcus.setNewsletterSubscription(6);
+        tcus.setBigPayment(8);
+        tcus.setRequireDataCollection(true);
+        tcus.setSensitiveDataCollection(true);
+        tcus.setKeyLogger(true);
+        assertEquals(tcus.getReportReplies(), 2);
+        assertEquals(tcus.getRequestReplies(), 4);
+        assertEquals(tcus.getNewsletterSubscription(), 6);
+        assertEquals(tcus.getBigPayment(), 8);
+        assertEquals(tcus.getRequireDataCollection(), true);
+        assertEquals(tcus.getSensitiveDataCollection(), true);
+        assertEquals(tcus.getKeyLogger(), true);
     }
 
     @Test
