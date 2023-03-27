@@ -423,7 +423,7 @@ public class BankAutomated
      * @param CA customer The customer who made the report
      * Returns the report created
      */
-    public Report makeReport(CA customer)
+    public Report makeReport(CA customer, String description)
     {
         // Get random admin that receives the report
         Random rand = new Random();
@@ -431,7 +431,7 @@ public class BankAutomated
         AD admin = admins.get(randIndex);
 
         // Create a new report object
-        Report report = new Report(customer, admin);
+        Report report = new Report(customer, admin, description);
 
         // Add the report to the list of reports
         customer.addReport(report);

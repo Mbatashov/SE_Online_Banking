@@ -8,16 +8,18 @@ import java.io.Serializable;
 public class Report implements Serializable {
     CA customer;
     AD admin;
+    String description;
 
     /*
      * Another Constructor for Report
      * @param customer: customer that made the report
      * @param admin: admin that receives the report
      */
-    public Report(CA customer, AD admin)
+    public Report(CA customer, AD admin, String description)
     {
         this.customer = customer;
         this.admin = admin;
+        this.description = description;
     }
 
     public void setCustomer(CA customer)
@@ -36,5 +38,14 @@ public class Report implements Serializable {
     public AD getAdmin()
     {
         return admin;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+    public String getDescription()
+    {
+        return description;
     }
 }

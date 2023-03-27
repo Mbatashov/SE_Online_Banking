@@ -119,8 +119,8 @@ public class MakeReportPage extends JFrame implements ActionListener
         }
         else if (e.getSource() == completeButton)
         {
-            String report = reportField.getText();
-            if (report.equals(""))
+            String reportDescription = reportField.getText();
+            if (reportDescription.equals(""))
             {
                 JOptionPane.showMessageDialog(this, "Please describe the situation before submitting.");
             }
@@ -128,7 +128,7 @@ public class MakeReportPage extends JFrame implements ActionListener
             {
                 JOptionPane.showMessageDialog(this, "Thank you for reporting suspicious on your" +
                         " account. An admin will review it and\n contact you shortly as per your notification preferences.");
-                BA.makeReport(customer);
+                BA.makeReport(customer, reportDescription);
                 this.setVisible(false);
                 home.setVisible(true);
             }
