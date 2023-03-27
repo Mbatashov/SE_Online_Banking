@@ -21,8 +21,14 @@ public class CA extends People
     ArrayList<Report> reportSus;
     ArrayList<Request> requests;
 
+    //Notification settings: 0 for don't notify, 1 for Email, 2 for SMS
+    private int requestReplies;
+    private int reportReplies;
+    private int newsletterSubscription;
+    private int bigPayment;
+
+    //Privacy Settings: true for allow, false for don't allow
     private boolean locationServices = true;
-    private boolean notificationSettings = true;
     private boolean requireDataCollection = true;
     private boolean sensitiveDataCollection = true;
     private boolean keyLogger = true;
@@ -59,10 +65,10 @@ public class CA extends People
         this.savings = rand.nextDouble()*10000;
         this.bankNumber = String.valueOf(rand.nextInt(99999));
 
-        chequingHist = new ArrayList<Transaction>();
-        savingsHist = new ArrayList<Transaction>();
-        reportSus = new ArrayList<Report>();
-        requests = new ArrayList<Request>();
+        chequingHist = new ArrayList<>();
+        savingsHist = new ArrayList<>();
+        reportSus = new ArrayList<>();
+        requests = new ArrayList<>();
     }
 
     /*
@@ -85,25 +91,39 @@ public class CA extends People
 
     /*
      * Sets the notification settings boolean of the Customer Account
-     * @param boolean notificationSettings the notification settings of the Customer Account
+     * @param boolean: the notification settings of the Customer Account
      * 
      */
-    public void setNotificationSettings(boolean notificationSettings) {
-        this.notificationSettings = notificationSettings;
+    public void setRequestReplies(int requestReplies) {
+        this.requestReplies = requestReplies;
+    }
+    public void setReportReplies(int reportReplies) {
+        this.reportReplies = reportReplies;
+    }
+    public void setNewsletterSubscription(int subscription)
+    {
+        this.newsletterSubscription = subscription;
+    }
+    public void setBigPayment(int bigPayment)
+    {
+        this.bigPayment = bigPayment;
     }
 
     /*
      * Gets the notification settings boolean of the Customer Account
-     * @return boolean the notification settings of the Customer Account
+     * @return boolean: the notification settings of the Customer Account
      * 
      */
-    public boolean getNotificationSettings() {
-        return notificationSettings;
+    public int getRequestReplies() {
+        return requestReplies;
     }
+    public int getReportReplies(){return reportReplies;}
+    public int getNewsletterSubscription(){return newsletterSubscription;}
+    public int getBigPayment(){return bigPayment;}
 
     /*
-     * Sets the require data collection boolean of the Customer Account
-     * @param boolean requireDataCollection the require data collection of the Customer Account
+     * Sets the 'require data collection' boolean of the Customer Account
+     * @param boolean requireDataCollection the 'require data collection' of the Customer Account
      * 
      */
     public void setRequireDataCollection(boolean requireDataCollection) {

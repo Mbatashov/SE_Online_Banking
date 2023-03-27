@@ -311,7 +311,7 @@ public class HomePage extends JFrame implements ActionListener
             if (response == 0)
             {
                 this.setVisible(false);
-                NotificationSettingPage notificationPage = new NotificationSettingPage(this, customer);
+                NotificationSettingPage notificationPage = new NotificationSettingPage(this, BA, customer);
                 notificationPage.setVisible(true);
             }
             else if (response == 1)

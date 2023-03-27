@@ -16,8 +16,7 @@ public class BankAutomated
     ArrayList<CSR> customerService = new ArrayList<>();
 
     @SuppressWarnings("SpellCheckingInspection")
-    public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
-                        NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
+    public enum State {NOTIFSET, PRIVSET, EDITPROF, CHEQHIST, SAVHIST}
 
     /*
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)

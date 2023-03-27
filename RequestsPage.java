@@ -18,7 +18,7 @@ public class RequestsPage extends JFrame implements ActionListener
     private final JButton backToHome;
     private final JButton completeButton;
     private final JTextArea detailsField;
-    private final String instructions;
+
     public RequestsPage(BankAutomated BA, HomePage home, CA customer)
     {
         this.setTitle("Make a Request");
@@ -47,7 +47,7 @@ public class RequestsPage extends JFrame implements ActionListener
         selectType.addActionListener(this);
         this.add(selectType);
 
-        instructions = "Enter the details of your request here. If requesting a meeting, make\nsure to " +
+        String instructions = "Enter the details of your request here. If requesting a meeting, make\nsure to " +
                 "include a few dates/timings for the admins to pick one.";
         detailsField = new JTextArea(instructions);
         detailsField.setFont(new Font("SansSerif", Font.PLAIN, 22));
