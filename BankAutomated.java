@@ -12,12 +12,14 @@ public class BankAutomated
     private final ConcurrentHashMap<String, CA> customerHash = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+    AD admin = new AD("Mister", "Admin", "admin@BCS.ca", "1234567890", 0);
+    MT maintenance = new MT ("Mister", "Maintenance", "maintenance@BCS.ca", "1234567890", 0);
+    CSR customerService = new CSR("Mister", "Customer Service", "customerservice@BCS.ca", "123456789", 0);
+
     @SuppressWarnings("SpellCheckingInspection")
     public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
                         NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
-
-
-
+                        
     /*
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
@@ -114,8 +116,8 @@ public class BankAutomated
 
     /*
      * Checks if the email is valid
-     * @param email The email to check
-     * @return True if the email is valid, false otherwise
+     * @param String email The email to check
+     * @return boolean True if the email is valid, false otherwise
      * 
      */
     public boolean validEmail(String email)
@@ -134,8 +136,8 @@ public class BankAutomated
 
     /*
      * Checks if the email is already in use
-     * @param email The email to check
-     * @return True if the email is already in use, false otherwise
+     * @param String email The email to check
+     * @return boolean True if the email is already in use, false otherwise
      * 
      */
     public boolean existingEmail(String email)
@@ -145,8 +147,8 @@ public class BankAutomated
 
     /*
      * Checks if the password is valid
-     * @param password The password to check
-     * @return True if the password is valid, false otherwise
+     * @param String password The password to check
+     * @return boolean True if the password is valid, false otherwise
      * 
      */
     public boolean validPassword(String password)
@@ -189,9 +191,9 @@ public class BankAutomated
 
     /*
      * Creates a new customer account
-     * @param email The email of the customer
-     * @param password The password of the customer
-     * @return The customer account if it was created successfully, null otherwise
+     * @param String email The email of the customer
+     * @param String password The password of the customer
+     * @return CA The customer account if it was created successfully, null otherwise
      * NOTE: DO NOT TOUCH THIS METHOD
      *
      */
@@ -211,8 +213,8 @@ public class BankAutomated
 
     /*
      * Checks if the string contains numbers only
-     * @param str The string to check
-     * @return True if the string contains numbers only, false otherwise
+     * @param string str The string to check
+     * @return boolean True if the string contains numbers only, false otherwise
      * 
      */
     public boolean onlyNumeric(String str)
@@ -230,8 +232,8 @@ public class BankAutomated
 
     /*
      * Checks if the string contains numbers only
-     * @param str The string to check
-     * @return True if the string contains numbers only, false otherwise
+     * @param String str The string to check
+     * @return boolean True if the string contains numbers only, false otherwise
      * 
      */
     public boolean onlyNumericDouble(String str) {
@@ -252,8 +254,8 @@ public class BankAutomated
 
     /*
      * Checks if the credit card number is valid
-     * @param ccNum The credit card number
-     * @return True if the credit card number is valid, false otherwise
+     * @param String ccv The credit card number
+     * @return boolean True if the credit card number is valid, false otherwise
      *
      */
     public boolean validCVV(String cvv)
@@ -268,10 +270,10 @@ public class BankAutomated
 
     /*
      * Checks if the date of birth is valid
-     * @param month The month of the date of birth
-     * @param day The day of the date of birth
-     * @param year The year of the date of birth
-     * @return True if the date of birth is valid, false otherwise
+     * @param String month The month of the date of birth
+     * @param String day The day of the date of birth
+     * @param String year The year of the date of birth
+     * @return boolean True if the date of birth is valid, false otherwise
      * 
      */
     public boolean validDOB(String month, String day, String year)
@@ -298,8 +300,8 @@ public class BankAutomated
 
     /*
      * Checks if the credit card number is valid
-     * @param cardNum The credit card number
-     * @return True if the card number is valid, false otherwise
+     * @param String cardNum The credit card number
+     * @return boolean True if the card number is valid, false otherwise
      * 
      */
     public boolean validCard(String cardNum) {
@@ -369,30 +371,85 @@ public class BankAutomated
         return customer;
     }
 
-    // Allows customers to create a report about any suspicious activity, one for customers without
-    // accounts, and one for logged in customers
-    public void makeReport(String customerFName, String customerLName, String email)
-    {
+    /*
+     * This function allows a customer to make a report. It returns true if the report was made successfully, and false otherwise.
+     * Allowing the customer to make a report about suspicious activity on their accounts.
+     * @param String customerFName The first name of the customer
+     * @param String customerLName The last name of the customer
+     * @param String email The email of the customer
+     * @return boolean True if the report was made successfully, false otherwise
+     * 
+     */
+    public boolean makeReport(String customerFName, String customerLName, String email) {
+
+        CA customer = customerHash.get(email);
+
+        if (customer == null) {
+            return false;
+        }
+        this.addReport(customer);
+
+        return true;
 
     }
-    public void makeReport(CA customer)
-    {
+
+    /*
+     * Adds a report to the customer's report list and the admin's report list
+     * @param CA customer The customer who made the report
+     * 
+     */
+    public void addReport(CA customer) {
+
+        // Create a new report object
+        Report report = new Report(customer.getFirstName(), customer.getLastName(), customer.getEmail(), customer.getCardNum());
+
+        // Add the report to the list of reports
+        customer.addReport(report);
+        admin.addCustomerReports(report);
 
     }
 
-    // Depending on request type, this gets the correct receiver and adds the customer request to their
-    // correct argument (Request arraylist)
-    public void makeRequest(String type)
-    {
+    /*
+     * This function allows a customer to make a request. It returns true if the request was made successfully, and false otherwise.
+     * Allowing the customer to make a request about a technical issue, a maintenance issue, or a customer service issue.
+     * @param CA customer The customer who made the request
+     * @param String type The type of request
+     * @return boolean True if the request was made successfully, false otherwise
+     * 
+     */
+    public boolean makeRequest(CA customer, String type) {
+
+        Request request;
+
+        switch(type){
+            case "1": // Maintenance
+                request = new Request(type, maintenance);
+                maintenance.addSysRequest(request);
+                break;
+            case "2": // Technical
+                request = new Request(type, admin);
+                admin.addMeetingRequests(request);
+                break;
+            case "3": // Customer Service
+                request = new Request(type, customerService);
+                customerService.addRequest(request);
+                break;
+            default:
+                return false;
+        }
+
+        customer.addRequests(request);
+
+        return true;
 
     }
 
     /*
      * Allows users to transfer money between their chequing and savings accounts
-     * @param transferAmount: amount of money to transfer
-     * @param fromAccount: account to transfer money from
-     * @param customer: customer object
-     * @return 0 if transfer is successful, 1 if transfer is unsuccessful
+     * @param double transferAmount: amount of money to transfer
+     * @param String fromAccount: account to transfer money from
+     * @param CA customer: customer object
+     * @return int 0 if transfer is successful, 1 if transfer is unsuccessful
      * 
      */
     public int transferFunds(double transferAmount, String fromAccount, CA customer) {
@@ -408,6 +465,7 @@ public class BankAutomated
 
             customer.setChequing(customer.getChequing() - transferAmount);
             customer.setSavings(customer.getSavings() + transferAmount);
+            customer.addSaving(new Transaction("Chequing", "Savings", transferAmount,1));
             return 0;
 
         } else {
@@ -420,6 +478,7 @@ public class BankAutomated
 
             customer.setChequing(customer.getChequing() + transferAmount);
             customer.setSavings(customer.getSavings() - transferAmount);
+            customer.addChequing(new Transaction("Chequing", "Savings", transferAmount,1));
             return 0;
 
         }
@@ -428,12 +487,12 @@ public class BankAutomated
 
     /*
      * Allows users to transfer money to other users of the bank (if they have an account)
-     * @param amount: amount of money to transfer
-     * @param receiverEmail: email of the receiver
-     * @param customer: the customer who is sending the money
-     * @param accountFrom: the account the money is being sent from
-     * @return 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
-     * @return 4 if amount is greater than 1000
+     * @param double amount: amount of money to transfer
+     * @param String receiverEmail: email of the receiver
+     * @param CA customer: the customer who is sending the money
+     * @param String accountFrom: the account the money is being sent from
+     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
+     * @return int 4 if amount is greater than 1000
      * 
      */
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
@@ -473,12 +532,16 @@ public class BankAutomated
             if (accountFrom.equals("Chequing")) {
 
                 customer.setChequing(customer.getChequing() - amount);
+                customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
                 receiverAccount.setChequing(receiverAccount.getChequing() + amount);
+                receiverAccount.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
 
             } else {
 
                 customer.setSavings(customer.getSavings() - amount);
+                customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
                 receiverAccount.setSavings(receiverAccount.getSavings() + amount);
+                receiverAccount.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
 
             }
 
@@ -490,17 +553,16 @@ public class BankAutomated
 
     /*
      * This function allows users to transfer money to another user's account using their bank number
-     * @param amount: the amount to be transferred
-     * @param receiverAcc: the receiver's bank number
-     * @param customer: the customer who is transferring the money
-     * @param accountFrom: the account the customer is transferring from
-     * @return 0 if successful, 1 if receiver account is invalid, 2 if customer has insufficient funds
-     * @return 3 if receiver account is not found
+     * @param double amount: amount of money to transfer
+     * @param String receiverAcc: bank number of the receiver
+     * @param CA customer: the customer who is sending the money
+     * @param String accountFrom: the account the money is being sent from
+     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
+     * @return int 4 if amount is greater than 1000
      * 
      */
     public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom) {
         
-
         // Check if receiver account is valid
         if (receiverAcc.length() != 5) {
 
@@ -539,15 +601,18 @@ public class BankAutomated
             if (accountFrom.equals("Chequing")) {
 
                 customer.setChequing(customer.getChequing() - amount);
+                customer.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
 
             // Add the amount to the receiver's account (savings)
             } else if (accountFrom.equals("Savings")) {
 
                 customer.setSavings(customer.getSavings() - amount);
+                customer.addSaving(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,4));
 
             }
 
             receiver.setChequing(receiver.getChequing() + amount);
+            receiver.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
 
             return 0;
 

@@ -148,6 +148,8 @@ public class TestCase {
         BA.transferFunds(5000.0, "Chequing", cust);
         assert(cust.getChequing() == 5000.0);
         assert(cust.getSavings() == 10000.0);
+        
+        System.out.println(cust.getChequingHist());
 
         // Test 2
         cust.setChequing(10000.0);
@@ -748,6 +750,26 @@ public class TestCase {
         assertEquals(requestTest, csr.getAssistanceRequests().get(0));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Test
+    public void testRequest(){
+
+        BankAutomated BA = new BankAutomated(false);
+
+        dummy = BA.createAccount("John", "Doe", "416-792-1234", "test street",
+                "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
+                "4417123456789113", "01/01/2027", "555");
+
+        BA.makeReport("John", "Doe", "test@gmail.com");
+
+        assertEquals(dummy.getReportSus().size(), 1);
+        assertEquals(BA.admin.getCustomerReports().size(), 1);
+
+        assertNotEquals(dummy.getReportSus().size(), 2);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testRequest", JOptionPane.INFORMATION_MESSAGE);
+
     }
     // Future test cases for test and integration phase
 
