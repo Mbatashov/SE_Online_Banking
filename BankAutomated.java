@@ -162,6 +162,26 @@ public class BankAutomated
     }
 
     /*
+     * Changes the password of a user
+     * @param CA user The user to change the password of
+     * @param String oldPassword The old password of the user
+     * @param String newPassword The new password of the user
+     * @return boolean True if the password was changed, false otherwise
+     * 
+     */
+    public boolean changePassword(CA user, String oldPassword, String newPassword){
+
+        if (oldPassword.equals(user.password)){
+
+            user.setPassword(newPassword);
+            return true;
+
+        }
+        return false;
+
+    }
+
+    /*
      * Checks if the email is valid
      * @param String email The email to check
      * @return boolean True if the email is valid, false otherwise
