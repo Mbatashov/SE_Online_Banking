@@ -131,8 +131,8 @@ public class CA extends People
     }
 
     /*
-     * Gets the require data collection boolean of the Customer Account
-     * @return boolean the require data collection of the Customer Account
+     * Gets the 'require data collection' boolean of the Customer Account
+     * @return boolean the 'require data collection' of the Customer Account
      * 
      */
     public boolean getRequireDataCollection() {
@@ -159,8 +159,8 @@ public class CA extends People
     }
 
     /*
-     * Sets the key logger boolean of the Customer Account
-     * @param boolean keyLogger the key logger of the Customer Account
+     * Sets the keylogger boolean of the Customer Account
+     * @param boolean keyLogger the keylogger of the Customer Account
      * 
      */
     public void setKeyLogger(boolean keyLogger) {
@@ -168,8 +168,8 @@ public class CA extends People
     }
 
     /*
-     * Gets the key logger boolean of the Customer Account
-     * @return boolean the key logger of the Customer Account
+     * Gets the keylogger boolean of the Customer Account
+     * @return boolean the keylogger of the Customer Account
      * 
      */
     public boolean getKeyLogger() {
@@ -264,7 +264,7 @@ public class CA extends People
     }
     
     /*
-     * Sets the date of bith of the Customer Account
+     * Sets the date of birth of the Customer Account
      * @param String dob the date of birth of the Customer Account
      * 
      */
@@ -470,7 +470,7 @@ public class CA extends People
 
     /*
      * Adds a request to the request history of the Customer Account
-     * @param request the request to be added to the request history of the Customer Account
+     * @param request: the request to be added to the request history of the Customer Account
      * 
      */
     public void addRequests(Request request) {

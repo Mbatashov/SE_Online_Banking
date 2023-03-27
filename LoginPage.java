@@ -127,7 +127,7 @@ public class LoginPage extends JFrame implements ActionListener
         this.setSize(WIDTH, LENGTH);
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(loginButton);
-        this.setVisible(false);
+        this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 

@@ -25,16 +25,13 @@ public class HomePage extends JFrame implements ActionListener
     CA customer;
     LoginPage previous;
 
-    private final double savAmount;
-    private final double cheqAmount;
-
     public HomePage(LoginPage previous, BankAutomated BA, CA customer)
     {
         this.setTitle("Account Home");
         this.setLayout(null);
         custName = customer.firstName;
-        cheqAmount = customer.getChequing();
-        savAmount = customer.getSavings();
+        double cheqAmount = customer.getChequing();
+        double savAmount = customer.getSavings();
        
         this.previous = previous;
         this.BA = BA;
@@ -327,11 +324,17 @@ public class HomePage extends JFrame implements ActionListener
                 privacyPage.setVisible(true);
             }
         }
-        else if(e.getSource() == savAmountButton || e.getSource() == savingsButton)
-        {
-        }
         else if (e.getSource() == chequingButton || e.getSource() == cheqAmountButton)
         {
+            this.setVisible(false);
+            ChequingHistoryPage chequingHistoryPage = new ChequingHistoryPage(this, BA, customer);
+            chequingHistoryPage.setVisible(true);
+        }
+        else if (e.getSource() == savAmountButton || e.getSource() == savingsButton)
+        {
+            this.setVisible(false);
+            SavingsHistoryPage savingsHistoryPage = new SavingsHistoryPage(this, BA, customer);
+            savingsHistoryPage.setVisible(true);
         }
     }
 }

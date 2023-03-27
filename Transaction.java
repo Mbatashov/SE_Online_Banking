@@ -4,13 +4,16 @@ public class Transaction implements Serializable
 {
     String sender;
     String receiver;
+    String accountFrom;
     double amount;
     int id;
+    double senderRemaining;
+    double receiverRemaining;
 
     // Transaction types:
     //  1- If sender = "Chequing" and receiver = "Savings", transfer funds between accounts locally, and vice versa between accounts
-    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds from chequing
-    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number from chequing
+    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds
+    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number
     public Transaction(String sender, String receiver, double amount, int id)
     {
         this.sender = sender;
@@ -25,9 +28,7 @@ public class Transaction implements Serializable
      * 
      */
     public String getSender() {
-
         return sender;
-
     }
 
     /*
@@ -36,9 +37,7 @@ public class Transaction implements Serializable
      * 
      */
     public void setSender(String sender){
-
         this.sender = sender;
-
     }
 
     /*
@@ -47,9 +46,7 @@ public class Transaction implements Serializable
      * 
      */
     public String getReceiver() {
-
         return receiver;
-
     }
 
     /*
@@ -58,9 +55,7 @@ public class Transaction implements Serializable
      * 
      */
     public void setReceiver(String receiver) {
-
         this.receiver = receiver;
-
     }
 
     /*
@@ -69,20 +64,16 @@ public class Transaction implements Serializable
      * 
      */
     public double getAmount() {
-
         return amount;
-
     }
 
     /*
      * Sets the amount of the transaction
-     * @param amount the amount of the transaction
+     * @param amount: the amount of the transaction
      * 
      */
     public void setAmount(double amount) {
-
         this.amount = amount;
-
     }
 
     /*
@@ -91,9 +82,7 @@ public class Transaction implements Serializable
      * 
      */
     public int getId() {
-
         return id;
-
     }
 
     /*
@@ -102,9 +91,34 @@ public class Transaction implements Serializable
      * 
      */
     public void setId(int id) {
-
         this.id=id;
+    }
 
+    public String getAccountFrom()
+    {
+        return accountFrom;
+    }
+    public void setAccountFrom(String from)
+    {
+        this.accountFrom = from;
+    }
+
+    public double getSenderRemaining()
+    {
+        return senderRemaining;
+    }
+    public void setSenderRemaining(double remaining)
+    {
+        this.senderRemaining = remaining;
+    }
+
+    public double getReceiverRemaining()
+    {
+        return receiverRemaining;
+    }
+    public void setReceiverRemaining(double remaining)
+    {
+        this.receiverRemaining = remaining;
     }
     
 }
