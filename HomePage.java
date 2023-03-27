@@ -17,9 +17,9 @@ public class HomePage extends JFrame implements ActionListener
     private final JButton findUsButton;
     private final JButton logoutButton;
     private final JButton chequingButton;
-    private JButton cheqAmountButton;
+    private final JButton cheqAmountButton;
     private final JButton savingsButton;
-    private JButton savAmountButton;
+    private final JButton savAmountButton;
 
     BankAutomated BA;
     CA customer;
@@ -311,20 +311,20 @@ public class HomePage extends JFrame implements ActionListener
             if (response == 0)
             {
                 this.setVisible(false);
-                NotificationSettingPage notifPage = new NotificationSettingPage(this, customer);
-                notifPage.setVisible(true);
+                NotificationSettingPage notificationPage = new NotificationSettingPage(this, customer);
+                notificationPage.setVisible(true);
             }
             else if (response == 1)
             {
                 this.setVisible(false);
-                ProfileSettingPage profPage = new ProfileSettingPage(this, customer);
-                profPage.setVisible(true);
+                ProfileSettingPage profileSettingPage = new ProfileSettingPage(this, customer);
+                profileSettingPage.setVisible(true);
             }
             else if (response == 2)
             {
                 this.setVisible(false);
-                PrivacySettingPage privPage = new PrivacySettingPage(this, customer);
-                privPage.setVisible(true);
+                PrivacySettingPage privacyPage = new PrivacySettingPage(this, customer);
+                privacyPage.setVisible(true);
             }
         }
         else if(e.getSource() == savAmountButton || e.getSource() == savingsButton)
