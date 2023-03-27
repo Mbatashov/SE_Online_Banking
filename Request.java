@@ -54,7 +54,6 @@ public class Request implements Serializable {
         return type;
 
     }
-
     /*
      * Sets the type of request
      * @param type: the type of request

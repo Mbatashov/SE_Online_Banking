@@ -9,7 +9,6 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 {
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
-
     JPanel changePasswordPanel = new JPanel();
     private final JPasswordField oldPasswordField;
     private final JPasswordField newPasswordField_one;

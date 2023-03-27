@@ -16,6 +16,7 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
     private final JLabel locImage4;
     private final JLabel locImage5;
     private final JLabel locImage6;
+
     BankAutomated BA;
     HomePage previous; 
     ArrayList<String> streets;

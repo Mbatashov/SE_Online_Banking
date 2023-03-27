@@ -9,7 +9,6 @@ public class NotificationSettingPage extends JFrame implements ActionListener
 {
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
-
     BankAutomated BA;
     HomePage home;
     CA customer;

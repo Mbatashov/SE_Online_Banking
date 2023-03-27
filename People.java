@@ -7,7 +7,6 @@ public class People implements Serializable
     // 2- Admin (AD)
     // 3- Maintenance Team (MT)
     // 4- Customer Service Representative (CSR)
-
     String firstName;
     String lastName;
     String email;

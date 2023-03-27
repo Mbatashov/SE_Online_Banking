@@ -1,11 +1,7 @@
 import java.io.Serializable;
 
-// This class is the parent class for all the following classes:
-// 1- Client with account (includes recipients) (CA)
-// 2- Admin (AD)
-// 3- Maintenance Team (MT)
-// 4- Customer Service Representative (CSR)
-public class Report implements Serializable {
+public class Report implements Serializable
+{
     CA customer;
     AD admin;
     String description;

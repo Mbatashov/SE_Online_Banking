@@ -20,7 +20,6 @@ public class LoginPage extends JFrame implements ActionListener
     private final JCheckBox showPassword;
 
     BankAutomated logic;
-
     CA customer;
 
     public LoginPage(BankAutomated BA)

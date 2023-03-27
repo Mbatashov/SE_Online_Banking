@@ -3,7 +3,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.lang.Math;  
 
-// customer account
 public class CA extends People
 {
     String address;

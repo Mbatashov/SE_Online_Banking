@@ -3,7 +3,6 @@ import java.util.*;
 // Customer Service Representative Class
 public class CSR extends People
 {
-
     int id;
     ArrayList<Request> assistanceRequests = new ArrayList<>();
 

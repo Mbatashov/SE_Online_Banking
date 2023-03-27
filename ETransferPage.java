@@ -14,6 +14,7 @@ public class ETransferPage extends JFrame implements ActionListener
     HomePage home;
     CA customer;
     LoginPage login;
+
     private final JButton backToHome;
     private final JTextField emailField;
     private final JTextField amountField;

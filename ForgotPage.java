@@ -15,6 +15,7 @@ public class ForgotPage extends JFrame implements ActionListener
 {
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
+
     LoginPage previous;
     BankAutomated BA;
     private final JTextField emailField;

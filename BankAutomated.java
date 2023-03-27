@@ -13,7 +13,6 @@ public class BankAutomated
     ArrayList<AD> admins = new ArrayList<>();
     ArrayList<MT> maintenanceTeam = new ArrayList<>();
     ArrayList<CSR> customerService = new ArrayList<>();
-
     /*
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results

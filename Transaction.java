@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 public class Transaction implements Serializable
 {
+
     String sender;
     String receiver;
     String accountFrom;
