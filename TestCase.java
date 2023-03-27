@@ -145,6 +145,7 @@ public class TestCase {
         cust.setChequing(10000.0);
         cust.setSavings(5000.0);
 
+        // Transfer funds add a Transaction object to both Chequing and Savings
         BA.transferFunds(5000.0, "Chequing", cust);
         assert(cust.getChequing() == 5000.0);
         assert(cust.getSavings() == 10000.0);
@@ -155,7 +156,7 @@ public class TestCase {
         int amount = (int) (temp.getAmount() * 1);
 
         assertEquals(amount, 5000);
-        assertEquals(cust.getChequingHist().size(), 0);
+        assertEquals(cust.getChequingHist().size(), 1);
 
         // Test 2
         cust.setChequing(10000.0);
@@ -165,35 +166,35 @@ public class TestCase {
         assert(cust.getChequing() == 15000);
         assert(cust.getSavings() == 0);
 
-        assertEquals(cust.getSavingsHist().size(), 1);
+        assertEquals(cust.getSavingsHist().size(), 2);
 
         temp = cust.getChequingHist().get(0);
         amount = (int) (temp.getAmount() * 1);
 
         assertEquals(amount, 5000);
-        assertEquals(cust.getChequingHist().size(), 1);
+        assertEquals(cust.getChequingHist().size(), 2);
 
         // Test 3
         cust.setChequing(10000.0);
         cust.setSavings(5000.0);
-        // Ensure correct error value is return if there are insuficcient funds
+        // Ensure correct error value is return if there are insufficient funds
         assert(BA.transferFunds(5001, "Savings", cust) == 1);
         assert(cust.getChequing() == 10000);
         assert(cust.getSavings() == 5000);
 
-        assertEquals(cust.getSavingsHist().size(), 1);
-        assertEquals(cust.getChequingHist().size(), 1);
+        assertEquals(cust.getSavingsHist().size(), 2);
+        assertEquals(cust.getChequingHist().size(), 2);
 
         // Test 4
         cust.setChequing(10000.0);
         cust.setSavings(5000.0);
-        // Ensure correct error value is return if there are insuficcient funds
+        // Ensure correct error value is return if there are insufficient funds
         assert(BA.transferFunds(10001, "Chequing", cust) == 1);
         assert(cust.getChequing() == 10000);
         assert(cust.getSavings() == 5000);
 
-        assertEquals(cust.getSavingsHist().size(), 1);
-        assertEquals(cust.getChequingHist().size(), 1);
+        assertEquals(cust.getSavingsHist().size(), 2);
+        assertEquals(cust.getChequingHist().size(), 2);
 
         long endTime = System.currentTimeMillis();
         long timePassedSeconds = (endTime - startTime)/1000;
@@ -264,21 +265,21 @@ public class TestCase {
         john.setChequing(10000);
         jane.setChequing(10000);
 
-        // Invalid Email adress (returns code 1)
-        assertEquals(BA.etransfer(500, "johndoe", jane, "Chequing"), 1);
+        // Invalid Email address (returns code 1)
+        assertEquals(BA.etransfer(500, "johnDoe", jane, "Chequing"), 1);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
 
-        // Insufficient funds (returns code 2)
-        assertEquals(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing"), 2);
+        // Transfer amount above limit, returns error code 4
+        assertEquals(BA.etransfer(10001, "johndoe@example.com", jane, "Chequing"), 4);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
 
-        // Email not found (returns code 1) and does an external transaction
-        assertEquals(BA.etransfer(500, "test@example.com", jane, "Chequing"), 1);
+        // Email not found (returns code 3) and does an external transaction
+        assertEquals(BA.etransfer(500, "test@example.com", jane, "Chequing"), 3);
         assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 10000);
+        assert(jane.getChequing() == 9500);
 
         long endTime = System.currentTimeMillis();
         long timePassedSeconds = (endTime - startTime)/1000;
@@ -344,7 +345,7 @@ public class TestCase {
         // Email not found (returns code 3), and transfers money to external account
         assertEquals(BA.bankTransfer(500, "98765", jane, "Chequing"), 3);
         assert(john.getChequing() == 10000);
-        assert(jane.getChequing() == 10000);
+        assert(jane.getChequing() == 9500);
 
         long endTime = System.currentTimeMillis();
         long timePassedSeconds = (endTime - startTime)/1000;
@@ -821,9 +822,9 @@ public class TestCase {
         assertEquals(tcus.getRequestReplies(), 4);
         assertEquals(tcus.getNewsletterSubscription(), 6);
         assertEquals(tcus.getBigPayment(), 8);
-        assertEquals(tcus.getRequireDataCollection(), true);
-        assertEquals(tcus.getSensitiveDataCollection(), true);
-        assertEquals(tcus.getKeyLogger(), true);
+        assertTrue(tcus.getRequireDataCollection());
+        assertTrue(tcus.getSensitiveDataCollection());
+        assertTrue(tcus.getKeyLogger());
     }
 
     @Test
@@ -845,6 +846,4 @@ public class TestCase {
         JOptionPane.showMessageDialog(null, "Test cases passed", "testRequest", JOptionPane.INFORMATION_MESSAGE);
 
     }
-    // Future test cases for test and integration phase
-
 }
