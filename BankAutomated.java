@@ -493,6 +493,12 @@ public class BankAutomated
      */
     public int transferFunds(double transferAmount, String fromAccount, CA customer) {
 
+        //if transfer amount is less than 0.5, then return 2 to make an error
+        if (transferAmount < 0.5)
+        {
+            return 2;
+        }
+
         // If the transfer amount is negative, then return 1
         if (fromAccount.equals("Chequing")) {
 
@@ -535,8 +541,16 @@ public class BankAutomated
      */
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
 
+        //if transfer amount is less than 0.5, then return 2 to make an error
+        if (amount < 0.5)
+        {
+            return 2;
+        }
+
         CA receiverAccount = customerHash.get(receiverEmail);
         
+        
+
         // Check if receiver has an account
         if (receiverAccount == null){
 
@@ -601,6 +615,14 @@ public class BankAutomated
      */
     public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom) {
         
+
+        //if transfer amount is less than 0.5, then return 2 to make an error
+        if (amount < 0.5)
+        {
+            return 2;
+        }
+
+
         // Check if receiver account is valid
         if (receiverAcc.length() != 5) {
 
