@@ -317,7 +317,7 @@ public class HomePage extends JFrame implements ActionListener
             else if (response == 1)
             {
                 this.setVisible(false);
-                ProfileSettingPage profileSettingPage = new ProfileSettingPage(this, customer);
+                ProfileSettingPage profileSettingPage = new ProfileSettingPage(this, BA, customer);
                 profileSettingPage.setVisible(true);
             }
             else if (response == 2)
