@@ -278,14 +278,14 @@ public class HomePage extends JFrame implements ActionListener
         else if(e.getSource() == contactUSButton)
         {
             
-            String[] options = new String[] {"Request a Meeting", "Make a Report", "Cancel"};
+            String[] options = new String[] {"Make a Request", "Make a Suspicious Activity Report","Cancel"};
             int response = JOptionPane.showOptionDialog(this, "Select contact option:",
                     "Ways to Contact", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
                     options[0]);
             if (response == 0)
             {
                 this.setVisible(false);
-                RequestMeetingPage requestPage = new RequestMeetingPage(BA,this, customer);
+                RequestsPage requestPage = new RequestsPage(BA,this, customer);
                 requestPage.setVisible(true);
             }
             else if (response == 1)

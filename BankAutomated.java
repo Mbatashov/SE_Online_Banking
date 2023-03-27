@@ -36,7 +36,7 @@ public class BankAutomated
         MT maintenance4 = new MT ("Mister", "Maintenance4", "maintenance4@BCS.ca", "1234567901", 3);
         MT maintenance5 = new MT ("Mister", "Maintenance5", "maintenance5@BCS.ca", "1224567890", 4);
 
-        CSR customerService1 = new CSR("Mister", "CustomerService2", "customerservice@BCS.ca", "123456789", 0);
+        CSR customerService1 = new CSR("Mister", "CustomerService1", "customerservice@BCS.ca", "123456789", 0);
         CSR customerService2 = new CSR("Mister", "CustomerService2", "customerservice2@BCS.ca", "121456789", 1);
         CSR customerService3 = new CSR("Mister", "CustomerService3", "customerservice3@BCS.ca", "112456789", 2);
         CSR customerService4 = new CSR("Mister", "CustomerService4", "customerservice4@BCS.ca", "123456889", 3);
@@ -249,7 +249,7 @@ public class BankAutomated
         System.out.println("Logging in customer with email: " + email);
 
         // Multithreaded Stream
-        CA customer = (CA) customerHash.get(email);
+        CA customer = customerHash.get(email);
         if (customer != null && password.equals(customer.password)) {
             return customer;
         }
@@ -352,7 +352,7 @@ public class BankAutomated
      * 
      */
     public boolean validCard(String cardNum) {
-        boolean valid = true;
+        boolean valid;
     
         // Check length, starting digit, and only numeric
         if (!(cardNum.length() >= 13 && cardNum.length() <= 19 && onlyNumeric(cardNum) &&
@@ -506,7 +506,6 @@ public class BankAutomated
             customer.setChequing(customer.getChequing() - transferAmount);
             customer.setSavings(customer.getSavings() + transferAmount);
             customer.addSaving(new Transaction("Chequing", "Savings", transferAmount,1));
-            return 0;
 
         } else {
 
@@ -519,9 +518,9 @@ public class BankAutomated
             customer.setChequing(customer.getChequing() + transferAmount);
             customer.setSavings(customer.getSavings() - transferAmount);
             customer.addChequing(new Transaction("Chequing", "Savings", transferAmount,1));
-            return 0;
 
         }
+        return 0;
 
     }
 
@@ -567,7 +566,7 @@ public class BankAutomated
             return 4;
 
         // If all checks pass, transfer the money and receiver's account exists
-        } else if (receiverAccount != null) {
+        } else {
 
             if (accountFrom.equals("Chequing")) {
 
