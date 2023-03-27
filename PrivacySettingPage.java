@@ -10,12 +10,18 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
 
+    JPanel changePasswordPanel = new JPanel();
+    private JPasswordField oldPasswordField;
+    private JPasswordField newPasswordField_one;
+    private JPasswordField newPasswordField_two;
+
     BankAutomated BA;
     HomePage home;
     CA customer;
 
     private final JButton backToHome;
     private final JButton completeButton;
+    private final JButton changePasswordButton;
     private final JComboBox<String> selectTrack; private final JComboBox<String> selectDataCollection;
     private final JComboBox<String> selectSensitiveData; private final JComboBox<String> selectKeyLogger;
     public PrivacySettingPage(HomePage home, BankAutomated BA, CA customer)
@@ -52,6 +58,16 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         selectTrack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectTrack.addActionListener(this);
         this.add(selectTrack);
+
+        changePasswordPanel.add(new JLabel("Old Password:"));
+        oldPasswordField = new JPasswordField();
+        changePasswordPanel.add(oldPasswordField);
+        changePasswordPanel.add(new JLabel("New Password:"));
+        newPasswordField_one = new JPasswordField();
+        changePasswordPanel.add(newPasswordField_one);
+        changePasswordPanel.add(new JLabel("New Password Again:"));
+        newPasswordField_two = new JPasswordField();
+        changePasswordPanel.add(newPasswordField_two);
 
         JLabel allowBasicData = new JLabel("Allow us to access necessary data:");
         allowBasicData.setFont(labels);
@@ -107,6 +123,17 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         completeButton.setBorder(emptyBorder);
         completeButton.addActionListener(this);
         this.add(completeButton);
+
+        changePasswordPanel.setLayout(new GridLayout(0, 1));
+        changePasswordButton = new JButton("Change Password");
+        changePasswordButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
+        changePasswordButton.setBounds(1275, 525, 350, 40);
+        changePasswordButton.setBackground(Color.black);
+        changePasswordButton.setForeground(Color.white);
+        changePasswordButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        changePasswordButton.setBorder(emptyBorder);
+        changePasswordButton.addActionListener(this);
+        this.add(changePasswordButton);
 
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
@@ -169,7 +196,97 @@ public class PrivacySettingPage extends JFrame implements ActionListener
             this.setVisible(false);
             home.setVisible(true);
         }
-        else if (e.getSource() == completeButton)
+        else if (e.getSource() == changePasswordButton)
+        {
+            // make jpanel changepassword visible
+            boolean changePassword = false;
+            boolean isSelected = false;
+
+            do {
+
+                String[] options = {"Change", "Cancel", "Show Passwords"};
+                int result = JOptionPane.showOptionDialog(null, changePasswordPanel, "Change Password", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+                String oldPassword = new String(oldPasswordField.getPassword());
+                String newPassword_one = new String(newPasswordField_one.getPassword());
+                String newPassword_two = new String(newPasswordField_two.getPassword()); 
+
+                if (result == 0) {
+
+                    if (oldPassword == null || oldPassword.equals("") || newPassword_one == null || newPassword_one.equals("") || newPassword_two == null || newPassword_two.equals("")) {
+
+                        JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+
+                    } else if (oldPassword.equals(customer.getPassword())) {
+
+                        if (oldPassword.equals(newPassword_one) || oldPassword.equals(newPassword_two)) {
+
+                            JOptionPane.showMessageDialog(this, "New password cannot be the same as the old password.");
+
+                        } else if (newPassword_one.equals(newPassword_two)) {
+
+                            if (BA.validPassword(newPassword_two) == false) {
+
+                                JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long with atleast 1 uppercase character and contain at least one number and one special character.");
+
+                            } else {
+
+                                BA.changePassword(customer, newPassword_two);
+
+                                JOptionPane.showMessageDialog(this, "Password changed successfully.");
+
+                                changePassword = true;
+
+                                break;
+
+                            }
+
+                        } else {
+
+                            JOptionPane.showMessageDialog(this, "New passwords do not match.");
+
+                        }
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(this, "Old password is incorrect.");
+
+                    }
+
+                } else if (result == 1) {
+
+                    int choice = JOptionPane.showOptionDialog(null, "Are you sure you want to cancel password change?", "Password Change exit", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+                    
+                    if (choice == JOptionPane.YES_OPTION) {
+
+                        break;
+
+                    }
+    
+                } else if (result == 2) {
+
+                    if (isSelected == false) {
+
+                        oldPasswordField.setEchoChar((char) 0);
+                        newPasswordField_one.setEchoChar((char) 0);
+                        newPasswordField_two.setEchoChar((char) 0);
+
+                        isSelected = true;
+
+                    } else {
+
+                        oldPasswordField.setEchoChar('*');
+                        newPasswordField_one.setEchoChar('*');
+                        newPasswordField_two.setEchoChar('*');
+
+                        isSelected = false;
+
+                    }
+
+                }
+
+            } while (changePassword == false);
+
+        } else if (e.getSource() == completeButton)
         {
             if(selectTrack.getSelectedIndex()==0 || selectDataCollection.getSelectedIndex()==0 ||
                     selectSensitiveData.getSelectedIndex()==0 || selectKeyLogger.getSelectedIndex()==0)
