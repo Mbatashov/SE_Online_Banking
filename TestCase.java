@@ -640,7 +640,7 @@ public class TestCase {
 
         Transaction chequing = new Transaction("Chequing", "Savings", 500, 201);
         Transaction savings = new Transaction("Savings", "Chequing", 600, 205);
-        Report report = new Report("Jane", "Doe", "jane@example.ca", "4417987654321098");
+        Report report = new Report(dummy, admin);
         Request request = new Request("RM", admin);
 
         dummy.addChequing(chequing);
@@ -674,22 +674,22 @@ public class TestCase {
         assert(98765 == transactionTest.getId());
 
         // Test setter and getters for reports
-        Report reportTest = new Report("John", "Doe", "johndoe@example.com", "4417123456789012");
+        Report reportTest = new Report(dummy, admin);
 
-        assertEquals("John", reportTest.getFirstName());
-        assertEquals("Doe", reportTest.getLastName());
-        assertEquals("johndoe@example.com", reportTest.getEmail());
-        assertEquals("4417123456789012", reportTest.getCardNum());
+        assertEquals("Jane", reportTest.getCustomer().getFirstName());
+        assertEquals("Smith", reportTest.getCustomer().getLastName());
+        assertEquals("jane@example.ca", reportTest.getCustomer().getEmail());
+        assertEquals("4417987654321098", reportTest.getCustomer().getCardNum());
 
-        reportTest.setFirstName("Jane");
-        reportTest.setLastName("Smith");
-        reportTest.setEmail("janesmith@example.ca");
-        reportTest.setCardNum("4417210987654321");
+        reportTest.getCustomer().setFirstName("John");
+        reportTest.getCustomer().setLastName("Doe");
+        reportTest.getCustomer().setEmail("janesmith@example.ca");
+        reportTest.getCustomer().setCardNum("4417210987654321");
 
-        assertEquals("Jane", reportTest.getFirstName());
-        assertEquals("Smith", reportTest.getLastName());
-        assertEquals("janesmith@example.ca", reportTest.getEmail());
-        assertEquals("4417210987654321", reportTest.getCardNum());
+        assertEquals("John", reportTest.getCustomer().getFirstName());
+        assertEquals("Doe", reportTest.getCustomer().getLastName());
+        assertEquals("janesmith@example.ca", reportTest.getCustomer().getEmail());
+        assertEquals("4417210987654321", reportTest.getCustomer().getCardNum());
 
         // Test setters and getters for requests
         MT mtTest = new MT("Mike", "Smith", "mike@bcs.ca", "647-123-4568", 105);
@@ -761,10 +761,10 @@ public class TestCase {
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
                 "4417123456789113", "01/01/2027", "555");
 
-        BA.makeReport("John", "Doe", "test@gmail.com");
+        Report report = BA.makeReport(dummy);
 
         assertEquals(dummy.getReportSus().size(), 1);
-        assertEquals(BA.admin.getCustomerReports().size(), 1);
+        assertEquals(report.getAdmin().getCustomerReports().size(), 1);
 
         assertNotEquals(dummy.getReportSus().size(), 2);
 
