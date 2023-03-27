@@ -94,28 +94,58 @@ public class Transaction implements Serializable
         this.id=id;
     }
 
+    /*
+     * Gets the account the transaction was sent from
+     * @return the account the transaction was sent from
+     *
+     */
     public String getAccountFrom()
     {
         return accountFrom;
     }
+    /*
+     * Sets the account the transaction was sent from
+     * @param from: the account that initiated the transaction
+     *
+     */
     public void setAccountFrom(String from)
     {
         this.accountFrom = from;
     }
 
+    /*
+     * Gets the remaining amount the sender has in their account after the transaction
+     * @return the remaining amount
+     *
+     */
     public double getSenderRemaining()
     {
         return senderRemaining;
     }
+    /*
+     * Sets the remaining amount the sender has in their account after the transaction
+     * @param remaining: the amount remaining in the sender's account
+     *
+     */
     public void setSenderRemaining(double remaining)
     {
         this.senderRemaining = remaining;
     }
 
+    /*
+     * Gets the remaining amount the receiver has in their account after the transaction
+     * @return the remaining amount
+     *
+     */
     public double getReceiverRemaining()
     {
         return receiverRemaining;
     }
+    /*
+     * Sets the remaining amount the receiver has in their account after the transaction
+     * @param remaining: the amount remaining in the receiver's account
+     *
+     */
     public void setReceiverRemaining(double remaining)
     {
         this.receiverRemaining = remaining;
