@@ -15,7 +15,7 @@ public class BankSystem
             TransferFundsPage TFP = new TransferFundsPage(BA, HP, test, LP);
             MakeReportPage MRP = new MakeReportPage(BA, HP, test);
             RequestsPage RP = new RequestsPage(BA, HP, test);
-            RP.setVisible(true);
+            HP.setVisible(true);
         }
         catch (Exception e)
         {
