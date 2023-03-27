@@ -508,7 +508,7 @@ public class BankAutomated
      * @param double transferAmount: amount of money to transfer
      * @param String fromAccount: account to transfer money from
      * @param CA customer: customer object
-     * @return int 0 if transfer is successful, 1 if transfer is unsuccessful
+     * @return int 0 if transfer is successful, 1 if transfer is unsuccessful, 2 if amount is too small
      * 
      */
     public int transferFunds(double transferAmount, String fromAccount, CA customer) {
@@ -556,26 +556,20 @@ public class BankAutomated
      * @param CA customer: the customer who is sending the money
      * @param String accountFrom: the account the money is being sent from
      * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
-     * @return int 4 if amount is greater than 1000
+     * @return int 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5)
      * 
      */
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
-
-        //if transfer amount is less than 0.5, then return 2 to make an error
         if (amount < 0.5)
         {
-            return 2;
+            return 5;
         }
 
         CA receiverAccount = customerHash.get(receiverEmail);
-        
-        
 
-        // Check if receiver has an account
-        if (receiverAccount == null){
-
+        // Check if receiver email is valid
+        if (!validEmail(receiverEmail)){
             return 1;
-
         }
 
         // Check if the sender has enough money to send
@@ -589,34 +583,42 @@ public class BankAutomated
             return 2;
 
         // Check if the amount is negative
-        } else if (amount <= 0) {
-
+        } else if (receiverAccount == null) {
+            if (accountFrom.equals("Chequing"))
+            {
+                customer.setChequing(customer.getChequing() - amount);
+                customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
+            }
+            else
+            {
+                customer.setSavings(customer.getSavings() - amount);
+                customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
+            }
             return 3;
-
+        }
         // Check if the amount is greater than 1000
-        } else if (amount > 1000) {
-
+        else if (amount > 1000)
+        {
             return 4;
-
+        }
         // If all checks pass, transfer the money and receiver's account exists
-        } else {
-
-            if (accountFrom.equals("Chequing")) {
-
+        else
+        {
+            if (accountFrom.equals("Chequing"))
+            {
                 customer.setChequing(customer.getChequing() - amount);
                 customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
                 receiverAccount.setChequing(receiverAccount.getChequing() + amount);
                 receiverAccount.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
-
-            } else {
-
+            }
+            else
+            {
                 customer.setSavings(customer.getSavings() - amount);
                 customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
                 receiverAccount.setSavings(receiverAccount.getSavings() + amount);
                 receiverAccount.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
 
             }
-
         }
 
         return 0;
@@ -629,17 +631,15 @@ public class BankAutomated
      * @param String receiverAcc: bank number of the receiver
      * @param CA customer: the customer who is sending the money
      * @param String accountFrom: the account the money is being sent from
-     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if amount is negative,
-     * @return int 4 if amount is greater than 1000
+     * @return int 0 if successful, 1 if receiver account is invalid, 2 if insufficient funds, 3 if receiver is not in BCS,
+     * @return 5 if amount is less than 0.5
      * 
      */
-    public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom) {
-        
-
-        //if transfer amount is less than 0.5, then return 2 to make an error
+    public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom)
+    {
         if (amount < 0.5)
         {
-            return 2;
+            return 5;
         }
 
 

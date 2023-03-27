@@ -182,6 +182,10 @@ public class ETransferPage extends JFrame implements ActionListener
             {
                 JOptionPane.showMessageDialog(this, "ERROR: E-transfer limit is $1,000.");
             }
+            else if (result == 5)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer amount is $0.5");
+            }
             else if (result == 0)
             {
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +

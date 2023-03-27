@@ -170,6 +170,10 @@ public class TransferFundsPage extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "ERROR: You do not have sufficient funds " +
                         "in your " + from + " account to complete this transaction.");
             }
+            else if (result == 2)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer is $0.5");
+            }
             else if (result == 0)
             {
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
