@@ -743,7 +743,7 @@ public class BankAutomated
         System.out.println("Uploaded " + customerAccounts.size() + " customer objects. In: " + timePassedSeconds + "s");
 
         // IMPORTANT: REMOVE THIS LATER THIS IS FOR RUNNING PURPOSES
-        // clearPeopleFile();
+        clearPeopleFile();
 
         executor.shutdown();
 
