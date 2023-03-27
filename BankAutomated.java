@@ -564,6 +564,12 @@ public class BankAutomated
             return 1;
         }
 
+        // Check if the amount is greater than 1000
+        if (amount > 1000)
+        {
+            return 4;
+        }
+
         // Check if the sender has enough money to send
         if (accountFrom.equals("Chequing") && amount > customer.getChequing()) {
 
@@ -573,14 +579,8 @@ public class BankAutomated
         } else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
 
             return 2;
-        // check if receiver doesn't exist, i.e. it is an external transfer
         }
-        // Check if the amount is greater than 1000
-        else if (amount > 1000)
-        {
-            return 4;
-        }
-        // If all checks pass, transfer the money and receiver's account exists
+        // If all checks pass, transfer the money and receiver's account is valid
         else
         {
             if (receiverAccount == null) {
@@ -670,22 +670,17 @@ public class BankAutomated
         }
     
         // Subtract the amount from the customer's account and add it to the receiver's account (chequing / savings)
+        if (accountFrom.equals("Chequing")) {
+
+            customer.setChequing(customer.getChequing() - amount);
+            customer.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
+        } else if (accountFrom.equals("Savings")) {
+
+            customer.setSavings(customer.getSavings() - amount);
+            customer.addSaving(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,4));
+
+        }// Add the amount to the receiver's account (chequing auto-deposit)
         if (receiver != null){
-
-            // Subtract the amount from the customer's account (chequing)
-            if (accountFrom.equals("Chequing")) {
-
-                customer.setChequing(customer.getChequing() - amount);
-                customer.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
-
-            // Add the amount to the receiver's account (savings)
-            } else if (accountFrom.equals("Savings")) {
-
-                customer.setSavings(customer.getSavings() - amount);
-                customer.addSaving(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,4));
-
-            }
-
             receiver.setChequing(receiver.getChequing() + amount);
             receiver.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
 
@@ -694,24 +689,9 @@ public class BankAutomated
         }
         else
         {
-            // Subtract the amount from the customer's account (chequing)
-            if (accountFrom.equals("Chequing")) {
-
-                customer.setChequing(customer.getChequing() - amount);
-                customer.addChequing(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,3));
-
-                // Add the amount to the receiver's account (savings)
-            } else if (accountFrom.equals("Savings")) {
-
-                customer.setSavings(customer.getSavings() - amount);
-                customer.addSaving(new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,4));
-
-            }
+            // Signify external transaction
+            return 3;
         }
-
-        // If the receiver account is not found, return 3
-        return 3;
-
     }
 
     /*
