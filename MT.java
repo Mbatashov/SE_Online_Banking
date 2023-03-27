@@ -4,7 +4,7 @@ import java.util.*;
 public class MT extends People
 {
     int id;
-    ArrayList<Request> sysChangeRequests = new ArrayList<Request>();
+    ArrayList<Request> sysChangeRequests = new ArrayList<>();
 
     /*
      * Constructor for the MT

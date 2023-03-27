@@ -5,7 +5,7 @@ public class CSR extends People
 {
 
     int id;
-    ArrayList<Request> assistanceRequests = new ArrayList<Request>();
+    ArrayList<Request> assistanceRequests = new ArrayList<>();
 
     /*
      * Constructor for the CSR

@@ -608,7 +608,7 @@ public class BankAutomated
                 else
                 {
                     transaction.setAccountFrom("Savings");
-                    transaction.setSenderRemaining(customer.getChequing() - amount);
+                    transaction.setSenderRemaining(customer.getSavings() - amount);
 
                     customer.setSavings(customer.getSavings() - amount);
                     customer.addSaving(transaction);
@@ -637,7 +637,7 @@ public class BankAutomated
 
                     Transaction receiverTransaction = new Transaction(customer.email, receiverEmail, amount, idReceiver);
                     senderTransaction.setSenderRemaining(customer.getChequing() - amount);
-                    receiverTransaction.setReceiverRemaining(customer.getSavings() + amount);
+                    receiverTransaction.setReceiverRemaining(customer.getChequing() + amount);
 
                     customer.setSavings(customer.getSavings() - amount);
                     customer.addSaving(senderTransaction);
@@ -716,14 +716,14 @@ public class BankAutomated
         } else if (accountFrom.equals("Savings")) {
             Transaction transaction = new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,idSender);
             transaction.setAccountFrom("Savings");
-            transaction.setSenderRemaining(customer.getChequing() - amount);
+            transaction.setSenderRemaining(customer.getSavings() - amount);
 
             customer.setSavings(customer.getSavings() - amount);
             customer.addSaving(transaction);
         }// Add the amount to the receiver's account (chequing auto-deposit)
         if (receiver != null){
             Transaction receiverTrans = new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,idReceiver);
-            receiverTrans.setReceiverRemaining(customer.getSavings() + amount);
+            receiverTrans.setReceiverRemaining(customer.getChequing() + amount);
 
             receiver.setChequing(receiver.getChequing() + amount);
             receiver.addChequing(receiverTrans);

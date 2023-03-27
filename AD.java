@@ -4,16 +4,16 @@ import java.util.ArrayList;
 public class AD extends People
 {
     int id;
-    ArrayList<Report> customerReports = new ArrayList<Report>();
-    ArrayList<Request> meetingRequests = new ArrayList<Request>();
+    ArrayList<Report> customerReports = new ArrayList<>();
+    ArrayList<Request> meetingRequests = new ArrayList<>();
 
     /*
      * Constructor for the Admin
-     * @param firstName the first name of the Admin
-     * @param lastName the last name of the Admin
-     * @param email the email of the Admin
-     * @param phoneNum the phone number of the Admin
-     * @param id the id of the Admin
+     * @param firstName: the first name of the Admin
+     * @param lastName: the last name of the Admin
+     * @param email: the email of the Admin
+     * @param phoneNum: the phone number of the Admin
+     * @param id: the id of the Admin
      * 
      */
     public AD(String firstName, String lastName, String email, String phoneNum, int id) {
@@ -57,7 +57,7 @@ public class AD extends People
 
     /*
      * Adds a customer report to the Admin
-     * @param report the customer report to be added
+     * @param report: the customer report to be added
      * 
      */
     public void addCustomerReports(Report report) {

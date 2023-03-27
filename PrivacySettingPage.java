@@ -11,9 +11,9 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     static final int LENGTH = 1080;
 
     JPanel changePasswordPanel = new JPanel();
-    private JPasswordField oldPasswordField;
-    private JPasswordField newPasswordField_one;
-    private JPasswordField newPasswordField_two;
+    private final JPasswordField oldPasswordField;
+    private final JPasswordField newPasswordField_one;
+    private final JPasswordField newPasswordField_two;
 
     BankAutomated BA;
     HomePage home;
@@ -198,7 +198,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         }
         else if (e.getSource() == changePasswordButton)
         {
-            // make jpanel changepassword visible
+            // make JPanel changePassword visible
             boolean changePassword = false;
             boolean isSelected = false;
 
@@ -212,7 +212,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 
                 if (result == 0) {
 
-                    if (oldPassword == null || oldPassword.equals("") || newPassword_one == null || newPassword_one.equals("") || newPassword_two == null || newPassword_two.equals("")) {
+                    if (oldPassword.equals("") || newPassword_one.equals("") || newPassword_two.equals("")) {
 
                         JOptionPane.showMessageDialog(this, "Please fill in all fields.");
 
@@ -224,9 +224,11 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 
                         } else if (newPassword_one.equals(newPassword_two)) {
 
-                            if (BA.validPassword(newPassword_two) == false) {
+                            if (!BA.validPassword(newPassword_two)) {
 
-                                JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long with atleast 1 uppercase character and contain at least one number and one special character.");
+                                JOptionPane.showMessageDialog(this, "Password is invalid. Password must contain:\n" +
+                                        "\n-At least one lowercase and one uppercase character\n-At least one number\n-At least one" +
+                                        " special character\n-At least 8 characters overall.");
 
                             } else {
 
@@ -264,7 +266,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     
                 } else if (result == 2) {
 
-                    if (isSelected == false) {
+                    if (!isSelected) {
 
                         oldPasswordField.setEchoChar((char) 0);
                         newPasswordField_one.setEchoChar((char) 0);
@@ -284,7 +286,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 
                 }
 
-            } while (changePassword == false);
+            }while (!changePassword);
 
         } else if (e.getSource() == completeButton)
         {
