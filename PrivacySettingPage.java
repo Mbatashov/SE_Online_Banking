@@ -116,7 +116,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 
         completeButton = new JButton("Save Preferences");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
-        completeButton.setBounds(475, 525, 350, 40);
+        completeButton.setBounds(275, 525, 350, 40);
         completeButton.setBackground(Color.black);
         completeButton.setForeground(Color.white);
         completeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -127,7 +127,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         changePasswordPanel.setLayout(new GridLayout(0, 1));
         changePasswordButton = new JButton("Change Password");
         changePasswordButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
-        changePasswordButton.setBounds(1275, 525, 350, 40);
+        changePasswordButton.setBounds(650, 525, 350, 40);
         changePasswordButton.setBackground(Color.black);
         changePasswordButton.setForeground(Color.white);
         changePasswordButton.setCursor(new Cursor(Cursor.HAND_CURSOR));

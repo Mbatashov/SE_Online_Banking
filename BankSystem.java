@@ -18,7 +18,7 @@ public class BankSystem
             NotificationSettingPage NSP = new NotificationSettingPage(HP, BA, test);
             PrivacySettingPage PSP = new PrivacySettingPage(HP, BA, test);
             ProfileSettingPage PRP = new ProfileSettingPage(HP, BA, test);
-            PRP.setVisible(true);
+            PSP.setVisible(true);
         }
         catch (Exception e)
         {
