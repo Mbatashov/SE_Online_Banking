@@ -22,10 +22,10 @@ public class CA extends People
     ArrayList<Request> requests;
 
     //Notification settings: 0 for don't notify, 1 for Email, 2 for SMS
-    private int requestReplies;
-    private int reportReplies;
-    private int newsletterSubscription;
-    private int bigPayment;
+    private int requestReplies = 1;
+    private int reportReplies = 1;
+    private int newsletterSubscription = 1;
+    private int bigPayment = 1;
 
     //Privacy Settings: true for allow, false for don't allow
     private boolean locationServices = true;

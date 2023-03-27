@@ -323,7 +323,7 @@ public class HomePage extends JFrame implements ActionListener
             else if (response == 2)
             {
                 this.setVisible(false);
-                PrivacySettingPage privacyPage = new PrivacySettingPage(this, customer);
+                PrivacySettingPage privacyPage = new PrivacySettingPage(this, BA, customer);
                 privacyPage.setVisible(true);
             }
         }

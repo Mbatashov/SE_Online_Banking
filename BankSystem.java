@@ -16,7 +16,8 @@ public class BankSystem
             MakeReportPage MRP = new MakeReportPage(BA, HP, test);
             RequestsPage RP = new RequestsPage(BA, HP, test);
             NotificationSettingPage NSP = new NotificationSettingPage(HP, BA, test);
-            NSP.setVisible(true);
+            PrivacySettingPage PSP = new PrivacySettingPage(HP, BA, test);
+            PSP.setVisible(true);
         }
         catch (Exception e)
         {
