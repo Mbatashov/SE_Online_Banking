@@ -149,7 +149,13 @@ public class TestCase {
         assert(cust.getChequing() == 5000.0);
         assert(cust.getSavings() == 10000.0);
         
-        System.out.println(cust.getChequingHist());
+        assertEquals(cust.getSavingsHist().size(), 1);
+
+        Transaction temp = cust.getSavingsHist().get(0);
+        int amount = (int) (temp.getAmount() * 1);
+
+        assertEquals(amount, 5000);
+        assertEquals(cust.getChequingHist().size(), 0);
 
         // Test 2
         cust.setChequing(10000.0);
@@ -159,6 +165,14 @@ public class TestCase {
         assert(cust.getChequing() == 15000);
         assert(cust.getSavings() == 0);
 
+        assertEquals(cust.getSavingsHist().size(), 1);
+
+        temp = cust.getChequingHist().get(0);
+        amount = (int) (temp.getAmount() * 1);
+
+        assertEquals(amount, 5000);
+        assertEquals(cust.getChequingHist().size(), 1);
+
         // Test 3
         cust.setChequing(10000.0);
         cust.setSavings(5000.0);
@@ -167,6 +181,9 @@ public class TestCase {
         assert(cust.getChequing() == 10000);
         assert(cust.getSavings() == 5000);
 
+        assertEquals(cust.getSavingsHist().size(), 1);
+        assertEquals(cust.getChequingHist().size(), 1);
+
         // Test 4
         cust.setChequing(10000.0);
         cust.setSavings(5000.0);
@@ -174,6 +191,9 @@ public class TestCase {
         assert(BA.transferFunds(10001, "Chequing", cust) == 1);
         assert(cust.getChequing() == 10000);
         assert(cust.getSavings() == 5000);
+
+        assertEquals(cust.getSavingsHist().size(), 1);
+        assertEquals(cust.getChequingHist().size(), 1);
 
         long endTime = System.currentTimeMillis();
         long timePassedSeconds = (endTime - startTime)/1000;
@@ -199,9 +219,34 @@ public class TestCase {
                 "01/01/2000", "johndoe@example.com", "Password123@", "4417123456789113", 
                 "01/01/2030", "123");
 
+
+        john.setChequing(10000);
+        jane.setChequing(10000);
+
+        // John to Jane
+        assertEquals(BA.etransfer(999, "janedoe@example.com", john, "Chequing"), 0);
+        assert(john.getChequing() == 10000 - 999);
+        assert(jane.getChequing() == 10000 + 999);
+
+        assertEquals(john.getChequingHist().size(), 1);
+        assertEquals(jane.getChequingHist().size(), 1);
+
+        john.setChequing(10000);
+        jane.setChequing(10000);
+
+        // Jane to John
+        assertEquals(BA.etransfer(999, "johndoe@example.com", jane, "Chequing"), 0);
+        assert(john.getChequing() == 10000 + 999);
+        assert(jane.getChequing() == 10000 - 999);
+
+        assertEquals(john.getChequingHist().size(), 2);
+        assertEquals(jane.getChequingHist().size(), 2);
+
         // Test 1
         john.setChequing(10000);
         jane.setChequing(10000);
+
+        // Amount > limit so no Transfer
         assertEquals(BA.etransfer(5000, "janedoe@example.com", john, "Chequing"), 4);
         assert(john.getChequing() == 10000);
         assert(jane.getChequing() == 10000);
@@ -209,6 +254,8 @@ public class TestCase {
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
+
+        // Amount > limit so no Transfer
         assertEquals(BA.etransfer(5000, "johndoe@example.com", jane, "Chequing"), 4);
         assert(jane.getChequing() == 10000);
         assert(john.getChequing() == 10000);
@@ -266,12 +313,18 @@ public class TestCase {
         assert(john.getChequing() == 5000);
         assert(jane.getChequing() == 15000);
 
+        assertEquals(john.getChequingHist().size(), 1);
+        assertEquals(jane.getChequingHist().size(), 1);
+
         // Test 2
         john.setChequing(10000);
         jane.setChequing(10000);
         assertEquals(BA.bankTransfer(5000, "54321", jane, "Chequing"), 0);
         assert(jane.getChequing() == 5000);
         assert(john.getChequing() == 15000);
+
+        assertEquals(john.getChequingHist().size(), 2);
+        assertEquals(jane.getChequingHist().size(), 2);
 
         // Error code tests
         john.setChequing(10000);
