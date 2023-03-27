@@ -14,8 +14,8 @@ public class CA extends People
     String cardExpiry;
     String cvv;
     String bankNumber; // For bank transfers
-    double chequing = 0.0;
-    double savings = 0.0;
+    double chequing;
+    double savings;
     ArrayList<Transaction> chequingHist;
     ArrayList<Transaction> savingsHist;
     ArrayList<Report> reportSus;

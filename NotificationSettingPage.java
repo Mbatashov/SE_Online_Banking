@@ -29,6 +29,14 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         Font labels = new Font("Raleway", Font.BOLD, 22);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         String[] options = {"Select Notification Method", "Email", "SMS", "Don't Notify"};
+        int custRequestReply = customer.getRequestReplies();
+        if (custRequestReply == 0) { custRequestReply = 3; }
+        int custReportReply = customer.getReportReplies();
+        if (custReportReply == 0) { custReportReply = 3; }
+        int custNewsletter = customer.getNewsletterSubscription();
+        if (custNewsletter == 0) { custNewsletter = 3; }
+        int custThreshold = customer.getBigPayment();
+        if (custThreshold == 0) { custThreshold = 3; }
 
         JLabel requestNotif = new JLabel("Notification for request reply:");
         requestNotif.setFont(labels);
@@ -38,6 +46,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         this.add(requestNotif);
 
         selectNotification = new JComboBox<>(options);
+        selectNotification.setSelectedIndex(custRequestReply);
         selectNotification.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification.setBounds(575, 150, 500, 40);
         selectNotification.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -52,6 +61,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         this.add(reportNotif);
 
         selectNotification2 = new JComboBox<>(options);
+        selectNotification2.setSelectedIndex(custReportReply);
         selectNotification2.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification2.setBounds(575, 250, 500, 40);
         selectNotification2.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -66,6 +76,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         this.add(newsletter);
 
         selectNotification3 = new JComboBox<>(options);
+        selectNotification3.setSelectedIndex(custNewsletter);
         selectNotification3.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification3.setBounds(575, 350, 500, 40);
         selectNotification3.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -80,6 +91,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         this.add(threshold);
 
         selectNotification4 = new JComboBox<>(options);
+        selectNotification4.setSelectedIndex(custThreshold);
         selectNotification4.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification4.setBounds(575, 450, 500, 40);
         selectNotification4.setCursor(new Cursor(Cursor.HAND_CURSOR));

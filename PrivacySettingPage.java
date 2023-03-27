@@ -29,6 +29,14 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         Font labels = new Font("Raleway", Font.BOLD, 22);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         String[] options = {"Select...", "Allow", "Don't Allow"};
+        boolean custLoc = customer.getLocationServices(); int indexLoc;
+        if (custLoc) {indexLoc = 1;} else {indexLoc = 2;}
+        boolean custDataColl = customer.getRequireDataCollection(); int indexData;
+        if (custDataColl) {indexData = 1;} else {indexData = 2;}
+        boolean custSensitiveData = customer.getSensitiveDataCollection(); int indexSensitiveData;
+        if (custSensitiveData) {indexSensitiveData = 1;} else {indexSensitiveData = 2;}
+        boolean custKeyLogger = customer.getKeyLogger(); int indexKeyLogger;
+        if (custKeyLogger) {indexKeyLogger = 1;} else {indexKeyLogger = 2;}
 
         JLabel allowTrack = new JLabel("Allow us to access your location:");
         allowTrack.setFont(labels);
@@ -38,6 +46,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         this.add(allowTrack);
 
         selectTrack = new JComboBox<>(options);
+        selectTrack.setSelectedIndex(indexLoc);
         selectTrack.setFont(new Font("Arial", Font.PLAIN, 20));
         selectTrack.setBounds(600, 150, 500, 40);
         selectTrack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -52,6 +61,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         this.add(allowBasicData);
 
         selectDataCollection = new JComboBox<>(options);
+        selectDataCollection.setSelectedIndex(indexData);
         selectDataCollection.setFont(new Font("Arial", Font.PLAIN, 20));
         selectDataCollection.setBounds(600, 250, 500, 40);
         selectDataCollection.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -66,6 +76,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         this.add(allowSensitiveData);
 
         selectSensitiveData = new JComboBox<>(options);
+        selectSensitiveData.setSelectedIndex(indexSensitiveData);
         selectSensitiveData.setFont(new Font("Arial", Font.PLAIN, 20));
         selectSensitiveData.setBounds(600, 350, 500, 40);
         selectSensitiveData.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -80,6 +91,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         this.add(allowKeyLogger);
 
         selectKeyLogger = new JComboBox<>(options);
+        selectKeyLogger.setSelectedIndex(indexKeyLogger);
         selectKeyLogger.setFont(new Font("Arial", Font.PLAIN, 20));
         selectKeyLogger.setBounds(600, 450, 500, 40);
         selectKeyLogger.setCursor(new Cursor(Cursor.HAND_CURSOR));
