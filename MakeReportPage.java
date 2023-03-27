@@ -57,7 +57,7 @@ public class MakeReportPage extends JFrame implements ActionListener
 
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
-        backToHome.setBounds(475, 600, 350, 50);
+        backToHome.setBounds(475, 575, 350, 50);
         backToHome.setBackground(Color.white);
         backToHome.setForeground(new Color(57, 107, 170));
         backToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -127,7 +127,7 @@ public class MakeReportPage extends JFrame implements ActionListener
             else
             {
                 JOptionPane.showMessageDialog(this, "Thank you for reporting suspicious on your" +
-                        " account. An admin will review it and\n contact you shortly as per your notification preferences.");
+                        " account. An admin will review it and\ncontact you shortly as per your notification preferences.");
                 BA.makeReport(customer, reportDescription);
                 this.setVisible(false);
                 home.setVisible(true);
