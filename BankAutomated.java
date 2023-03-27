@@ -19,7 +19,7 @@ public class BankAutomated
     @SuppressWarnings("SpellCheckingInspection")
     public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
                         NOTIF, NOTIFSET, PRIVSET, EDITPROF, SETTINGS}
-
+                        
     /*
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
