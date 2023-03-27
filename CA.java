@@ -24,19 +24,17 @@ public class CA extends People
  
     /*
      * Constructor for the Customer Account
-     * @param firstName the first name of the Customer Account
-     * @param lastName the last name of the Customer Account
-     * @param email the email of the Customer Account
-     * @param phoneNum the phone number of the Customer Account
-     * @param address the address of the Customer Account
-     * @param cardNum the card number of the Customer Account
-     * @param password the password of the Customer Account
-     * @param chequing the chequing balance of the Customer Account
-     * @param savings the savings balance of the Customer Account
-     * @param chequingHist the chequing history of the Customer Account
-     * @param savingsHist the savings history of the Customer Account
-     * @param reportSus the report suspicious of the Customer Account
-     * @param requests the requests of the Customer Account
+     * @param String firstName the first name of the Customer Account
+     * @param String lastName the last name of the Customer Account
+     * @param String phoneNum the phone number of the Customer Account
+     * @param String address the address of the Customer Account
+     * @param String gender the gender of the customer
+     * @param String dob the date of birth of the customer
+     * @param String email the email of the Customer Account
+     * @param String password the password of the Customer Account
+     * @param String cardNum the card number of the Customer Account
+     * @param String cardExpiry the card expiry of the Customer Account
+     * @param String cvv the cvv of the Customer Account
      * 
      */
     public CA(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
@@ -64,7 +62,7 @@ public class CA extends People
 
     /*
      * Sets the bank num of the Customer Account
-     * @param num the bank number of the Customer Account
+     * @param String num the bank number of the Customer Account
      * 
      */
     public void setBankNumber(String num) {
@@ -75,7 +73,7 @@ public class CA extends People
 
     /*
      * Gets the bank number of the Customer Account
-     * @return the bank number of the Customer Account
+     * @return String the bank number of the Customer Account
      * 
      */
     public String getBankNumber() {
@@ -86,7 +84,7 @@ public class CA extends People
 
     /*
      * Sets the card Expiry of the Customer Account
-     * @param cardExpiry the card expiry of the Customer Account
+     * @param String cardExpiry the card expiry of the Customer Account
      * 
      */
     public void setCardExpiry(String cardExpiry) {
@@ -97,7 +95,7 @@ public class CA extends People
 
     /*
      * Gets the card expiry of the Customer Account
-     * @return the card expiry of the Customer Account
+     * @return String the card expiry of the Customer Account
      * 
      */
     public String getCardExpiry() {
@@ -108,7 +106,7 @@ public class CA extends People
     
     /*
      * Sets the Credit Card CVV of the Customer Account
-     * @param cvv the cvv of the Customer Account
+     * @param String cvv the cvv of the Customer Account
      * 
      */
     public void setCvv(String cvv) {
@@ -119,7 +117,7 @@ public class CA extends People
 
     /*
      * Gets the Credit Card CVV of the Customer Account
-     * @return the cvv of the Customer Account
+     * @return String the cvv of the Customer Account
      * 
      */
     public String getCvv() {
@@ -130,7 +128,7 @@ public class CA extends People
     
     /*
      * Sets the password of the Customer Account
-     * @param password the password of the Customer Account
+     * @param String password the password of the Customer Account
      * 
      */
     public void setPassword(String password) {
@@ -140,7 +138,7 @@ public class CA extends People
 
     /*
      * Gets the password of the Customer Account
-     * @return the password of the Customer Account
+     * @return String the password of the Customer Account
      * 
      */
     public String getPassword() {
@@ -151,7 +149,7 @@ public class CA extends People
     
     /*
      * Sets the date of bith of the Customer Account
-     * @param dob the date of birth of the Customer Account
+     * @param String dob the date of birth of the Customer Account
      * 
      */
     public void setDob(String dob) {
@@ -163,7 +161,7 @@ public class CA extends People
 
     /*
      * Gets the date of birth of the Customer Account
-     * @return the date of birth of the Customer Account
+     * @return String the date of birth of the Customer Account
      * 
      */
     public String getDob() {
@@ -175,7 +173,7 @@ public class CA extends People
 
     /*
      * Sets the gender of the customer
-     * @param gender the gender of the customer
+     * @param String gender the gender of the customer
      */
     public void setGender(String gender) {
 
@@ -185,7 +183,7 @@ public class CA extends People
 
     /*
      * Gets the gender of the customer
-     * @return gender the gender of the customer
+     * @return String gender the gender of the customer
      */
     public String getGender() {
 
@@ -195,7 +193,7 @@ public class CA extends People
     
     /*
      * Gets the address of the Customer Account
-     * @return the address of the Customer Account
+     * @return String the address of the Customer Account
      * 
      */
     public String getAddress() {
@@ -206,7 +204,7 @@ public class CA extends People
 
     /*
      * Set the address of the Customer Account
-     * @param Address the address of the Customer Account
+     * @param String Address the address of the Customer Account
      * 
      */
     public void setAddress(String Address) {
@@ -215,7 +213,7 @@ public class CA extends People
 
     /*
      * Gets the card number of the Customer Account
-     * @return the card number of the Customer Account
+     * @return String the card number of the Customer Account
      * 
      */
     public void setCardNum(String cardNum) {
@@ -226,7 +224,7 @@ public class CA extends People
 
     /*
      * Gets the card number of the Customer Account
-     * @return the card number of the Customer Account
+     * @return String the card number of the Customer Account
      * 
      */
     public String getCardNum() {
@@ -237,7 +235,7 @@ public class CA extends People
 
     /*
      * Sets the chequing balance of the Customer Account
-     * @param amount the chequing balance of the Customer Account
+     * @param double amount the chequing balance of the Customer Account
      * 
      */
     public void setChequing(double amount) {
@@ -248,7 +246,7 @@ public class CA extends People
 
     /*
      * Gets the chequing balance of the Customer Account
-     * @return the chequing balance of the Customer Account
+     * @return double the chequing balance of the Customer Account
      * 
      */
     public double getChequing() {
@@ -259,7 +257,7 @@ public class CA extends People
 
     /*
      * Sets the savings balance of the Customer Account
-     * @param amount the savings balance of the Customer Account
+     * @param double amount the savings balance of the Customer Account
      * 
      */
     public void setSavings(double amount) {
@@ -270,7 +268,7 @@ public class CA extends People
 
     /*
      * Gets the savings balance of the Customer Account
-     * @return the savings balance of the Customer Account
+     * @return double the savings balance of the Customer Account
      * 
      */
     public double getSavings() {
@@ -281,7 +279,7 @@ public class CA extends People
 
     /*
      * Gets the chequing transaction history of the Customer Account
-     * @return the chequing transaction history of the Customer Account
+     * @return double the chequing transaction history of the Customer Account
      * 
      */
     public ArrayList<Transaction> getChequingHist() {
@@ -292,7 +290,7 @@ public class CA extends People
 
     /*
      * Adds a transaction to the chequing transaction history of the Customer Account
-     * @param chequingTransaction the transaction to be added to the chequing transaction history of the Customer Account
+     * @param Transaction chequingTransaction the transaction to be added to the chequing transaction history of the Customer Account
      * 
      */
     public void addChequing(Transaction chequingTransaction)
@@ -302,7 +300,7 @@ public class CA extends People
 
     /*
      * Gets the savings transaction history of the Customer Account
-     * @return the savings transaction history of the Customer Account
+     * @return ArrayList<Transaction> the savings transaction history of the Customer Account
      * 
      */
     public ArrayList<Transaction> getSavingsHist() {
@@ -312,7 +310,7 @@ public class CA extends People
 
     /*
      * Adds a transaction to the savings transaction history of the Customer Account
-     * @param savingTransaction the transaction to be added to the savings transaction history of the Customer Account
+     * @param Transaction savingTransaction the transaction to be added to the savings transaction history of the Customer Account
      * 
      */
     public void addSaving(Transaction savingTransaction) {
@@ -323,7 +321,7 @@ public class CA extends People
 
     /*
      * Gets the suspicious report history of the Customer Account
-     * @return the suspicious report history of the Customer Account
+     * @return ArrayList<Report> the suspicious report history of the Customer Account
      * 
      */
     public ArrayList<Report> getReportSus() {
@@ -334,7 +332,7 @@ public class CA extends People
 
     /*
      * Adds a suspicious report to the suspicious report history of the Customer Account
-     * @param suspiciousReport the suspicious report to be added to the suspicious report history of the Customer Account
+     * @param Report suspiciousReport the suspicious report to be added to the suspicious report history of the Customer Account
      * 
      */
     public void addReport(Report suspiciousReport) {

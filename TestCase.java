@@ -13,7 +13,7 @@ public class TestCase {
 
     @Test
     public void stressTest() {
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
 
@@ -70,7 +70,7 @@ public class TestCase {
     @Test
     public void testRegister() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
     
@@ -92,7 +92,7 @@ public class TestCase {
         assert(BA.customerAccounts.size() == 1);
 
         long endTime = System.currentTimeMillis();
-        //noinspection IntegerDivisionInFloatingPointContext
+
         long timePassedSeconds = (endTime - startTime)/1000;
 
         System.out.println("Register time: " + timePassedSeconds + " seconds");
@@ -104,7 +104,7 @@ public class TestCase {
     @Test
     public void testLogin() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
 
@@ -122,7 +122,6 @@ public class TestCase {
         assertNull(dummy);
 
         long endTime = System.currentTimeMillis();
-        //noinspection IntegerDivisionInFloatingPointContext
         long timePassedSeconds = (endTime - startTime)/1000;
 
         System.out.println("Login time: " + timePassedSeconds + " seconds");
@@ -134,7 +133,7 @@ public class TestCase {
     @Test
     public void testTransferFunds(){
         
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
 
@@ -149,6 +148,8 @@ public class TestCase {
         BA.transferFunds(5000.0, "Chequing", cust);
         assert(cust.getChequing() == 5000.0);
         assert(cust.getSavings() == 10000.0);
+        
+        System.out.println(cust.getChequingHist());
 
         // Test 2
         cust.setChequing(10000.0);
@@ -175,7 +176,6 @@ public class TestCase {
         assert(cust.getSavings() == 5000);
 
         long endTime = System.currentTimeMillis();
-        //noinspection IntegerDivisionInFloatingPointContext
         long timePassedSeconds = (endTime - startTime)/1000;
 
         System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
@@ -187,7 +187,7 @@ public class TestCase {
     @Test
     public void testETransfer() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
 
@@ -234,7 +234,6 @@ public class TestCase {
         assert(jane.getChequing() == 10000);
 
         long endTime = System.currentTimeMillis();
-        //noinspection IntegerDivisionInFloatingPointContext
         long timePassedSeconds = (endTime - startTime)/1000;
 
         System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
@@ -245,7 +244,7 @@ public class TestCase {
     @Test
     public void testBankTransfer()
     {
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         long startTime = System.currentTimeMillis();
 
@@ -295,7 +294,6 @@ public class TestCase {
         assert(jane.getChequing() == 10000);
 
         long endTime = System.currentTimeMillis();
-        //noinspection IntegerDivisionInFloatingPointContext
         long timePassedSeconds = (endTime - startTime)/1000;
 
         System.out.println("Transfer Funds time: " + timePassedSeconds + " seconds");
@@ -306,7 +304,7 @@ public class TestCase {
     @Test
     public void testCardExpiry() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -324,7 +322,7 @@ public class TestCase {
     @Test
     public void testBankNumber() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -344,7 +342,7 @@ public class TestCase {
     @Test
     public void testCVV() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -363,7 +361,7 @@ public class TestCase {
     @Test
     public void testPassword() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -382,7 +380,7 @@ public class TestCase {
     @Test
     public void testDoB() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -401,7 +399,7 @@ public class TestCase {
     @Test
     public void testGender() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -421,7 +419,7 @@ public class TestCase {
     @Test
     public void testAddress() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -440,7 +438,7 @@ public class TestCase {
     @Test
     public void testCardNum() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -459,7 +457,7 @@ public class TestCase {
     @Test
     public void testChequing() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -480,7 +478,7 @@ public class TestCase {
     @Test
     public void testSavings() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
     
         dummy = BA.createAccount("test", "dummy", "416-792-1234", "test street",
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
@@ -501,7 +499,7 @@ public class TestCase {
     @Test
     public void testChequingHistory() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
         ArrayList<Transaction> chequingHist = new ArrayList<>();
 
         chequingHist.add(new Transaction("Person 1", "test", 500,1));
@@ -530,7 +528,7 @@ public class TestCase {
     @Test
     public void testSavingsHistory() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
         ArrayList<Transaction> savingsHist = new ArrayList<>();
 
         savingsHist.add(new Transaction("Person 1", "test", 500,1));
@@ -558,7 +556,7 @@ public class TestCase {
     @Test
     public void testSetterGetter() {
 
-        BankAutomated BA = new BankAutomated();
+        BankAutomated BA = new BankAutomated(false);
 
         // Test setters and getters for People objects
         People test = new People("John", "Doe", "johndoe@example.com", "416-123-4567");
@@ -752,6 +750,26 @@ public class TestCase {
         assertEquals(requestTest, csr.getAssistanceRequests().get(0));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testSetterGetter", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Test
+    public void testRequest(){
+
+        BankAutomated BA = new BankAutomated(false);
+
+        dummy = BA.createAccount("John", "Doe", "416-792-1234", "test street",
+                "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
+                "4417123456789113", "01/01/2027", "555");
+
+        BA.makeReport("John", "Doe", "test@gmail.com");
+
+        assertEquals(dummy.getReportSus().size(), 1);
+        assertEquals(BA.admin.getCustomerReports().size(), 1);
+
+        assertNotEquals(dummy.getReportSus().size(), 2);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testRequest", JOptionPane.INFORMATION_MESSAGE);
+
     }
     // Future test cases for test and integration phase
 
