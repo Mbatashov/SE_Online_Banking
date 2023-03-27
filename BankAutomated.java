@@ -11,10 +11,9 @@ public class BankAutomated
     List<CA> customerAccounts = Collections.synchronizedList(new ArrayList<CA>());
     private final ConcurrentHashMap<String, CA> customerHash = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
-    AD admin = new AD("Mister", "Admin", "admin@BCS.ca", "1234567890", 0);
-    MT maintenance = new MT ("Mister", "Maintenance", "maintenance@BCS.ca", "1234567890", 0);
-    CSR customerService = new CSR("Mister", "Customer Service", "customerservice@BCS.ca", "123456789", 0);
+    ArrayList<AD> admins = new ArrayList<>();
+    ArrayList<MT> maintenanceTeam = new ArrayList<>();
+    ArrayList<CSR> customerService = new ArrayList<>();
 
     @SuppressWarnings("SpellCheckingInspection")
     public enum State {HOME, ACCOUNT, ETRANS, BANKTRANS, FUNDTRANS, MEETREQ, MAKEREP, LOCATE,
@@ -24,13 +23,61 @@ public class BankAutomated
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
      */
-    public BankAutomated(boolean Test){}
+    public BankAutomated(boolean Test){
+        AD admin = new AD("Mister", "Admin", "admin@BCS.ca", "1234567890", 0);
+        AD admin2 = new AD("Mister", "Admin2", "admin2@BCS.ca", "1112223333", 1);
+        AD admin3 = new AD("Mister", "Admin3", "admin3@BCS.ca", "2223334444", 2);
+        AD admin4 = new AD("Mister", "Admin4", "admin4@BCS.ca", "3334445555", 3);
+        AD admin5 = new AD("Mister", "Admin5", "admin5@BCS.ca", "4445556666", 4);
+
+        MT maintenance = new MT ("Mister", "Maintenance", "maintenance@BCS.ca", "1234567890", 0);
+        MT maintenance2 = new MT ("Mister", "Maintenance2", "maintenance2@BCS.ca", "1123456789", 1);
+        MT maintenance3 = new MT ("Mister", "Maintenance3", "maintenance3@BCS.ca", "1234567800", 2);
+        MT maintenance4 = new MT ("Mister", "Maintenance4", "maintenance4@BCS.ca", "1234567901", 3);
+        MT maintenance5 = new MT ("Mister", "Maintenance5", "maintenance5@BCS.ca", "1224567890", 4);
+
+        CSR customerService1 = new CSR("Mister", "CustomerService2", "customerservice@BCS.ca", "123456789", 0);
+        CSR customerService2 = new CSR("Mister", "CustomerService2", "customerservice2@BCS.ca", "121456789", 1);
+        CSR customerService3 = new CSR("Mister", "CustomerService3", "customerservice3@BCS.ca", "112456789", 2);
+        CSR customerService4 = new CSR("Mister", "CustomerService4", "customerservice4@BCS.ca", "123456889", 3);
+        CSR customerService5 = new CSR("Mister", "CustomerService5", "customerservice5@BCS.ca", "123567899", 4);
+
+        admins.add(admin); admins.add(admin2); admins.add(admin3); admins.add(admin4); admins.add(admin5);
+        maintenanceTeam.add(maintenance); maintenanceTeam.add(maintenance2); maintenanceTeam.add(maintenance3);
+        maintenanceTeam.add(maintenance4); maintenanceTeam.add(maintenance5);
+        customerService.add(customerService1); customerService.add(customerService2); customerService.add(customerService3);
+        customerService.add(customerService4); customerService.add(customerService5);
+    }
     
     /*
      * Constructor for the BankAutomated class
      * NOTE: DO NOT TOUCH
      */
-    public BankAutomated() {
+    public BankAutomated()
+    {
+        AD admin = new AD("Mister", "Admin", "admin@BCS.ca", "1234567890", 0);
+        AD admin2 = new AD("Mister", "Admin2", "admin2@BCS.ca", "1112223333", 1);
+        AD admin3 = new AD("Mister", "Admin3", "admin3@BCS.ca", "2223334444", 2);
+        AD admin4 = new AD("Mister", "Admin4", "admin4@BCS.ca", "3334445555", 3);
+        AD admin5 = new AD("Mister", "Admin5", "admin5@BCS.ca", "4445556666", 4);
+
+        MT maintenance = new MT ("Mister", "Maintenance", "maintenance@BCS.ca", "1234567890", 0);
+        MT maintenance2 = new MT ("Mister", "Maintenance2", "maintenance2@BCS.ca", "1123456789", 1);
+        MT maintenance3 = new MT ("Mister", "Maintenance3", "maintenance3@BCS.ca", "1234567800", 2);
+        MT maintenance4 = new MT ("Mister", "Maintenance4", "maintenance4@BCS.ca", "1234567901", 3);
+        MT maintenance5 = new MT ("Mister", "Maintenance5", "maintenance5@BCS.ca", "1224567890", 4);
+
+        CSR customerService1 = new CSR("Mister", "CustomerService2", "customerservice@BCS.ca", "123456789", 0);
+        CSR customerService2 = new CSR("Mister", "CustomerService2", "customerservice2@BCS.ca", "121456789", 1);
+        CSR customerService3 = new CSR("Mister", "CustomerService3", "customerservice3@BCS.ca", "112456789", 2);
+        CSR customerService4 = new CSR("Mister", "CustomerService4", "customerservice4@BCS.ca", "123456889", 3);
+        CSR customerService5 = new CSR("Mister", "CustomerService5", "customerservice5@BCS.ca", "123567899", 4);
+
+        admins.add(admin); admins.add(admin2); admins.add(admin3); admins.add(admin4); admins.add(admin5);
+        maintenanceTeam.add(maintenance); maintenanceTeam.add(maintenance2); maintenanceTeam.add(maintenance3);
+        maintenanceTeam.add(maintenance4); maintenanceTeam.add(maintenance5);
+        customerService.add(customerService1); customerService.add(customerService2); customerService.add(customerService3);
+        customerService.add(customerService4); customerService.add(customerService5);
 
         System.out.println("Loading customer objects...");
 
@@ -231,7 +278,7 @@ public class BankAutomated
     }
 
     /*
-     * Checks if the string contains numbers only
+     * Checks if the string contains numbers only (allows up to one decimal point for doubles)
      * @param String str The string to check
      * @return boolean True if the string contains numbers only, false otherwise
      * 
@@ -372,41 +419,25 @@ public class BankAutomated
     }
 
     /*
-     * This function allows a customer to make a report. It returns true if the report was made successfully, and false otherwise.
-     * Allowing the customer to make a report about suspicious activity on their accounts.
-     * @param String customerFName The first name of the customer
-     * @param String customerLName The last name of the customer
-     * @param String email The email of the customer
-     * @return boolean True if the report was made successfully, false otherwise
-     * 
-     */
-    public boolean makeReport(String customerFName, String customerLName, String email) {
-
-        CA customer = customerHash.get(email);
-
-        if (customer == null) {
-            return false;
-        }
-        this.addReport(customer);
-
-        return true;
-
-    }
-
-    /*
      * Adds a report to the customer's report list and the admin's report list
      * @param CA customer The customer who made the report
-     * 
+     * Returns the report created
      */
-    public void addReport(CA customer) {
+    public Report makeReport(CA customer)
+    {
+        // Get random admin that receives the report
+        Random rand = new Random();
+        int randIndex = rand.nextInt(admins.size()-1);
+        AD admin = admins.get(randIndex);
 
         // Create a new report object
-        Report report = new Report(customer.getFirstName(), customer.getLastName(), customer.getEmail(), customer.getCardNum());
+        Report report = new Report(customer, admin);
 
         // Add the report to the list of reports
         customer.addReport(report);
         admin.addCustomerReports(report);
 
+        return report;
     }
 
     /*
@@ -421,18 +452,27 @@ public class BankAutomated
 
         Request request;
 
+        Random rand = new Random();
+        int randIndex;
+
         switch(type){
             case "1": // Maintenance
+                randIndex = rand.nextInt(maintenanceTeam.size()-1);
+                MT maintenance = maintenanceTeam.get(randIndex);
                 request = new Request(type, maintenance);
                 maintenance.addSysRequest(request);
                 break;
             case "2": // Technical
+                randIndex = rand.nextInt(admins.size()-1);
+                AD admin = admins.get(randIndex);
                 request = new Request(type, admin);
                 admin.addMeetingRequests(request);
                 break;
             case "3": // Customer Service
-                request = new Request(type, customerService);
-                customerService.addRequest(request);
+                randIndex = rand.nextInt(customerService.size()-1);
+                CSR csr = customerService.get(randIndex);
+                request = new Request(type, csr);
+                csr.addRequest(request);
                 break;
             default:
                 return false;
