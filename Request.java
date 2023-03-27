@@ -6,44 +6,42 @@ public class Request implements Serializable {
     MT mt;
     AD admin;
     CSR csr;
+    String details;
 
     /*
-     * Constructor for Request (type 1) 
-     * @param type the type of request
+     * Constructor for Request (type 1), requesting system changes from maintenance team
+     * @param type: the type of request
      * @param mt the maintenance team
      * 
      */
-    public Request(String type, MT mt) {
-
+    public Request(String type, MT mt, String description) {
         this.type = type;
         this.mt = mt;
-
+        this.details = description;
     }
 
     /*
-     * Constructor for Request (type 2)
-     * @param type the type of request
-     * @param admin the admin
-     * 
+     * Constructor for Request (type 2), requesting a meeting from admin
+     * @param type: the type of request
+     * @param admin: the admin
+     * @param date: the date requested by the customer
      */
-    public Request(String type, AD admin) {
-
+    public Request(String type, AD admin, String date) {
         this.type = type;
         this.admin = admin;
-
+        this.details = date;
     }
 
     /*
-     * Constructor for Request (type 3)
+     * Constructor for Request (type 3), requesting assistance from CSR
      * @param type the type of request
      * @param csr the customer service representative
-     * 
+     * @param description: the description of the request
      */
-    public Request(String type, CSR csr) {
-
+    public Request(String type, CSR csr, String description) {
         this.type = type;
         this.csr = csr;
-
+        this.details = description;
     }
 
     /*
@@ -59,7 +57,7 @@ public class Request implements Serializable {
 
     /*
      * Sets the type of request
-     * @param type the type of request
+     * @param type: the type of request
      * 
      */
     public void setType(String type) {
@@ -131,6 +129,26 @@ public class Request implements Serializable {
 
         this.csr = csr;
 
+    }
+
+    /*
+     * Gets the customer service representative
+     * @return the details/date depending on the type
+     *
+     */
+    public String getDetails()
+    {
+        return details;
+    }
+
+    /*
+     * Sets the customer service representative
+     * @param str the details/date depending on the type
+     *
+     */
+    public void setDetails(String str)
+    {
+        str = this.details;
     }
 
 }

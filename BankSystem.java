@@ -8,6 +8,11 @@ public class BankSystem
             CA test= BA.createAccount("Mo", "N", "6667771111", "Yonge Street",
                     "Male", "01/02/2003", "this2@gmail.com", "Hello@World1",
                     "4417123456789113", "0521", "111");
+
+                    BA.createAccount("test", "dummy", "416-792-1234", "test street",
+                    "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
+                    "4417123456789113", "01/01/2027", "555");
+                    
             LoginPage LP = new LoginPage(BA);
             HomePage HP = new HomePage(LP, BA, test);
             ETransferPage ETP = new ETransferPage(BA, HP, test, LP);

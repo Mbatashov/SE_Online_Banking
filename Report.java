@@ -6,108 +6,46 @@ import java.io.Serializable;
 // 3- Maintenance Team (MT)
 // 4- Customer Service Representative (CSR)
 public class Report implements Serializable {
-    String firstName;
-    String lastName;
-    String email;
-    String cardNum;
+    CA customer;
+    AD admin;
+    String description;
 
     /*
-     * Constructor for Report
-     * @param firstName the first name of the person
-     * @param lastName the last name of the person
-     * @param email the email of the person
-     * @param cardNum the card number of the person
-     * 
+     * Another Constructor for Report
+     * @param customer: customer that made the report
+     * @param admin: admin that receives the report
      */
-    public Report(String firstName, String lastName, String email, String cardNum) {
-
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.cardNum = cardNum;
-
+    public Report(CA customer, AD admin, String description)
+    {
+        this.customer = customer;
+        this.admin = admin;
+        this.description = description;
     }
 
-    /*
-     * Gets the first name of the person
-     * @return the first name of the person
-     * 
-     */
-    public String getFirstName() {
-
-        return firstName;
-
+    public void setCustomer(CA customer)
+    {
+        this.customer = customer;
+    }
+    public CA getCustomer()
+    {
+        return customer;
     }
 
-    /*
-     * Sets the first name of the person
-     * @param firstName the first name of the person
-     * 
-     */
-    public void setFirstName(String fName) {
-
-        this.firstName = fName;
-
+    public void setAdmin(AD admin)
+    {
+        this.admin = admin;
+    }
+    public AD getAdmin()
+    {
+        return admin;
     }
 
-    /*
-     * Gets the last name of the person
-     * @return the last name of the person
-     * 
-     */
-    public String getLastName() {
-
-        return lastName;
-
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
-
-    /*
-     * Sets the last name of the person
-     * @param lastName the last name of the person
-     * 
-     */
-    public void setLastName(String lName) {
-
-        this.lastName = lName;
-
+    public String getDescription()
+    {
+        return description;
     }
-
-    /*
-     * Gets the email of the person
-     * @return the email of the person
-     * 
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /*
-     * Sets the email of the person
-     * @param email the email of the person
-     * 
-     */
-    public void setEmail(String email) {
-
-        this.email = email;
-
-    }
-
-    /*
-     * Gets the card number of the person
-     * @return the card number of the person
-     * 
-     */
-    public String getCardNum() {
-        return cardNum;
-    }
-
-    /*
-     * Sets the card number of the person
-     * @param cardNum the card number of the person
-     * 
-     */
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum;
-    }
-
 }

@@ -45,7 +45,7 @@ public class MakeReportPage extends JFrame implements ActionListener
         reportField.setEditable(true);
         this.add(scroll);
 
-        completeButton = new JButton("Complete Transaction");
+        completeButton = new JButton("Submit Report");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
         completeButton.setBounds(475, 525, 350, 40);
         completeButton.setBackground(Color.black);
@@ -112,6 +112,26 @@ public class MakeReportPage extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
+        if (e.getSource() == backToHome)
+        {
+            this.setVisible(false);
+            home.setVisible(true);
+        }
+        else if (e.getSource() == completeButton)
+        {
+            String reportDescription = reportField.getText();
+            if (reportDescription.equals(""))
+            {
+                JOptionPane.showMessageDialog(this, "Please describe the situation before submitting.");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Thank you for reporting suspicious on your" +
+                        " account. An admin will review it and\n contact you shortly as per your notification preferences.");
+                BA.makeReport(customer, reportDescription);
+                this.setVisible(false);
+                home.setVisible(true);
+            }
+        }
     }
 }
