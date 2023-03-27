@@ -662,12 +662,6 @@ public class BankAutomated
 
     }
 
-    // Change the customer's details in the settings tab. Customers can change their address, email,
-    // and phone number
-    public void changeSettings(CA customer) {
-
-    }
-
     /*
      * This method is used to return a list of addresses for the customer to 
      * choose from when visiting a branch.

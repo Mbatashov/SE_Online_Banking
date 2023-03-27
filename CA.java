@@ -21,7 +21,12 @@ public class CA extends People
     ArrayList<Report> reportSus;
     ArrayList<Request> requests;
 
- 
+    private boolean locationServices = true;
+    private boolean notificationSettings = true;
+    private boolean requireDataCollection = true;
+    private boolean sensitiveDataCollection = true;
+    private boolean keyLogger = true;
+
     /*
      * Constructor for the Customer Account
      * @param String firstName the first name of the Customer Account
@@ -58,6 +63,97 @@ public class CA extends People
         savingsHist = new ArrayList<Transaction>();
         reportSus = new ArrayList<Report>();
         requests = new ArrayList<Request>();
+    }
+
+    /*
+     * Sets the address of the Customer Account
+     * @param String address the address of the Customer Account
+     * 
+     */
+    public void setLocationServices(boolean locationServices) {
+        this.locationServices = locationServices;
+    }
+
+    /*
+     * Gets the location services boolean of the Customer Account
+     * @return boolean the location services of the Customer Account
+     * 
+     */
+    public boolean getLocationServices() {
+        return locationServices;
+    }
+
+    /*
+     * Sets the notification settings boolean of the Customer Account
+     * @param boolean notificationSettings the notification settings of the Customer Account
+     * 
+     */
+    public void setNotificationSettings(boolean notificationSettings) {
+        this.notificationSettings = notificationSettings;
+    }
+
+    /*
+     * Gets the notification settings boolean of the Customer Account
+     * @return boolean the notification settings of the Customer Account
+     * 
+     */
+    public boolean getNotificationSettings() {
+        return notificationSettings;
+    }
+
+    /*
+     * Sets the require data collection boolean of the Customer Account
+     * @param boolean requireDataCollection the require data collection of the Customer Account
+     * 
+     */
+    public void setRequireDataCollection(boolean requireDataCollection) {
+        this.requireDataCollection = requireDataCollection;
+    }
+
+    /*
+     * Gets the require data collection boolean of the Customer Account
+     * @return boolean the require data collection of the Customer Account
+     * 
+     */
+    public boolean getRequireDataCollection() {
+        return requireDataCollection;
+    }
+
+    /*
+     * Sets the sensitive data collection boolean of the Customer Account
+     * @param boolean sensitiveDataCollection the sensitive data collection of the Customer Account
+     * 
+     */
+    public void setSensitiveDataCollection(boolean sensitiveDataCollection) {
+        this.sensitiveDataCollection = sensitiveDataCollection;
+    }
+
+
+    /*
+     * Gets the sensitive data collection boolean of the Customer Account
+     * @return boolean the sensitive data collection of the Customer Account
+     * 
+     */
+    public boolean getSensitiveDataCollection() {
+        return sensitiveDataCollection;
+    }
+
+    /*
+     * Sets the key logger boolean of the Customer Account
+     * @param boolean keyLogger the key logger of the Customer Account
+     * 
+     */
+    public void setKeyLogger(boolean keyLogger) {
+        this.keyLogger = keyLogger;
+    }
+
+    /*
+     * Gets the key logger boolean of the Customer Account
+     * @return boolean the key logger of the Customer Account
+     * 
+     */
+    public boolean getKeyLogger() {
+        return keyLogger;
     }
 
     /*
@@ -384,4 +480,4 @@ public class CA extends People
         );
     }
     
-}
+}   
