@@ -582,18 +582,6 @@ public class BankAutomated
 
             return 2;
         // check if receiver doesn't exist, i.e. it is an external transfer
-        } else if (receiverAccount == null) {
-            if (accountFrom.equals("Chequing"))
-            {
-                customer.setChequing(customer.getChequing() - amount);
-                customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
-            }
-            else
-            {
-                customer.setSavings(customer.getSavings() - amount);
-                customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
-            }
-            return 3;
         }
         // Check if the amount is greater than 1000
         else if (amount > 1000)
@@ -603,20 +591,36 @@ public class BankAutomated
         // If all checks pass, transfer the money and receiver's account exists
         else
         {
-            if (accountFrom.equals("Chequing"))
-            {
-                customer.setChequing(customer.getChequing() - amount);
-                customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
-                receiverAccount.setChequing(receiverAccount.getChequing() + amount);
-                receiverAccount.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
+            if (receiverAccount == null) {
+                if (accountFrom.equals("Chequing"))
+                {
+                    customer.setChequing(customer.getChequing() - amount);
+                    customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
+                }
+                else
+                {
+                    customer.setSavings(customer.getSavings() - amount);
+                    customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
+                }
+                return 3;
             }
             else
             {
-                customer.setSavings(customer.getSavings() - amount);
-                customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
-                receiverAccount.setSavings(receiverAccount.getSavings() + amount);
-                receiverAccount.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
+                if (accountFrom.equals("Chequing"))
+                {
+                    customer.setChequing(customer.getChequing() - amount);
+                    customer.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
+                    receiverAccount.setChequing(receiverAccount.getChequing() + amount);
+                    receiverAccount.addChequing(new Transaction(customer.email, receiverEmail, amount,1));
+                }
+                else
+                {
+                    customer.setSavings(customer.getSavings() - amount);
+                    customer.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
+                    receiverAccount.setSavings(receiverAccount.getSavings() + amount);
+                    receiverAccount.addSaving(new Transaction(customer.email, receiverEmail, amount,1));
 
+                }
             }
         }
 
