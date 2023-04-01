@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.*;
 
 
-// This is the test case for the BankAutomated class
+// Test cases for each of the functions used, including the BankAutomated functions and setters and getters.
 public class TestCase {
     CA dummy;
 
