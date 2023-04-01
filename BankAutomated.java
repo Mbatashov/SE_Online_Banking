@@ -361,7 +361,16 @@ public class BankAutomated
      */
     public boolean validCard(String cardNum) {
         boolean valid;
-    
+
+        // If card number already exists, return false
+        for (CA cust: customerAccounts)
+        {
+            if (cust.getCardNum().equals(cardNum))
+            {
+                return false;
+            }
+        }
+
         // Check length, starting digit, and only numeric
         if (!(cardNum.length() >= 13 && cardNum.length() <= 19 && onlyNumeric(cardNum) &&
             (cardNum.charAt(0) == '4' || cardNum.charAt(0) == '3' || cardNum.charAt(0) == '2' || cardNum.charAt(0) == '5'))) {

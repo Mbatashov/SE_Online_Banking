@@ -305,7 +305,7 @@ public class RegisterPage extends JFrame implements ActionListener
             }
             else if (!BA.validCard(cardNum))
             {
-                JOptionPane.showMessageDialog(this, "Card Number is Invalid.");
+                JOptionPane.showMessageDialog(this, "Card Number is invalid/already registered with an account.");
                 cardNumField.setText("");
                 return;
             }
