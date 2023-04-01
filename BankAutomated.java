@@ -436,6 +436,31 @@ public class BankAutomated
     }
 
     /*
+     * This function does the same as the previous one; however, it is used for the stressTest testing in order to
+     * create a million customer objects at once. The function takes in the same parameters except card number, which
+     * it sets to the empty string in order to create a million customer objects without having to assign a new card
+     * number to all 1,000,000 objects in the stressTest.
+     * It is also used in the e-transfer and bank transfer testing to prevent the same issue
+     */
+    public CA createAccountTest(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
+                                String email, String password, String cardExpiry, String cvv)
+    {
+        // Check if the email is already in use, if the email is valid, if the password is valid, and if the card number is valid
+        if (existingEmail(email) || !validEmail(email) || !validPassword(password)) {
+            return null;
+        }
+
+        // Create and return new CA object
+        CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, "", cardExpiry, cvv);
+
+        // Add the new account to the customerAccounts list and customerHash map
+        customerAccounts.add(customer);
+        customerHash.put(email, customer);
+
+        return customer;
+    }
+
+    /*
      * Adds a report to the customer's report list and the admin's report list
      * @param CA customer The customer who made the report
      * Returns the report created

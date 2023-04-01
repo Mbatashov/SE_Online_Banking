@@ -36,9 +36,8 @@ public class TestCase {
                 // Do work:
                 for (int i = start; i < end; i++) {
                     String email = i + "@gmail.com";
-                    BA.createAccount("test", "dummy", "416-792-1234", "test street",
-                            "Male", "01/01/1990", email, "Hello@World1",
-                            "4417123456789113", "01/01/2027", "555");
+                    BA.createAccountTest("test", "dummy", "416-792-1234", "test street",
+                            "Male", "01/01/1990", email, "Hello@World1", "01/01/2027", "555");
                 }
 
             });
@@ -212,12 +211,12 @@ public class TestCase {
 
         long startTime = System.currentTimeMillis();
 
-        CA jane = BA.createAccount("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
-                "01/01/2000", "janedoe@example.com", "Password123@", "4417123456789113", 
+        CA jane = BA.createAccountTest("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
+                "01/01/2000", "janedoe@example.com", "Password123@",
                 "01/01/2030", "123");
 
-        CA john = BA.createAccount("John", "Doe", "647-987-6543", "321 Example St.", "Male",
-                "01/01/2000", "johndoe@example.com", "Password123@", "4417123456789113", 
+        CA john = BA.createAccountTest("John", "Doe", "647-987-6543", "321 Example St.", "Male",
+                "01/01/2000", "johndoe@example.com", "Password123@",
                 "01/01/2030", "123");
 
 
@@ -296,12 +295,12 @@ public class TestCase {
 
         long startTime = System.currentTimeMillis();
 
-        CA jane = BA.createAccount("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
-                "01/01/2000", "janedoe@example.com", "Password123@", "4417123456789113", 
+        CA jane = BA.createAccountTest("Jane", "Doe", "647-123-4567", "123 Example St.", "Female",
+                "01/01/2000", "janedoe@example.com", "Password123@",
                 "01/01/2030", "123");
 
-        CA john = BA.createAccount("John", "Doe", "647-987-6543", "321 Example St.", "Male",
-                "01/01/2000", "johndoe@example.com", "Password123@", "4417123456789113", 
+        CA john = BA.createAccountTest("John", "Doe", "647-987-6543", "321 Example St.", "Male",
+                "01/01/2000", "johndoe@example.com", "Password123@",
                 "01/01/2030", "123");
         
         jane.setBankNumber("12345");
