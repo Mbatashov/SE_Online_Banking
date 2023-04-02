@@ -28,6 +28,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         Font labels = new Font("Raleway", Font.BOLD, 22);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         String[] options = {"Select Notification Method", "Email", "SMS", "Don't Notify"};
+        String[] options2 = {"Select Notification Method", "Email", "SMS"};
         int custRequestReply = customer.getRequestReplies();
         if (custRequestReply == 0) { custRequestReply = 3; }
         int custReportReply = customer.getReportReplies();
@@ -44,7 +45,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         requestNotif.setBounds(225,150,350,40);
         this.add(requestNotif);
 
-        selectNotification = new JComboBox<>(options);
+        selectNotification = new JComboBox<>(options2);
         selectNotification.setSelectedIndex(custRequestReply);
         selectNotification.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification.setBounds(575, 150, 500, 40);
@@ -59,7 +60,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         reportNotif.setBounds(225,250,350,40);
         this.add(reportNotif);
 
-        selectNotification2 = new JComboBox<>(options);
+        selectNotification2 = new JComboBox<>(options2);
         selectNotification2.setSelectedIndex(custReportReply);
         selectNotification2.setFont(new Font("Arial", Font.PLAIN, 20));
         selectNotification2.setBounds(575, 250, 500, 40);

@@ -197,7 +197,14 @@ public class BankAutomated
      */
     public boolean existingEmail(String email)
     {
-        return customerHash.containsKey(email);
+        for (CA cust: customerAccounts)
+        {
+            if (cust.getEmail().equalsIgnoreCase(email))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
