@@ -48,7 +48,7 @@ public class RequestsPage extends JFrame implements ActionListener
 
         String instructions = "Enter the details of your request here. If requesting a meeting, make\nsure to " +
                 "include a few dates/timings for the admins to pick one, as well as\nyour preferred meeting setting" +
-                "(in-person or virtual).";
+                " (in-person or virtual)\nPlease clear this box before adding your details.";
         detailsField = new JTextArea(instructions);
         detailsField.setFont(new Font("SansSerif", Font.PLAIN, 22));
         detailsField.setBackground(Color.white);
@@ -137,7 +137,8 @@ public class RequestsPage extends JFrame implements ActionListener
         {
             String requestDescription = detailsField.getText();
             if (requestDescription.equals("") || requestDescription.contains("Enter the details of your request here.")
-                || requestDescription.contains("If requesting a meeting"))
+                || requestDescription.contains("If requesting a meeting")
+                || requestDescription.contains("Please clear this box before adding your details."))
             {
                 JOptionPane.showMessageDialog(this, "Please clear the text box and add details" +
                         " to your request before submitting.");
