@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class TestCase {
     CA dummy;
 
-    /*
+    /* Test 1
      * Stress test for createAccount and login
      */
     @Test
@@ -71,7 +71,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 2
      * Test case for the createAccount method
      * 
      */
@@ -113,7 +113,7 @@ public class TestCase {
         
     }
 
-    /*
+    /* Test 3
      * Test case for the loginAccount method
      * 
      */
@@ -149,7 +149,7 @@ public class TestCase {
         
     }
 
-    /*
+    /* Test 4
      * Test case for the deposit method
      * 
      */
@@ -239,7 +239,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 5
      * Test case for the deposit method
      * 
      */
@@ -337,7 +337,7 @@ public class TestCase {
         JOptionPane.showMessageDialog(null, "Test cases passed", "testETransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /*
+    /* Test 6
      * Test case for the deposit method
      * 
      */
@@ -418,7 +418,7 @@ public class TestCase {
         JOptionPane.showMessageDialog(null, "Test cases passed", "testBankTransferFunds", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    /*
+    /* Test 7
      * Test case for card expiry
      * 
      */
@@ -444,6 +444,10 @@ public class TestCase {
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /* Test 8
+     * Test case for bank number
+     * 
+     */
     @Test
     public void testBankNumber() {
 
@@ -477,7 +481,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 9
      * Test case for CVV
      * 
      */
@@ -512,7 +516,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 10
      * Test case for password
      * 
      */
@@ -547,7 +551,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 11
      * Test case for date of birth
      * 
      */
@@ -582,7 +586,7 @@ public class TestCase {
 
     }
 
-    /*
+    /* Test 12
      * Test case for gender
      * 
      */
@@ -605,12 +609,12 @@ public class TestCase {
         // Test if gender is set
         assert(dummy.getGender().equals("Female"));
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testGender", JOptionPane.INFORMATION_MESSAGE);
 
 
     }
 
-    /*
+    /* Test 13
      * Test case for address
      * 
      */
@@ -623,17 +627,22 @@ public class TestCase {
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
                 "4417123456789113", "01/01/2027", "555");
 
+
+        // Test 1
+        // Check if the address is being set
         assert(dummy.getAddress().equals("test street"));
 
         dummy.setAddress("5 CS Road");
 
+        // Test 2
+        // Check if the address is being set
         assert(dummy.getAddress().equals("5 CS Road"));
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testAddress", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    /*
+    /* Test 14
      * Test case for card number
      * 
      */
@@ -664,10 +673,14 @@ public class TestCase {
         // Check if the card number is invalid
         assertEquals(BA.validCard("552823455789113"), false);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardNum", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
+    /* Test 15
+     * Test case for chequing set
+     * 
+     */
     @Test
     public void testChequing() {
 
@@ -679,16 +692,24 @@ public class TestCase {
 
         dummy.setChequing(4545.13);
 
+        // Test 1
+        // Check if the chequing is being set
         assert(dummy.getChequing() == 4545.13);
 
         dummy.setChequing(5942.84);
 
+        // Test 2
+        // Check if the chequing is being set
         assert(dummy.getChequing() == 5942.84);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testChequing", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
+    /* Test 16
+     * Test case for savings set
+     * 
+     */
     @Test
     public void testSavings() {
 
@@ -700,16 +721,24 @@ public class TestCase {
 
         dummy.setSavings(4545.13);
 
+        // Test 1
+        // Check if the savings is being set
         assert(dummy.getSavings() == 4545.13);
 
         dummy.setSavings(5942.84);
 
+        // Test 2
+        // Check if the savings is being set
         assert(dummy.getSavings() == 5942.84);
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testSavings", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
+    /* Test 17
+     * Test case for chequing history
+     * 
+     */
     @Test
     public void testChequingHistory() {
 
@@ -728,6 +757,8 @@ public class TestCase {
         dummy.addChequing(new Transaction("test", "Person 2", 115,5));
         dummy.addChequing(new Transaction("Person 3", "test", 200,6));
 
+        // Test 1
+        // Check if the chequing history is being set after adding transactions to each customer
         for (int i = 0; i < chequingHist.size(); i++)
         {
             assert(dummy.getChequingHist().get(i).getReceiver().equals(chequingHist.get(i).getReceiver()));
@@ -735,10 +766,14 @@ public class TestCase {
             assert (dummy.getChequingHist().get(i).getAmount() == chequingHist.get(i).getAmount());
         }
 
-        JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Test cases passed", "testChequingHistory", JOptionPane.INFORMATION_MESSAGE);
         
     }
 
+    /* Test 18
+     * Test case for savings history
+     * 
+     */
     @Test
     public void testSavingsHistory() {
 
@@ -757,6 +792,8 @@ public class TestCase {
         dummy.addSaving(new Transaction("test", "Person 2", 115,5));
         dummy.addSaving(new Transaction("Person 3", "test", 200,6));
 
+        // Test 1
+        // Check if the savings history is being set after adding transactions to each customer
         for (int i = 0; i < savingsHist.size(); i++)
         {
             assert(dummy.getSavingsHist().get(i).getReceiver().equals(savingsHist.get(i).getReceiver()));
@@ -767,6 +804,10 @@ public class TestCase {
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    /* Test 19
+     * Test case for card expiry
+     * 
+     */
     @Test
     public void testSetterGetter() {
 
@@ -775,6 +816,7 @@ public class TestCase {
         // Test setters and getters for People objects
         People test = new People("John", "Doe", "johndoe@example.com", "416-123-4567");
 
+        // Test setter and getters for People objects
         assertEquals("John", test.getFirstName());
         assertEquals("Doe", test.getLastName());
         assertEquals("johndoe@example.com", test.getEmail());
@@ -785,6 +827,7 @@ public class TestCase {
         test.setEmail("janesmith@example.ca");
         test.setPhoneNum("647-987-6543");
 
+        // Test setters and getters for People objects
         assertEquals("Jane", test.getFirstName());
         assertEquals("Smith", test.getLastName());
         assertEquals("janesmith@example.ca", test.getEmail());
@@ -987,6 +1030,10 @@ public class TestCase {
         assertTrue(tcus.getKeyLogger());
     }
 
+    /* Test 20
+     * Test the request method in BankAutomated
+     * 
+     */
     @Test
     public void testRequest(){
 
