@@ -1,3 +1,5 @@
+package bank.core;
+
 import java.io.Serializable;
 
 // Request class, between CA and AD, MT, CSR
@@ -54,7 +56,6 @@ public class Request implements Serializable {
         return type;
 
     }
-
     /*
      * Sets the type of request
      * @param type: the type of request

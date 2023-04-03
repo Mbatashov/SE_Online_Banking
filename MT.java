@@ -1,11 +1,12 @@
+package bank.core;
+
 import java.util.*;
 
 // Maintenance Technician Class
 public class MT extends People
 {
     int id;
-    ArrayList<Request> sysChangeRequests = new ArrayList<Request>();
-
+    ArrayList<Request> sysChangeRequests = new ArrayList<>();
     /*
      * Constructor for the MT
      * @param firstName the first name of the MT

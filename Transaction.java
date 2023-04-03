@@ -1,19 +1,22 @@
+package bank.core;
+
 import java.io.Serializable;
 
 public class Transaction implements Serializable
 {
+
     String sender;
     String receiver;
+    String accountFrom;
     double amount;
     int id;
+    double senderRemaining;
+    double receiverRemaining;
 
     // Transaction types:
     //  1- If sender = "Chequing" and receiver = "Savings", transfer funds between accounts locally, and vice versa between accounts
-    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds from chequing
-    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number from chequing
-    //  Add a function called receive funds that loops and checks if it's a local transfer, and if it's not it brings up
-    //  an "Are you sure you wanna transfer to a customer not in BCS". Otherwise, a make sure message to transfer to someone
-    //  within BCS.
+    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds
+    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number
     public Transaction(String sender, String receiver, double amount, int id)
     {
         this.sender = sender;
@@ -28,9 +31,7 @@ public class Transaction implements Serializable
      * 
      */
     public String getSender() {
-
         return sender;
-
     }
 
     /*
@@ -39,9 +40,7 @@ public class Transaction implements Serializable
      * 
      */
     public void setSender(String sender){
-
         this.sender = sender;
-
     }
 
     /*
@@ -50,9 +49,7 @@ public class Transaction implements Serializable
      * 
      */
     public String getReceiver() {
-
         return receiver;
-
     }
 
     /*
@@ -61,9 +58,7 @@ public class Transaction implements Serializable
      * 
      */
     public void setReceiver(String receiver) {
-
         this.receiver = receiver;
-
     }
 
     /*
@@ -72,20 +67,16 @@ public class Transaction implements Serializable
      * 
      */
     public double getAmount() {
-
         return amount;
-
     }
 
     /*
      * Sets the amount of the transaction
-     * @param amount the amount of the transaction
+     * @param amount: the amount of the transaction
      * 
      */
     public void setAmount(double amount) {
-
         this.amount = amount;
-
     }
 
     /*
@@ -94,9 +85,7 @@ public class Transaction implements Serializable
      * 
      */
     public int getId() {
-
         return id;
-
     }
 
     /*
@@ -105,9 +94,64 @@ public class Transaction implements Serializable
      * 
      */
     public void setId(int id) {
-
         this.id=id;
+    }
 
+    /*
+     * Gets the account the transaction was sent from
+     * @return the account the transaction was sent from
+     *
+     */
+    public String getAccountFrom()
+    {
+        return accountFrom;
+    }
+    /*
+     * Sets the account the transaction was sent from
+     * @param from: the account that initiated the transaction
+     *
+     */
+    public void setAccountFrom(String from)
+    {
+        this.accountFrom = from;
+    }
+
+    /*
+     * Gets the remaining amount the sender has in their account after the transaction
+     * @return the remaining amount
+     *
+     */
+    public double getSenderRemaining()
+    {
+        return senderRemaining;
+    }
+    /*
+     * Sets the remaining amount the sender has in their account after the transaction
+     * @param remaining: the amount remaining in the sender's account
+     *
+     */
+    public void setSenderRemaining(double remaining)
+    {
+        this.senderRemaining = remaining;
+    }
+
+    /*
+     * Gets the remaining amount the receiver has in their account after the transaction
+     * @return the remaining amount
+     *
+     */
+    public double getReceiverRemaining()
+    {
+        return receiverRemaining;
+    }
+    /*
+     * Sets the remaining amount the receiver has in their account after the transaction
+     * @param remaining: the amount remaining in the receiver's account
+     *
+     */
+    public void setReceiverRemaining(double remaining)
+    {
+        this.receiverRemaining = remaining;
     }
     
 }

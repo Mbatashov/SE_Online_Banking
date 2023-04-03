@@ -1,3 +1,5 @@
+package bank.core;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -5,23 +7,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+// This class is for the E-transfer page
 public class ETransferPage extends JFrame implements ActionListener
 {
+    // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
 
+    // Objects
     BankAutomated BA;
     HomePage home;
     CA customer;
     LoginPage login;
+
+    // GUI Components for ETransferPage
     private final JButton backToHome;
     private final JTextField emailField;
     private final JTextField amountField;
     private final JComboBox<String> selectAccount;
     private final JButton completeButton;
 
+    /*
+     * ETransferPage Constructor
+     * @param BA BankAutomated object
+     * @param home HomePage object
+     * @param customer CA object
+     * @param login LoginPage object
+     * 
+     */
     public ETransferPage(BankAutomated BA, HomePage home, CA customer, LoginPage login)
     {
+        // Set title of the frame
         this.setTitle("Make an E-transfer");
         this.setLayout(null);
         this.home = home;
@@ -29,10 +45,12 @@ public class ETransferPage extends JFrame implements ActionListener
         this.BA = BA;
         this.login = login;
 
+        // GUI Components
         Font labels = new Font("Raleway", Font.BOLD, 30);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
+        // GUI Components for reciever's email
         JLabel contact = new JLabel("Receiver's Email:");
         contact.setFont(labels);
         contact.setBorder(emptyBorder);
@@ -40,12 +58,14 @@ public class ETransferPage extends JFrame implements ActionListener
         contact.setBounds(350,200,300,40);
         this.add(contact);
 
+        // GUI Components for email field
         emailField = new JTextField(150);
         emailField.setFont(new Font("Arial", Font.PLAIN, 20));
         emailField.setBorder(border);
         emailField.setBounds(650, 200, 350, 40);
         this.add(emailField);
 
+        // GUI Components for amount
         JLabel amount = new JLabel("Amount (in CAD):");
         amount.setFont(labels);
         amount.setBorder(emptyBorder);
@@ -53,12 +73,14 @@ public class ETransferPage extends JFrame implements ActionListener
         amount.setBounds(350,325,300,40);
         this.add(amount);
 
+        // GUI Components for amount field
         amountField = new JTextField(150);
         amountField.setFont(new Font("Arial", Font.PLAIN, 20));
         amountField.setBorder(border);
         amountField.setBounds(650, 325, 350, 40);
         this.add(amountField);
 
+        // GUI Components for account from
         JLabel account = new JLabel("Account from:");
         account.setFont(labels);
         account.setBorder(emptyBorder);
@@ -66,6 +88,7 @@ public class ETransferPage extends JFrame implements ActionListener
         account.setBounds(350,450,300,40);
         this.add(account);
 
+        // GUI Components for account selection
         String[] accounts = {"Select Account", "Chequing", "Savings"};
         selectAccount = new JComboBox<>(accounts);
         selectAccount.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -74,6 +97,7 @@ public class ETransferPage extends JFrame implements ActionListener
         selectAccount.addActionListener(this);
         this.add(selectAccount);
 
+        // GUI Components for complete button
         completeButton = new JButton("Complete Transaction");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
         completeButton.setBounds(475, 525, 350, 40);
@@ -84,6 +108,7 @@ public class ETransferPage extends JFrame implements ActionListener
         completeButton.addActionListener(this);
         this.add(completeButton);
 
+        // GUI Components for back to home button
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
         backToHome.setBounds(475, 600, 350, 50);
@@ -97,6 +122,7 @@ public class ETransferPage extends JFrame implements ActionListener
         backToHome.addActionListener(this);
         this.add(backToHome);
 
+        // Window listener to logout when the window is closed
         this.addWindowListener(new WindowEventHandler() {
             @Override
             public void windowClosing(WindowEvent evt) {
@@ -112,18 +138,27 @@ public class ETransferPage extends JFrame implements ActionListener
                 System.exit(0);
             }
         });
+
+        // Set the frame
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
+    /*
+     * paint method
+     * @param g Graphics object
+     * 
+     */
     public void paint(Graphics g)
     {
         super.paint(g);
 
+        // Set the background
         Graphics2D g2 = (Graphics2D) g;
         Color myRed = new Color(230, 30, 30);
         Color myBlack = new Color(160, 32, 32);
@@ -131,45 +166,65 @@ public class ETransferPage extends JFrame implements ActionListener
         g2.setPaint(redToBlack);
         g2.fillRect(0, 0, WIDTH+1, 150);
 
+        // Set the title
         Font regFont = new Font("Raleway", Font.BOLD, 60);
         g2.setFont(regFont);
         g2.setColor(new Color(250, 185, 60));
         g2.drawString("E-Transfer to Contact", 25, 110);
+
     }
 
+    /*
+     * actionPerformed method
+     * @param e ActionEvent object
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        // If the back to home button is clicked, go back to the home page
         if (e.getSource() == backToHome)
         {
             this.setVisible(false);
             home.setVisible(true);
         }
+        // If the complete button is clicked, complete the transaction
         else if (e.getSource() == completeButton)
         {
+            // Get the information from the fields
             String email = emailField.getText();
             String amount = amountField.getText();
             String accountFrom = String.valueOf(selectAccount.getSelectedItem());
+
+            // Check if all fields are filled
             if (email.equals("") || amount.equals("") || selectAccount.getSelectedIndex() == 0)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: All fields are required.");
                 return;
             }
+            // Check if the amount is a digit
             else if (!BA.onlyNumericDouble(amount))
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Amount needs to be a digit (can include decimal).");
                 return;
             }
 
+            // Do the transaction, check for errors
             int result = BA.etransfer(Double.parseDouble(amount), email, customer, accountFrom);
+
+            // Invalid email
             if (result == 1)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Invalid email.");
             }
+
+            // Insufficient funds
             else if (result == 2)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: You do not have sufficient funds in selected account.");
             }
+
+            // Success (external transfer)
             else if (result == 3)
             {
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
@@ -178,10 +233,20 @@ public class ETransferPage extends JFrame implements ActionListener
                 home = new HomePage(login, BA, customer);
                 home.setVisible(true);
             }
+
+            // E-transfer limit
             else if (result == 4)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: E-transfer limit is $1,000.");
             }
+
+            // Minimum transfer amount
+            else if (result == 5)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer amount is $0.5");
+            }
+
+            // Success (internal transfer)
             else if (result == 0)
             {
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
@@ -195,6 +260,9 @@ public class ETransferPage extends JFrame implements ActionListener
             {
                 JOptionPane.showMessageDialog(this, "An error occurred.");
             }
+
         }
+
     }
+
 }

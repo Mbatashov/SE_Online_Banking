@@ -1,3 +1,5 @@
+package bank.core;
+
 import java.io.Serializable;
 
 public class People implements Serializable
@@ -7,7 +9,6 @@ public class People implements Serializable
     // 2- Admin (AD)
     // 3- Maintenance Team (MT)
     // 4- Customer Service Representative (CSR)
-
     String firstName;
     String lastName;
     String email;
@@ -15,10 +16,10 @@ public class People implements Serializable
 
     /*
      * Constructor for the People class
-     * @param firstName the first name of the person
-     * @param lastName the last name of the person
-     * @param email the email of the person
-     * @param phoneNum the phone number of the person
+     * @param firstName: the first name of the person
+     * @param lastName: the last name of the person
+     * @param email: the email of the person
+     * @param phoneNum: the phone number of the person
      * 
      */
     public People(String firstName, String lastName, String email, String phoneNum)
@@ -64,7 +65,7 @@ public class People implements Serializable
 
     /*
      * Sets the email of the person
-     * @param email the email of the person
+     * @param email: the email of the person
      * 
      */
     public void setEmail(String email) {

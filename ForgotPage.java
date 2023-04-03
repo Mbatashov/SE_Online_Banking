@@ -1,3 +1,5 @@
+package bank.core;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,45 +13,65 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+// This class is for the forgot password page
 public class ForgotPage extends JFrame implements ActionListener
 {
+
+    // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
+
+    // Objects
     LoginPage previous;
     BankAutomated BA;
+
+    // GUI Components for ForgotPage
     private final JTextField emailField;
     private final JButton requestReset;
     private final JButton backToLogin;
 
+    /*
+     * ForgotPage Constructor
+     * @param logic BankAutomated object
+     * @param login LoginPage object
+     * 
+     */
     public ForgotPage(BankAutomated logic, LoginPage login) {
+
+        // Set title of the frame
         this.setTitle("Forgot Password");
         this.setLayout(null);
         previous = login;
         BA = logic;
 
+        // Jlabel for forgot password
         JLabel forgotPass = new JLabel("Forgot Password");
         forgotPass.setFont(new Font("Osward", Font.BOLD, 38));
         forgotPass.setBounds(835, 50, 350, 50);
         this.add(forgotPass);
 
+        // Jlabel for instructions
         JLabel instructions = new JLabel("We'll email you instructions on");
         instructions.setForeground(new Color(100, 100, 100));
         instructions.setFont(new Font("Arial", Font.PLAIN, 20));
         instructions.setBounds(855, 120, 350, 30);
         this.add(instructions);
 
+        // Jlabel for instructions
         JLabel instructions2 = new JLabel("how to reset it.");
         instructions2.setForeground(new Color(100, 100, 100));
         instructions2.setFont(new Font("Arial", Font.PLAIN, 20));
         instructions2.setBounds(917, 150, 350, 30);
         this.add(instructions2);
 
+        // Jlabel for email
         JLabel enterEmail = new JLabel("Enter email address");
         enterEmail.setForeground(new Color(130, 130, 130));
         enterEmail.setFont(new Font("Arial", Font.PLAIN, 16));
         enterEmail.setBounds(815, 300, 350, 30);
         this.add(enterEmail);
 
+        // Email field
         Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
         emailField = new JTextField(150);
         emailField.setBounds(815, 330, 350, 40);
@@ -57,6 +79,7 @@ public class ForgotPage extends JFrame implements ActionListener
         emailField.setBorder(border);
         this.add(emailField);
 
+        // Request reset button
         requestReset = new JButton("Request Password Reset Link");
         requestReset.setFont(new Font("SansSerif", Font.PLAIN, 20));
         requestReset.setBounds(815, 450, 350, 50);
@@ -66,6 +89,7 @@ public class ForgotPage extends JFrame implements ActionListener
         requestReset.addActionListener(this);
         this.add(requestReset);
 
+        // Back to login button
         Border emptyBorder = BorderFactory.createEmptyBorder();
         backToLogin = new JButton("Back To Login");
         backToLogin.setFont(new Font("SansSerif", Font.PLAIN, 22));
@@ -77,6 +101,7 @@ public class ForgotPage extends JFrame implements ActionListener
         backToLogin.addActionListener(this);
         this.add(backToLogin);
 
+        // Add window listener to the frame, logout when the frame is closed
         this.addWindowListener(new WindowEventHandler() {
             @Override
             public void windowClosing(WindowEvent evt) {
@@ -92,18 +117,27 @@ public class ForgotPage extends JFrame implements ActionListener
                 System.exit(0);
             }
         });
+
+        // Set the frame
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(requestReset);
         this.setSize(WIDTH, LENGTH);
         this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
 
+    /*
+     * Paints the image on the frame
+     * @param g Graphics object
+     * 
+     */
     public void paint(Graphics g)
     {
         super.paint(g);
 
+        // Draw the image
         try
         {
             BufferedImage image = ImageIO.read(Objects.requireNonNull(getClass().getResource("forgotPassIcon.png")));
@@ -123,17 +157,27 @@ public class ForgotPage extends JFrame implements ActionListener
     }
 
 
+    /*
+     * Action performed when a button is clicked
+     * @param e ActionEvent object
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        // If the back to login button is clicked, go back to the login page
         if (e.getSource() == backToLogin)
         {
             this.setVisible(false);
             previous.setVisible(true);
         }
+
+        // If the request reset button is clicked, check if the email is valid and if it exists
         else if (e.getSource() == requestReset)
         {
             String email = emailField.getText();
+
+            // Check if the email is valid and if it exists
             if (BA.validEmail(email))
             {
                 if (BA.existingEmail(email)) {
@@ -157,6 +201,9 @@ public class ForgotPage extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "Email format is invalid. Try again.");
                 emailField.setText("");
             }
+
         }
+
     }
+    
 }

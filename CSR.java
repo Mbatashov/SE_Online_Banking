@@ -1,11 +1,12 @@
+package bank.core;
+
 import java.util.*;
 
 // Customer Service Representative Class
 public class CSR extends People
 {
-
     int id;
-    ArrayList<Request> assistanceRequests = new ArrayList<Request>();
+    ArrayList<Request> assistanceRequests = new ArrayList<>();
 
     /*
      * Constructor for the CSR
