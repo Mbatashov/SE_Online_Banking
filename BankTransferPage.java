@@ -1,3 +1,5 @@
+package bank.core;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -14,11 +16,21 @@ public class BankTransferPage extends JFrame implements ActionListener
     CA customer;
     LoginPage login;
 
+    // GUI Components for BankTransferPage
     private final JButton backToHome;
     private final JTextField accountNumField;
     private final JTextField amountField;
     private final JComboBox<String> selectAccount;
     private final JButton completeButton;
+
+    /*
+     * BankTransferPage Constructor
+     * @param BA BankAutomated object
+     * @param home HomePage object
+     * @param customer CA object
+     * @param login LoginPage object
+     * 
+     */
     public BankTransferPage(BankAutomated BA, HomePage home, CA customer, LoginPage login)
     {
         this.setTitle("Make Bank Transfer");
@@ -28,10 +40,13 @@ public class BankTransferPage extends JFrame implements ActionListener
         this.BA = BA;
         this.login = login;
 
+        // GUI Components
         Font labels = new Font("Raleway", Font.BOLD, 30);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
+
+        // GUI Components for contact button
         JLabel contact = new JLabel("Receiver's Account #:");
         contact.setFont(new Font("Raleway", Font.BOLD, 28));
         contact.setBorder(emptyBorder);
@@ -39,12 +54,14 @@ public class BankTransferPage extends JFrame implements ActionListener
         contact.setBounds(290,200,300,40);
         this.add(contact);
 
+        // GUI Components for account number field
         accountNumField = new JTextField(150);
         accountNumField.setFont(new Font("Arial", Font.PLAIN, 20));
         accountNumField.setBorder(border);
         accountNumField.setBounds(690, 200, 350, 40);
         this.add(accountNumField);
 
+        // GUI Components for amount field
         JLabel amount = new JLabel("Amount (in CAD):");
         amount.setFont(labels);
         amount.setBorder(emptyBorder);
@@ -52,12 +69,14 @@ public class BankTransferPage extends JFrame implements ActionListener
         amount.setBounds(290,325,300,40);
         this.add(amount);
 
+        // GUI Components for amount field
         amountField = new JTextField(150);
         amountField.setFont(new Font("Arial", Font.PLAIN, 20));
         amountField.setBorder(border);
         amountField.setBounds(690, 325, 350, 40);
         this.add(amountField);
 
+        // GUI Components for account selection
         JLabel account = new JLabel("Account from:");
         account.setFont(labels);
         account.setBorder(emptyBorder);
@@ -65,6 +84,7 @@ public class BankTransferPage extends JFrame implements ActionListener
         account.setBounds(290,450,300,40);
         this.add(account);
 
+        // GUI Components for account selection
         String[] accounts = {"Select Account", "Chequing", "Savings"};
         selectAccount = new JComboBox<>(accounts);
         selectAccount.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -73,6 +93,7 @@ public class BankTransferPage extends JFrame implements ActionListener
         selectAccount.addActionListener(this);
         this.add(selectAccount);
 
+        // GUI Components for complete button
         completeButton = new JButton("Complete Transaction");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
         completeButton.setBounds(475, 525, 350, 40);
@@ -83,6 +104,7 @@ public class BankTransferPage extends JFrame implements ActionListener
         completeButton.addActionListener(this);
         this.add(completeButton);
 
+        // GUI Components for back to home button
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
         backToHome.setBounds(475, 600, 350, 50);
@@ -96,6 +118,7 @@ public class BankTransferPage extends JFrame implements ActionListener
         backToHome.addActionListener(this);
         this.add(backToHome);
 
+        // Window Listener for closing the window
         this.addWindowListener(new WindowEventHandler() {
             @Override
             public void windowClosing(WindowEvent evt) {
@@ -111,6 +134,8 @@ public class BankTransferPage extends JFrame implements ActionListener
                 System.exit(0);
             }
         });
+
+        // Window Settings
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
@@ -119,10 +144,16 @@ public class BankTransferPage extends JFrame implements ActionListener
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    /*
+     * paint method
+     * @param g Graphics object
+     * 
+     */
     public void paint(Graphics g)
     {
         super.paint(g);
 
+        // Background
         Graphics2D g2 = (Graphics2D) g;
         Color myRed = new Color(230, 30, 30);
         Color myBlack = new Color(160, 32, 32);
@@ -130,37 +161,54 @@ public class BankTransferPage extends JFrame implements ActionListener
         g2.setPaint(redToBlack);
         g2.fillRect(0, 0, WIDTH+1, 150);
 
+        // Title
         Font regFont = new Font("Raleway", Font.BOLD, 60);
         g2.setFont(regFont);
         g2.setColor(new Color(250, 185, 60));
         g2.drawString("Make Bank Transfer", 25, 110);
     }
 
+    /*
+     * actionPerformed method (button listener)
+     * @param e ActionEvent object
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        // If back to home button is clicked
         if (e.getSource() == backToHome)
         {
             this.setVisible(false);
             home.setVisible(true);
         }
+
+        // If complete button is clicked
         else if (e.getSource() == completeButton)
         {
+            // Get all the information from the fields
             String accountNum = accountNumField.getText();
             String amount = amountField.getText();
             String accountFrom = String.valueOf(selectAccount.getSelectedItem());
+
+            // Check if all fields are filled
             if (accountNum.equals("") || amount.equals("") || selectAccount.getSelectedIndex() == 0)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: All fields are required.");
                 return;
             }
+
+            // Check if account number is valid
             else if (!BA.onlyNumericDouble(amount))
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Amount needs to be a digit (can include decimal).");
                 return;
             }
 
+            // Complete Transfer
             int result = BA.bankTransfer(Double.parseDouble(amount), accountNum, customer, accountFrom);
+
+            // Transfer was unsuccessful (invalid account number, insufficient funds, minimum transfer amount)
             if (result == 1)
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Invalid account number.");
@@ -173,16 +221,23 @@ public class BankTransferPage extends JFrame implements ActionListener
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer is $0.5");
             }
+
+            // Transfer was successful (external transfer)
             else if (result == 3)
             {
+
+                // Print success message and send user back to home page
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
                         " to user with account number " + accountNum + ".\n This is an external transfer (i.e., user is not a part of BCS).");
                 this.setVisible(false);
                 home = new HomePage(login, BA, customer);
                 home.setVisible(true);
             }
+
+            // Transfer was succcessful (internal transfer)
             else if (result == 0)
             {
+                // Print success message and send user back to home page
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
                         " to user with account number " + accountNum + ".\n This user has an account with BCS, and the funds will " +
                         "be auto-deposited to their chequing account.");
@@ -190,11 +245,15 @@ public class BankTransferPage extends JFrame implements ActionListener
                 home = new HomePage(login, BA, customer);
                 home.setVisible(true);
             }
+
+            // An error occurred
             else
             {
                 JOptionPane.showMessageDialog(this, "An error occurred.");
             }
         }
+
     }
+    
 }
 

@@ -1,9 +1,12 @@
+package bank.core;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
+import java.time.LocalDate;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class BankAutomated
@@ -13,6 +16,8 @@ public class BankAutomated
     ArrayList<AD> admins = new ArrayList<>();
     ArrayList<MT> maintenanceTeam = new ArrayList<>();
     ArrayList<CSR> customerService = new ArrayList<>();
+    
+    
     /*
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
@@ -99,7 +104,7 @@ public class BankAutomated
                 ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
                 futures.add(executor.submit(() -> {
                     customerAccounts.add(account);
-                    customerHash.put(account.email, account);
+                    customerHash.put(account.email.toLowerCase(), account);
                     return null;
                 }));
             }
@@ -158,6 +163,49 @@ public class BankAutomated
     }
 
     /*
+     * Checks if the card is expired and valid
+     * @param String expiryDateString The expiry date of the card
+     * @return boolean True if the card is expired, false otherwise
+     * 
+     */
+    public boolean validCardExpiry(String expiryDate) {
+        // Check if the expiry date is in the correct format
+        if (!expiryDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            return false;
+        }
+        
+        // Parse the expiry date into a LocalDate object
+        LocalDate expiry = LocalDate.parse(expiryDate, java.time.format.DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        
+        // Check if the expiry date is in the future
+        if (LocalDate.now().isAfter(expiry)) {
+            return false;
+        }
+        
+        // Return true if the expiry date is valid and not expired
+        return true;
+    }
+
+    /*
+     * Checks if the card is expired and valid
+     * @param String expiryDateString The expiry date of the card
+     * @return boolean True if the card is expired, false otherwise
+     * 
+     */
+    public boolean validBankNumber(String bankNumber) {
+        // Check if the expiry date is in the correct format
+        if (bankNumber.length() != 5) {
+            return false;
+        }
+
+        if (!onlyNumeric(bankNumber)){
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
      * Changes the password of a user
      * @param CA user The user to change the password of
      * @param String newPassword The new password of the user
@@ -197,14 +245,7 @@ public class BankAutomated
      */
     public boolean existingEmail(String email)
     {
-        for (CA cust: customerAccounts)
-        {
-            if (cust.getEmail().equalsIgnoreCase(email))
-            {
-                return true;
-            }
-        }
-        return false;
+        return customerHash.containsKey(email.toLowerCase());
     }
 
     /*
@@ -315,9 +356,9 @@ public class BankAutomated
     }
 
     /*
-     * Checks if the credit card number is valid
-     * @param String ccv The credit card number
-     * @return boolean True if the credit card number is valid, false otherwise
+     * Checks if the ccv is valid
+     * @param String ccv The ccv to check
+     * @return boolean True if the ccv is valid, false otherwise
      *
      */
     public boolean validCVV(String cvv)
@@ -342,6 +383,10 @@ public class BankAutomated
     {
         int numYear = Integer.parseInt(year);
         int numDay = Integer.parseInt(day);
+
+        if (2023 - numYear < 18) {
+            return false;
+        }
 
         switch(month) {
             case "02":
@@ -405,6 +450,31 @@ public class BankAutomated
     }
 
     /*
+     * This function does the same as the previous one; however, it is used for the stressTest testing in order to
+     * create a million customer objects at once. The function takes in the same parameters except card number, which
+     * it sets to the empty string in order to create a million customer objects without having to assign a new card
+     * number to all 1,000,000 objects in the stressTest.
+     * It is also used in the e-transfer and bank transfer testing to prevent the same issue
+     */
+    public CA createAccountTest(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
+                                String email, String password, String cardExpiry, String cvv)
+    {
+        // Check if the email is already in use, if the email is valid, if the password is valid, and if the card number is valid
+        if (existingEmail(email) || !validEmail(email) || !validPassword(password)) {
+            return null;
+        }
+
+        // Create and return new CA object
+        CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, "", cardExpiry, cvv);
+
+        // Add the new account to the customerAccounts list and customerHash map
+        customerAccounts.add(customer);
+        customerHash.put(email.toLowerCase(), customer);
+
+        return customer;
+    }
+
+    /*
      * This function creates a new customer account, and returns the new account if it was created successfully.
      * If the account was not created successfully, then it returns null.
      * The account is not created successfully if the email is already in use, if the email is not valid, if the password is not valid,
@@ -437,7 +507,7 @@ public class BankAutomated
 
         // Add the new account to the customerAccounts list and customerHash map
         customerAccounts.add(customer);
-        customerHash.put(email, customer);
+        customerHash.put(email.toLowerCase(), customer);
 
         return customer;
     }

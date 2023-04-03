@@ -1,3 +1,5 @@
+package bank.core;
+
 import java.io.Serializable;
 
 public class Report implements Serializable
