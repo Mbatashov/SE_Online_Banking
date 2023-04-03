@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class AD extends People
 {
     int id;
-    ArrayList<Report> customerReports = new ArrayList<>();
-    ArrayList<Request> meetingRequests = new ArrayList<>();
+    ArrayList<Report> customerReports = new ArrayList<Report>();
+    ArrayList<Request> meetingRequests = new ArrayList<Request>();
 
     /*
      * Constructor for the Admin
