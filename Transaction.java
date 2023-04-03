@@ -15,8 +15,11 @@ public class Transaction implements Serializable
 
     // Transaction types:
     //  1- If sender = "Chequing" and receiver = "Savings", transfer funds between accounts locally, and vice versa between accounts
-    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds
-    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number
+    //  2- If sender = "Current" and receiver = Valid Email, etransfer funds from chequing
+    //  3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number from chequing
+    //  Add a function called receive funds that loops and checks if it's a local transfer, and if it's not it brings up
+    //  an "Are you sure you wanna transfer to a customer not in BCS". Otherwise, a make sure message to transfer to someone
+    //  within BCS.
     public Transaction(String sender, String receiver, double amount, int id)
     {
         this.sender = sender;
