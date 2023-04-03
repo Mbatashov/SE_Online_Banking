@@ -1,5 +1,3 @@
-package bank.core;
-
 import java.io.Serializable;
 
 // Request class, between CA and AD, MT, CSR

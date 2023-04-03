@@ -1,5 +1,3 @@
-package bank.core;
-
 import java.util.ArrayList;
 
 // Admin Class

@@ -1,5 +1,3 @@
-package bank.core;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -14,10 +12,6 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
-    JPanel changePasswordPanel = new JPanel();
-    private final JPasswordField oldPasswordField;
-    private final JPasswordField newPasswordField_one;
-    private final JPasswordField newPasswordField_two;
 
     // GUI for change password
     JPanel changePasswordPanel = new JPanel();

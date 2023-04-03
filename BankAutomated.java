@@ -1,5 +1,3 @@
-package bank.core;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -450,31 +448,6 @@ public class BankAutomated
     }
 
     /*
-     * This function does the same as the previous one; however, it is used for the stressTest testing in order to
-     * create a million customer objects at once. The function takes in the same parameters except card number, which
-     * it sets to the empty string in order to create a million customer objects without having to assign a new card
-     * number to all 1,000,000 objects in the stressTest.
-     * It is also used in the e-transfer and bank transfer testing to prevent the same issue
-     */
-    public CA createAccountTest(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
-                                String email, String password, String cardExpiry, String cvv)
-    {
-        // Check if the email is already in use, if the email is valid, if the password is valid, and if the card number is valid
-        if (existingEmail(email) || !validEmail(email) || !validPassword(password)) {
-            return null;
-        }
-
-        // Create and return new CA object
-        CA customer = new CA(firstName, lastName, phoneNum, address, gender, dob, email, password, "", cardExpiry, cvv);
-
-        // Add the new account to the customerAccounts list and customerHash map
-        customerAccounts.add(customer);
-        customerHash.put(email.toLowerCase(), customer);
-
-        return customer;
-    }
-
-    /*
      * This function creates a new customer account, and returns the new account if it was created successfully.
      * If the account was not created successfully, then it returns null.
      * The account is not created successfully if the email is already in use, if the email is not valid, if the password is not valid,
@@ -532,7 +505,7 @@ public class BankAutomated
 
         // Add the new account to the customerAccounts list and customerHash map
         customerAccounts.add(customer);
-        customerHash.put(email, customer);
+        customerHash.put(email.toLowerCase(), customer);
 
         return customer;
     }
@@ -647,8 +620,8 @@ public class BankAutomated
 
             Transaction transaction = new Transaction("Savings", "Chequing", transferAmount, idReceiver);
             transaction.setAccountFrom("Savings");
-            transaction.setSenderRemaining(customer.getChequing() - transferAmount);
-            transaction.setReceiverRemaining(customer.getSavings() + transferAmount);
+            transaction.setSenderRemaining(customer.getSavings() - transferAmount);
+            transaction.setReceiverRemaining(customer.getChequing() + transferAmount);
 
             customer.setChequing(customer.getChequing() + transferAmount);
             customer.setSavings(customer.getSavings() - transferAmount);
@@ -734,7 +707,7 @@ public class BankAutomated
 
                     Transaction receiverTransaction = new Transaction(customer.email, receiverEmail, amount, idReceiver);
                     senderTransaction.setSenderRemaining(customer.getChequing() - amount);
-                    receiverTransaction.setReceiverRemaining(customer.getSavings() + amount);
+                    receiverTransaction.setReceiverRemaining(customer.getChequing() + amount);
 
                     customer.setChequing(customer.getChequing() - amount);
                     customer.addChequing(senderTransaction);
@@ -746,7 +719,7 @@ public class BankAutomated
                     senderTransaction.setAccountFrom("Savings");
 
                     Transaction receiverTransaction = new Transaction(customer.email, receiverEmail, amount, idReceiver);
-                    senderTransaction.setSenderRemaining(customer.getChequing() - amount);
+                    senderTransaction.setSenderRemaining(customer.getSavings() - amount);
                     receiverTransaction.setReceiverRemaining(customer.getChequing() + amount);
 
                     customer.setSavings(customer.getSavings() - amount);

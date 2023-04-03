@@ -1,5 +1,3 @@
-package bank.core;
-
 import org.junit.Test;
 
 import javax.swing.*;
@@ -432,13 +430,13 @@ public class TestCase {
 
         // Test 1
         // Check if the card expiry is valid
-        assertEquals(BA.validCardExpiry(dummy.getCardExpiry()), true);
+        assertTrue(BA.validCardExpiry(dummy.getCardExpiry()));
 
         dummy.setCardExpiry("01/12/2021");
 
         // Test 2
         // Check if the card expiry is invalid
-        assert(BA.validCardExpiry(dummy.getCardExpiry()) == false);
+        assert(!BA.validCardExpiry(dummy.getCardExpiry()));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardExpiry", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -470,11 +468,11 @@ public class TestCase {
 
         // Test 3
         // Check if the bank number is valid
-        assertEquals(BA.validBankNumber("12345"), true);
+        assertTrue(BA.validBankNumber("12345"));
 
         // Test 4
         // Check if the bank number is invalid
-        assertEquals(BA.validBankNumber("123456"), false);
+        assertFalse(BA.validBankNumber("123456"));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testBankNumber", JOptionPane.INFORMATION_MESSAGE);
 
@@ -505,11 +503,11 @@ public class TestCase {
 
         // Test 3
         // Check if the CVV is invalid
-        assertEquals(BA.validCVV("123456"), false);
+        assertFalse(BA.validCVV("123456"));
 
         // Test 4
         // Check if the CVV is valid
-        assertEquals(BA.validCVV("126"), true);
+        assertTrue(BA.validCVV("126"));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCVV", JOptionPane.INFORMATION_MESSAGE);
 
@@ -540,11 +538,11 @@ public class TestCase {
 
         // Test 3
         // Check if the password is valid
-        assertEquals(BA.validPassword("Hello123!@#"), true);
+        assertTrue(BA.validPassword("Hello123!@#"));
 
         // Test 4
         // Check if the password is invalid
-        assertEquals(BA.validPassword("hello123!@#"), false);
+        assertFalse(BA.validPassword("hello123!@#"));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testPassword", JOptionPane.INFORMATION_MESSAGE);
 
@@ -575,11 +573,11 @@ public class TestCase {
 
         // Test 3
         // Check if the DoB is invalid
-        assertEquals(BA.validDOB("09","01","2003"), true);
+        assertTrue(BA.validDOB("09", "01", "2003"));
 
         // Test 4
         // Check if the DoB is valid
-        assertEquals(BA.validDOB("09","01","2013"), false);
+        assertFalse(BA.validDOB("09", "01", "2013"));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testDOB", JOptionPane.INFORMATION_MESSAGE);
 
@@ -666,11 +664,11 @@ public class TestCase {
 
         // Test 3
         // Check if the card number is valid
-        assertEquals(BA.validCard("4417123456789113"), true);
+        assertTrue(BA.validCard("4417123456789113"));
 
         // Test 4
         // Check if the card number is invalid
-        assertEquals(BA.validCard("552823455789113"), false);
+        assertFalse(BA.validCard("552823455789113"));
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testCardNum", JOptionPane.INFORMATION_MESSAGE);
 
