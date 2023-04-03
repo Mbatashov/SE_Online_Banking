@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 // This class is for the home page
 public class HomePage extends JFrame implements ActionListener
 {
-
     // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;

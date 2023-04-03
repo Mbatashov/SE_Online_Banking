@@ -13,7 +13,7 @@ public class RequestsPage extends JFrame implements ActionListener
     // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
-
+    
     // Objects
     BankAutomated BA;
     HomePage home;
@@ -24,6 +24,7 @@ public class RequestsPage extends JFrame implements ActionListener
     private final JButton backToHome;
     private final JButton completeButton;
     private final JTextArea detailsField;
+
 
     /*
      * RequestsPage Constructor
@@ -64,8 +65,9 @@ public class RequestsPage extends JFrame implements ActionListener
         selectType.addActionListener(this);
         this.add(selectType);
 
-        // GUI Components for request details
-        String instructions = "include a few dates/timings for the admins to pick one, as well as\nyour preferred meeting setting" +" (in-person or virtual)\nPlease clear this box before adding your details.";
+        String instructions = "Enter the details of your request here. If requesting a meeting, make\nsure to " +
+                "include a few dates/timings for the admins to pick one, as well as\nyour preferred meeting setting" +
+                " (in-person or virtual)\nPlease clear this box before adding your details.";
         detailsField = new JTextArea(instructions);
         detailsField.setFont(new Font("SansSerif", Font.PLAIN, 22));
         detailsField.setBackground(Color.white);
@@ -177,9 +179,9 @@ public class RequestsPage extends JFrame implements ActionListener
         {
             String requestDescription = detailsField.getText();
 
-            // Check if all fields are filled out
-            if (requestDescription.equals("") || requestDescription.contains("Enter the details of your request here.") || requestDescription.contains("If requesting a meeting")
-            || requestDescription.contains("Please clear this box before adding your details."))
+            if (requestDescription.equals("") || requestDescription.contains("Enter the details of your request here.")
+                || requestDescription.contains("If requesting a meeting")
+                || requestDescription.contains("Please clear this box before adding your details."))
             {
                 JOptionPane.showMessageDialog(this, "Please clear the text box and add details" +
                         " to your request before submitting.");

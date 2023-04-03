@@ -216,6 +216,7 @@ public class LoginPage extends JFrame implements ActionListener
             emailField.setText("");
             passwordField.setText("");
             showPassword.setSelected(false);
+            passwordField.setEchoChar('*');
         }
 
         // Login
@@ -232,6 +233,7 @@ public class LoginPage extends JFrame implements ActionListener
                 emailField.setText("");
                 passwordField.setText("");
                 showPassword.setSelected(false);
+                passwordField.setEchoChar('*');
                 return;
             }
 
@@ -243,6 +245,7 @@ public class LoginPage extends JFrame implements ActionListener
                 emailField.setText("");
                 passwordField.setText("");
                 showPassword.setSelected(false);
+                passwordField.setEchoChar('*');
                 return;
             }
 
@@ -257,6 +260,7 @@ public class LoginPage extends JFrame implements ActionListener
                 emailField.setText("");
                 passwordField.setText("");
                 showPassword.setSelected(false);
+                passwordField.setEchoChar('*');
                 this.setVisible(false);
                 home.setVisible(true);
             }
@@ -269,6 +273,7 @@ public class LoginPage extends JFrame implements ActionListener
                 emailField.setText("");
                 passwordField.setText("");
                 showPassword.setSelected(false);
+                passwordField.setEchoChar('*');
             }
         }
 
@@ -279,6 +284,7 @@ public class LoginPage extends JFrame implements ActionListener
             emailField.setText("");
             passwordField.setText("");
             showPassword.setSelected(false);
+            passwordField.setEchoChar('*');
             this.setVisible(false);
             register.setVisible(true);
         }
@@ -289,6 +295,7 @@ public class LoginPage extends JFrame implements ActionListener
             emailField.setText("");
             passwordField.setText("");
             showPassword.setSelected(false);
+            passwordField.setEchoChar('*');
             ForgotPage forgot = new ForgotPage(logic, this);
             this.setVisible(false);
             forgot.setVisible(true);

@@ -8,8 +8,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
-
-// This class is for the test cases
+// Test cases for each of the functions used, including the BankAutomated functions and setters and getters.
 public class TestCase {
     CA dummy;
 
@@ -182,7 +181,7 @@ public class TestCase {
 
         // Check if the transaction amount is correct
         assertEquals(amount, 5000);
-
+        
         // Check if the transaction was added to the history
         assertEquals(cust.getChequingHist().size(), 1);
 
@@ -257,7 +256,7 @@ public class TestCase {
 
         // Create a customer
         CA john = BA.createAccountTest("John", "Doe", "647-987-6543", "321 Example St.", "Male",
-                "01/01/2000", "johndoe@example.com", "Password123@", 
+                "01/01/2000", "johndoe@example.com", "Password123@",
                 "01/01/2030", "123");
 
 

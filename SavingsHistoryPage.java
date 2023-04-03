@@ -15,7 +15,6 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
 
-    // Objects
     BankAutomated BA;
     HomePage home;
     CA customer;
@@ -32,7 +31,6 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
      */
     public SavingsHistoryPage(HomePage home, BankAutomated BA, CA customer)
     {
-
         // Set title of the frame
         this.setTitle("Savings History");
         this.setLayout(null);
@@ -305,7 +303,6 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
     }
 
     /*
@@ -347,7 +344,6 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
             this.setVisible(false);
             home.setVisible(true);
         }
-
     }
 
 }

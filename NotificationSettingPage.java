@@ -35,7 +35,6 @@ public class NotificationSettingPage extends JFrame implements ActionListener
      */
     public NotificationSettingPage(HomePage home, BankAutomated BA, CA customer)
     {
-
         // Set title of the frame
         this.setTitle("Notification Settings");
         this.setLayout(null);
@@ -167,7 +166,6 @@ public class NotificationSettingPage extends JFrame implements ActionListener
             }
         });
 
-        // JLABEL for the title
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(completeButton);
         this.setSize(WIDTH, LENGTH);
@@ -208,7 +206,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
+    
         // If the back to home button is clicked
         if (e.getSource() == backToHome)
         {

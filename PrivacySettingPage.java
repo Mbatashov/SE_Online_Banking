@@ -14,6 +14,10 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     // Constants
     static final int WIDTH = 1920;
     static final int LENGTH = 1080;
+    JPanel changePasswordPanel = new JPanel();
+    private final JPasswordField oldPasswordField;
+    private final JPasswordField newPasswordField_one;
+    private final JPasswordField newPasswordField_two;
 
     // GUI for change password
     JPanel changePasswordPanel = new JPanel();
@@ -106,7 +110,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         selectDataCollection.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectDataCollection.addActionListener(this);
         this.add(selectDataCollection);
-
+        
         // GUI Components for allowing sensitive data collection
         JLabel allowSensitiveData = new JLabel("Allow us to access sensitive data:");
         allowSensitiveData.setFont(labels);
@@ -194,7 +198,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
                 System.exit(0);
             }
         });
-
+        
         // GUI Components for the frame
         this.getContentPane().setBackground(Color.white);
         this.getRootPane().setDefaultButton(completeButton);
@@ -261,6 +265,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
                 String newPassword_one = new String(newPasswordField_one.getPassword());
                 String newPassword_two = new String(newPasswordField_two.getPassword()); 
 
+
                 // If the user clicks the change button
                 if (result == 0) {
 
@@ -299,7 +304,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
                                 break;
 
                             }
-
+                            
                         // If the user enters two different new passwords
                         } else {
 
@@ -406,9 +411,6 @@ public class PrivacySettingPage extends JFrame implements ActionListener
                 this.setVisible(false);
                 home.setVisible(true);
             }
-
         }
-
     }
-    
 }

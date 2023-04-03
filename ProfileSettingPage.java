@@ -62,7 +62,7 @@ public class ProfileSettingPage extends JFrame implements ActionListener
         emailField.setBorder(border);
         emailField.setBounds(690, 150, 350, 40);
         this.add(emailField);
-
+        
         // GUI Components for phone number
         JLabel phoneNum = new JLabel("Update phone #:");
         phoneNum.setFont(labels);
@@ -233,25 +233,22 @@ public class ProfileSettingPage extends JFrame implements ActionListener
                     phoneNumField.setText("");
                     return;
                 }
-
                 // set the new phone number
                 else
                 {
                     customer.setPhoneNum(phoneNum);
                 }
             }
-
             // Set the new address
             if (!address.equals(""))
             {
                 customer.setAddress(address);
             }
-
+            
             JOptionPane.showMessageDialog(this, "Your account has been updated.");
             this.setVisible(false);
             home.setVisible(true);
         }
-
     }
     
 }
