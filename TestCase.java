@@ -1045,9 +1045,13 @@ public class TestCase {
 
         Report report = BA.makeReport(dummy, "test");
 
+        // Test request method
         assertEquals(dummy.getReportSus().size(), 1);
+
+        // See if total reports are equal to 1
         assertEquals(report.getAdmin().getCustomerReports().size(), 1);
 
+        // See if total reports are not equal to 2
         assertNotEquals(dummy.getReportSus().size(), 2);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "testRequest", JOptionPane.INFORMATION_MESSAGE);
