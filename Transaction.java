@@ -19,6 +19,10 @@ public class Transaction implements Serializable
      *   1- If sender = "Chequing" and receiver = "Savings", transfer funds between accounts locally, and vice versa between accounts
      *   2- If sender = "Current" and receiver = Valid Email, etransfer funds
      *   3- If sender = "Current" and receiver = 5-digit number, bank transfer to that account number
+     * @param sender the sender/sending account of the transaction
+     * @param receiver the receiving account/email/bank account number of the transaction
+     * @param amount the amount to be transferred
+     * @param id the id of the transaction
      */
     public Transaction(String sender, String receiver, double amount, int id)
     {

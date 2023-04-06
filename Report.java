@@ -14,6 +14,7 @@ public class Report implements Serializable
      * Constructor for Report
      * @param customer the customer that made the suspicious activity report
      * @param admin the admin that receives the suspicious activity report
+     * @param description the details of the report being made
      */
     public Report(CA customer, AD admin, String description)
     {

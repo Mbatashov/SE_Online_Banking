@@ -24,6 +24,7 @@ public class BankAutomated
     /**
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
+     * @param ignoredTest a boolean to allow the overloading of the constructor
      */
     public BankAutomated(boolean ignoredTest){
         AD admin = new AD("Mister", "Admin", "admin@BCS.ca", "1234567890", 0);
@@ -488,6 +489,17 @@ public class BankAutomated
      * it sets to the empty string in order to create a million customer objects without having to assign a new card
      * number to all 1,000,000 objects in the stressTest.
      * It is also used in the e-transfer and bank transfer testing to prevent the same issue
+     * @param firstName The first name of the customer
+     * @param lastName The last name of the customer
+     * @param phoneNum The phone number of the customer
+     * @param address The address of the customer
+     * @param gender Gender of the customer
+     * @param dob Date of birth of the customer
+     * @param email Email of the customer
+     * @param password Password of the customer
+     * @param cardExpiry Expiry date of the card
+     * @param cvv CVV of the card
+     * @return CA The new customer account if it was created successfully, null otherwise
      */
     public CA createAccountTest(String firstName, String lastName, String phoneNum, String address, String gender, String dob,
                                 String email, String password, String cardExpiry, String cvv)
@@ -510,7 +522,8 @@ public class BankAutomated
     /**
      * Adds a report to the customer's report list and the admin's report list
      * @param customer The customer who made the report
-     * Returns the report created
+     * @param description The description of the report
+     * @return the report created
      */
     public Report makeReport(CA customer, String description)
     {
@@ -534,7 +547,7 @@ public class BankAutomated
      * Allowing the customer to make a request about a technical issue, a maintenance issue, or a customer service issue.
      * @param customer The customer who made the request
      * @param type The type of request
-     * 
+     * @param str The details of the request
      */
     public void makeRequest(CA customer, String type, String str) {
 
@@ -817,7 +830,7 @@ public class BankAutomated
     /**
      * This method is used to return a list of addresses for the customer to 
      * choose from when visiting a branch.
-     * 
+     * @return an array list of strings of the locations of branches
      */
     public ArrayList<String> addresses() {
         ArrayList<String> locationList = new ArrayList<>();

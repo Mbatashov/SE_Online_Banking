@@ -5,6 +5,7 @@ public class BankSystem
 {
     /**
      * main method, creates a new LoginPage frame for users to start using the bank system
+     * @param args the main method argument
      */
     public static void main(String[] args)
     {
