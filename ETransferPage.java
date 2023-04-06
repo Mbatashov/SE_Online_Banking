@@ -5,7 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the E-transfer page
+/**
+ * This class is a graphical implementation of the E-Transfer page where customers would be able to make
+ * e-transfers (either from chequing or savings) to any user if they have their email. Currently, this class assumes
+ * that any valid email (checked by BankAutomated) can receive an e-transfer. If the email is within BCS, the money
+ * is automatically deposited to chequing account of the user with that email, otherwise, a prompt saying it's an
+ * external transfer is shown.
+ */
 public class ETransferPage extends JFrame implements ActionListener
 {
     // Constants
@@ -25,8 +31,9 @@ public class ETransferPage extends JFrame implements ActionListener
     private final JComboBox<String> selectAccount;
     private final JButton completeButton;
 
-    /*
-     * ETransferPage Constructor
+    /**
+     * ETransferPage Constructor, this creates all the frame specifications when the customer selects "Transfer" then
+     * "Make an e-Transfer" from their homepage (e.g., buttons and labels).
      * @param BA BankAutomated object
      * @param home HomePage object
      * @param customer CA object
@@ -147,10 +154,9 @@ public class ETransferPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * paint method
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -172,10 +178,12 @@ public class ETransferPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * actionPerformed method
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). It calls all the logic through BankAutomated
+     * when certain conditions are met through the ActionEvent parameter (e.g., a button is clicked). It also
+     * displays success/failure methods depending on the conditions (e.g., prints a message if the user does not have
+     * enough funds for the transfer), as well as controls the frame display.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

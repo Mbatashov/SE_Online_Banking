@@ -6,7 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 
-// This class is for the Notification Settings page
+/**
+ * This class is the graphical implementation of the notification settings page. On this page, customers can edit their
+ * notification preferences on the system, e.g. their preferred method of contact. Admins and other actors will review
+ * those preferences when getting in touch with the customer. Initially, all customer preferences are set to email
+ * by default, and they can be changed in this page.
+ */
 public class NotificationSettingPage extends JFrame implements ActionListener
 {
 
@@ -25,11 +30,11 @@ public class NotificationSettingPage extends JFrame implements ActionListener
     private final JComboBox<String> selectNotification; private final JComboBox<String> selectNotification2;
     private final JComboBox<String> selectNotification3; private final JComboBox<String> selectNotification4;
 
-    /*
-     * NotificationSettingPage Constructor
-     * @param home HomePage object
-     * @param BA BankAutomated object
-     * @param customer CA object
+    /**
+     * NotificationSettingPage Constructor, this initializes all the frame specifications for the page
+     * @param home HomePage object for the user to return to if they want
+     * @param BA BankAutomated object to carry out the logout in case the customer exits the system
+     * @param customer CA object, the customer that is currently logged in
      */
     public NotificationSettingPage(HomePage home, BankAutomated BA, CA customer)
     {
@@ -71,7 +76,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         selectNotification.addActionListener(this);
         this.add(selectNotification);
 
-        // JLABEL for report reply notification
+        // JLabel for report reply notification
         JLabel reportNotif = new JLabel("Notification for report reply:");
         reportNotif.setFont(labels);
         reportNotif.setBorder(emptyBorder);
@@ -79,7 +84,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         reportNotif.setBounds(225,250,350,40);
         this.add(reportNotif);
 
-        // JCOMBOBOX for report reply notification
+        // JComboBox (Drop-down box) for report reply notification
         selectNotification2 = new JComboBox<>(options2);
         selectNotification2.setSelectedIndex(custReportReply);
         selectNotification2.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -88,7 +93,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         selectNotification2.addActionListener(this);
         this.add(selectNotification2);
 
-        // JLABEL for newsletter and special deals
+        // JLabel for newsletter and special deals
         JLabel newsletter = new JLabel("Newsletter and special deals:");
         newsletter.setFont(labels);
         newsletter.setBorder(emptyBorder);
@@ -96,7 +101,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         newsletter.setBounds(225,350,350,40);
         this.add(newsletter);
 
-        // JCOMBOBOX for newsletter and special deals
+        // JComboBox for newsletter and special deals
         selectNotification3 = new JComboBox<>(options);
         selectNotification3.setSelectedIndex(custNewsletter);
         selectNotification3.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -105,7 +110,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         selectNotification3.addActionListener(this);
         this.add(selectNotification3);
 
-        // JLABEL for payments above threshold
+        // JLabel for payments above threshold
         JLabel threshold = new JLabel("Payments above threshold:");
         threshold.setFont(labels);
         threshold.setBorder(emptyBorder);
@@ -113,7 +118,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         threshold.setBounds(225,450,350,40);
         this.add(threshold);
 
-        // JCOMBOBOX for payments above threshold
+        // JComboBox for payments above threshold
         selectNotification4 = new JComboBox<>(options);
         selectNotification4.setSelectedIndex(custThreshold);
         selectNotification4.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -122,7 +127,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         selectNotification4.addActionListener(this);
         this.add(selectNotification4);
 
-        // JBUTTON for saving preferences
+        // JButton for saving preferences
         completeButton = new JButton("Save Preferences");
         completeButton.setFont(new Font("SansSerif", Font.PLAIN, 22));
         completeButton.setBounds(475, 525, 350, 40);
@@ -133,7 +138,7 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         completeButton.addActionListener(this);
         this.add(completeButton);
 
-        // JBUTTON for going back to home page
+        // JButton for going back to home page
         backToHome = new JButton("Back to Home");
         backToHome.setFont(new Font("SansSerif", Font.PLAIN, 22));
         backToHome.setBounds(475, 575, 350, 50);
@@ -173,10 +178,9 @@ public class NotificationSettingPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * Method to paint the background of the window
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -197,10 +201,11 @@ public class NotificationSettingPage extends JFrame implements ActionListener
         g2.drawString("Select Your Notification Preferences", 25, 110);
     }
 
-    /*
-     * Method to handle the action events
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage. The notification preferences the customer selects are saved to their object
+     * if the "Save Preferences" button is clicked instead.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e) {

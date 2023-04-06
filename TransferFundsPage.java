@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the Funds Transfer page
+/**
+ * This class is the graphical implementation of the Transfer Funds Page. This page allows users to transfer money
+ * between their chequing and savings account in both directions.
+ */
 public class TransferFundsPage extends JFrame implements ActionListener
 {
     // Constants
@@ -24,12 +27,12 @@ public class TransferFundsPage extends JFrame implements ActionListener
     private final JTextField amountField;
     private final JComboBox<String> fromToSelect;
 
-    /*
-     * TransferFundsPage Constructor
-     * @param BA BankAutomated object
-     * @param home HomePage object
-     * @param customer CA object
-     * @param login LoginPage object
+    /**
+     * TransferFundsPage Constructor, this sets all the frame specifications for this page
+     * @param BA BankAutomated object, to process the logout and logic of transferring.
+     * @param home HomePage object, for the customer to go back to their homepage when they are done
+     * @param customer CA object, the customer that is logged in
+     * @param login LoginPage object, used to create a new HomePage object to ensure all the updates will be visible
      * 
      */
     public TransferFundsPage(BankAutomated BA, HomePage home, CA customer, LoginPage login)
@@ -52,7 +55,7 @@ public class TransferFundsPage extends JFrame implements ActionListener
         this.customer = customer;
         this.BA = BA;
 
-        // Jlabel for amount
+        // JLabel for amount
         JLabel amount = new JLabel("Amount (in CAD):");
         amount.setFont(labels);
         amount.setBorder(emptyBorder);
@@ -67,7 +70,7 @@ public class TransferFundsPage extends JFrame implements ActionListener
         amountField.setBounds(690, 250, 350, 40);
         this.add(amountField);
 
-        // Jlabel for account to transfer from
+        // JLabel for account to transfer from
         JLabel account = new JLabel("From, To:");
         account.setFont(labels);
         account.setBorder(emptyBorder);
@@ -136,10 +139,9 @@ public class TransferFundsPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * paint method
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -160,10 +162,11 @@ public class TransferFundsPage extends JFrame implements ActionListener
         g2.drawString("Transfer Funds Between Your Accounts", 25, 110);
     }
 
-    /*
-     * actionPerformed method
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage. When "Complete Transaction" is selected, BA carries out the logic behind
+     * the transfer and the funds and transaction histories are updated.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

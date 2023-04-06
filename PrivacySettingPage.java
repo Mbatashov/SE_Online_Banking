@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the Privacy Settings page
+/**
+ * This class is the graphical implementation of the Privacy Setting Page. Customers can set their privacy preferences
+ * on this page. They also have the option to change their password on this page.
+ */
 public class PrivacySettingPage extends JFrame implements ActionListener
 {
 
@@ -31,12 +34,11 @@ public class PrivacySettingPage extends JFrame implements ActionListener
     private final JComboBox<String> selectTrack; private final JComboBox<String> selectDataCollection;
     private final JComboBox<String> selectSensitiveData; private final JComboBox<String> selectKeyLogger;
 
-    /*
-     * PrivacySettingPage Constructor
-     * @param home HomePage object
-     * @param BA BankAutomated object
-     * @param customer CA object
-     * 
+    /**
+     * PrivacySettingPage Constructor, this sets all the frame specifications for the page
+     * @param home HomePage object, to allow the customer to go back to their homepage
+     * @param BA BankAutomated object, to process the validity of changed (e.g., password change) and process logout
+     * @param customer CA object, the customer that is currently logged in
      */
     public PrivacySettingPage(HomePage home, BankAutomated BA, CA customer)
     {
@@ -122,7 +124,7 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         selectSensitiveData.addActionListener(this);
         this.add(selectSensitiveData);
 
-        // GUI Components for allowing key logger
+        // GUI Components for allowing keylogger
         JLabel allowKeyLogger = new JLabel("Allow us to use a key logger:");
         allowKeyLogger.setFont(labels);
         allowKeyLogger.setBorder(emptyBorder);
@@ -203,10 +205,9 @@ public class PrivacySettingPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * Method to paint the background of the frame
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -227,10 +228,11 @@ public class PrivacySettingPage extends JFrame implements ActionListener
         g2.drawString("Select Your Privacy Settings", 25, 110);
     }
 
-    /*
-     * Method to handle the action events
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage. The customer can make changes to their privacy preferences and save them
+     * by clicking the "Save Preferences" button. They could also change their password by clicking "Change Password".
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

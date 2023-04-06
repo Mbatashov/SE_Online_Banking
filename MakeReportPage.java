@@ -5,7 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the Report Suspicious Activity page
+/**
+ * This class is the graphical implementation of the make report page. On this page, customers can report suspicious
+ * activity on their account and describe their situation. This is sent to one of the admins in the system (initialized
+ * in BankAutomated) and is reviewed by them.
+ */
 public class MakeReportPage extends JFrame implements ActionListener
 {
 
@@ -23,21 +27,20 @@ public class MakeReportPage extends JFrame implements ActionListener
     private final JButton completeButton;
     private final JTextArea reportField;
 
-    /*
-     * MakeReportPage Constructor
-     * @param BA BankAutomated object
-     * @param home HomePage object
-     * @param customer CA object
-     * 
+    /**
+     * MakeReportPage Constructor, this frame creates all the frame specifications for the make report page
+     * @param home HomePage object, for the user to return to if they select 'Back To Home'
+     * @param BA BankAutomated object, to process logout if user exits the system
+     * @param customer CA object, the customer that's logged in
      */
-    public MakeReportPage(BankAutomated BA, HomePage home, CA customer)
+    public MakeReportPage(HomePage home, BankAutomated BA, CA customer)
     {
         // Set title of the frame
         this.setTitle("Report Suspicious Activity");
         this.setLayout(null);
         this.home = home;
-        this.customer = customer;
         this.BA = BA;
+        this.customer = customer;
 
         // GUI Components
         Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -115,10 +118,9 @@ public class MakeReportPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * paint method
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -139,10 +141,10 @@ public class MakeReportPage extends JFrame implements ActionListener
         g2.drawString("Report Suspicious Activity To Admins", 25, 110);
     }
 
-    /*
-     * actionPerformed method
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). It displays different options depending on what the user
+     * clicks on in the homepage, and it controls which page to display next depending on that.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

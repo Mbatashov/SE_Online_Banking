@@ -5,7 +5,11 @@ import java.awt.event.*;
 import java.util.Objects;
 import java.util.*;
 
-// This class is for the Find Us page
+/**
+ * This class is the graphical implementation of the Find Us page, where customers are able to see the location of
+ * our different branches across Canada and the US by clicking on the pin icons on the page. A pop-up describes the
+ * address of the location clicked.
+ */
 public class FindUsPage extends JFrame implements ActionListener, MouseListener
 {
 
@@ -25,11 +29,11 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
     HomePage previous; 
     ArrayList<String> streets;
 
-    /*
-     * FindUsPage Constructor
+    /**
+     * FindUsPage Constructor, this constructor creates all the frame specifications for when the customer selects
+     * the "Find Us" option from their homepage (e.g, draws the location pins and adds button click listeners to them)
      * @param BA BankAutomated object
      * @param previous HomePage object
-     * 
      */
     public FindUsPage(BankAutomated BA, HomePage previous)
     {   
@@ -141,10 +145,9 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
 
     }
 
-    /*
-     * paint method
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -167,10 +170,10 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
 
     }
 
-    /*
-     * actionPerformed method
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implements ActionListener). If the "Back To Home" button is pressed, the user is sent
+     * back to their homepage.
+     * @param e ActionEvent object that keeps track of button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -183,10 +186,11 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
         }
     }
 
-    /*
-     * mouseClicked method
-     * @param e MouseEvent object
-     * 
+    /**
+     * mouseClicked method (implements MouseListener). This method keeps track of the button clicks of the pins (as
+     * those pins are implemented as JLabels, they need this method). When a pin is clicked, a specific prompt is
+     * shown describing the location of the pin selected.
+     * @param e the event to be processed
      */
     @Override
     public void mouseClicked(MouseEvent e)
@@ -218,20 +222,36 @@ public class FindUsPage extends JFrame implements ActionListener, MouseListener
         }
     }
 
+    /**
+     * Left empty, part of implementing the MouseListener interface
+     * @param e the event to be processed
+     */
     @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    /**
+     * Left empty, part of implementing the MouseListener interface
+     * @param e the event to be processed
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
 
+    /**
+     * Left empty, part of implementing the MouseListener interface
+     * @param e the event to be processed
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    /**
+     * Left empty, part of implementing the MouseListener interface
+     * @param e the event to be processed
+     */
     @Override
     public void mouseExited(MouseEvent e) {
 

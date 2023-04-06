@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * This class is the graphical implementation of the customer's chequing account transaction history
+ * It displays the last 6 transactions the customer did with their chequing account.
+ */
 public class ChequingHistoryPage extends JFrame implements ActionListener
 {
     static final int WIDTH = 1920;
@@ -15,20 +19,21 @@ public class ChequingHistoryPage extends JFrame implements ActionListener
     CA customer;
     private final JButton backToHome;
     
-     /*
-     * ChequingHistoryPage Constructor
-     * @param home HomePage object
-     * @param BA BankAutomated object
-     * @param customer CA object
-     * 
+     /**
+     * ChequingHistoryPage Constructor. This constructor creates all the frame specifications for when the customer
+     * clicks on their chequing account (i.e., buttons, display setup, etc.). It retrieves the customer's latest
+     * 6 chequing transaction and formats and displays them.
+     * @param home HomePage object to return to when the user wants to
+     * @param BA BankAutomated object to process the logout if the user exits the system
+     * @param customer CA object, the customer that is logged in
      */
     public ChequingHistoryPage(HomePage home, BankAutomated BA, CA customer)
     {
         this.setTitle("Chequing History");
         this.setLayout(null);
         this.home = home;
-        this.customer = customer;
         this.BA = BA;
+        this.customer = customer;
 
         Font labels = new Font("Raleway", Font.PLAIN, 22);
         Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -345,10 +350,9 @@ public class ChequingHistoryPage extends JFrame implements ActionListener
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    /*
-     * Paints the background of the panel
-     * @param g the graphics object
-     * 
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
+     * @param g Graphics object
      */
     public void paint(Graphics g)
     {
@@ -368,10 +372,10 @@ public class ChequingHistoryPage extends JFrame implements ActionListener
         g2.drawString("Chequing Transaction History", 25, 110);
     }
 
-    /*
-     * Action listener for the back to home button
-     * @param e the action event
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

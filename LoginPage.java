@@ -7,7 +7,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-// This class is for the login page
+/**
+ * This class is the graphical implementation of the Login page. Customers that already have an account can enter
+ * their email and password, and if they match an account in the system, their homepage is displayed. Otherwise, a
+ * prompt saying the account doesn't exist is shown. This page is shown when the system is initialized, and the customer
+ * can either log in with their existing account or register for an account. Customers could also go to the Forgot
+ * Password page. No other pages can be accessed through here, as all other functionality/use-cases require the customer
+ * to be logged in (the rest are accessible after login from the homepage).
+ */
 public class LoginPage extends JFrame implements ActionListener
 {
 
@@ -28,10 +35,9 @@ public class LoginPage extends JFrame implements ActionListener
     BankAutomated logic;
     CA customer;
 
-    /*
-     * LoginPage Constructor
-     * @param BA BankAutomated object
-     * 
+    /**
+     * LoginPage Constructor, this constructor creates all the frame specifications for the login page
+     * @param BA BankAutomated object, handles all the logic and passes it to other pages if necessary
      */
     public LoginPage(BankAutomated BA)
     {
@@ -158,10 +164,9 @@ public class LoginPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * paint method
-     * @param Graphics g
-     * 
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
+     * @param g Graphics object
      */
     public void paint(Graphics g)
     {
@@ -187,10 +192,11 @@ public class LoginPage extends JFrame implements ActionListener
         }
     }
 
-    /*
-     * actionPerformed method
-     * @param ActionEvent e
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). BankAutomated checks the validity and authenticity of the
+     * data inputted, and any buttons that are pressed are handled in this method (e.g., other pages are displayed,
+     * password inputted is shown, etc.).
+     * @param e the event to be processed
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -301,6 +307,12 @@ public class LoginPage extends JFrame implements ActionListener
     }
 }
 
+/**
+ * This class here allows the BankAutomated logout() function to be called before the system exits/terminates in order
+ * to store any customer objects created to the database (People.ser file) before terminating the system.
+ * A window listener is added to all graphical classes to implement that functionality so data is not lost between
+ * re-runs of the system.
+ */
 class WindowEventHandler extends WindowAdapter {
     public void windowClosing(WindowEvent evt) {
         Window[] windows = Window.getWindows();

@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the Profile Settings page
+/**
+ * This class is the graphical implementation of the Profile Settings Page. Customers can edit their profile on this
+ * page, e.g. update their email and/or address.
+ */
 public class ProfileSettingPage extends JFrame implements ActionListener
 {
     // Constants
@@ -24,12 +27,11 @@ public class ProfileSettingPage extends JFrame implements ActionListener
     private final JTextField phoneNumField;
     private final JTextField emailField;
 
-    /*
-     * ProfileSettingPage Constructor
-     * @param home HomePage object
-     * @param BA BankAutomated object
-     * @param customer CA object
-     * 
+    /**
+     * ProfileSettingPage Constructor, this creates all the frame specifications for this page and graphics positioning
+     * @param home HomePage object, for the customer to return to when they are done editing their profile
+     * @param BA BankAutomated object, to process logout if the customer terminated the program
+     * @param customer CA object, the customer that is currently logged in
      */
     public ProfileSettingPage(HomePage home, BankAutomated BA, CA customer)
     {
@@ -143,10 +145,9 @@ public class ProfileSettingPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * paint method
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -167,10 +168,11 @@ public class ProfileSettingPage extends JFrame implements ActionListener
         g2.drawString("Edit Profile Settings", 25, 110);
     }
 
-    /*
-     * actionPerformed method
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage. When "Save Preferences" is selected, customer changes set are saved
+     * to their object after being verified by BA.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

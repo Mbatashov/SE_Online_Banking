@@ -6,7 +6,12 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.time.LocalDate;
 
-@SuppressWarnings("BooleanMethodIsAlwaysInverted")
+/**
+ * BankAutomated class handles all the logic and authentication in the system using various methods.
+ * These methods are called in the graphical implementations of different pages when certain conditions are met, e.g.
+ * a button is clicked. All logic and authentication are carried out through this BA, therefore all graphical pages
+ * have a BankAutomated object passed into them.
+ */
 public class BankAutomated
 {
     List<CA> customerAccounts = Collections.synchronizedList(new ArrayList<>());
@@ -16,7 +21,7 @@ public class BankAutomated
     ArrayList<CSR> customerService = new ArrayList<>();
     
     
-    /*
+    /**
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
      */
@@ -46,9 +51,10 @@ public class BankAutomated
         customerService.add(customerService4); customerService.add(customerService5);
     }
     
-    /*
+    /**
      * Constructor for the BankAutomated class
-     * NOTE: DO NOT TOUCH
+     * Creates a few admin AD, MT, and CSR objects and adds them to their respective arraylists.
+     * people.ser file is opened and any objects stored in it are loaded as well.
      */
     public BankAutomated()
     {
@@ -102,7 +108,7 @@ public class BankAutomated
                 ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
                 futures.add(executor.submit(() -> {
                     customerAccounts.add(account);
-                    customerHash.put(account.email.toLowerCase(), account);
+                    customerHash.put(account.getEmail().toLowerCase(), account);
                     return null;
                 }));
             }
@@ -134,10 +140,9 @@ public class BankAutomated
         System.out.println("Loaded " + customerAccounts.size() + " customer objects. In: " + timePassedSeconds + "s");
     }
 
-    /* 
+    /**
      * Clears the People.ser file
-     * NOTE: This will delete all customer accounts DO NOT TOUCH
-     * 
+     * NOTE: This will delete all customer accounts that are saved in the system (i.e., any registered customer)
      */
     public void clearPeopleFile() {
         try {
@@ -160,9 +165,9 @@ public class BankAutomated
         }
     }
 
-    /*
+    /**
      * Checks if the card is expired and valid
-     * @param String expiryDateString The expiry date of the card
+     * @param expiryDate The expiry date of the card
      * @return boolean True if the card is expired, false otherwise
      * 
      */
@@ -176,18 +181,15 @@ public class BankAutomated
         LocalDate expiry = LocalDate.parse(expiryDate, java.time.format.DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         
         // Check if the expiry date is in the future
-        if (LocalDate.now().isAfter(expiry)) {
-            return false;
-        }
+        return !LocalDate.now().isAfter(expiry);
         
         // Return true if the expiry date is valid and not expired
-        return true;
     }
 
-    /*
-     * Checks if the card is expired and valid
-     * @param String expiryDateString The expiry date of the card
-     * @return boolean True if the card is expired, false otherwise
+    /**
+     * Checks if the bank number is valid
+     * @param bankNumber The bank account number of the customer
+     * @return True if the bank account number is valid
      * 
      */
     public boolean validBankNumber(String bankNumber) {
@@ -196,17 +198,13 @@ public class BankAutomated
             return false;
         }
 
-        if (!onlyNumeric(bankNumber)){
-            return false;
-        }
-
-        return true;
+        return onlyNumeric(bankNumber);
     }
 
-    /*
+    /**
      * Changes the password of a user
-     * @param CA user The user to change the password of
-     * @param String newPassword The new password of the user
+     * @param user The user to change the password of
+     * @param newPassword The new password of the user
      * 
      */
     public void changePassword(CA user, String newPassword){
@@ -215,10 +213,10 @@ public class BankAutomated
 
     }
 
-    /*
+    /**
      * Checks if the email is valid
-     * @param String email The email to check
-     * @return boolean True if the email is valid, false otherwise
+     * @param email The email to check
+     * @return true if the email is valid, false otherwise
      * 
      */
     public boolean validEmail(String email)
@@ -235,10 +233,10 @@ public class BankAutomated
                 ( (email.indexOf(".com") - email.indexOf("@") >= 2) || (email.indexOf(".ca") - email.indexOf("@") >= 2) );
     }
 
-    /*
+    /**
      * Checks if the email is already in use
-     * @param String email The email to check
-     * @return boolean True if the email is already in use, false otherwise
+     * @param email The email to check
+     * @return true if the email is already in use, false otherwise
      * 
      */
     public boolean existingEmail(String email)
@@ -246,10 +244,10 @@ public class BankAutomated
         return customerHash.containsKey(email.toLowerCase());
     }
 
-    /*
+    /**
      * Checks if the password is valid
-     * @param String password The password to check
-     * @return boolean True if the password is valid, false otherwise
+     * @param password The password to check
+     * @return true if the password is valid, false otherwise
      * 
      */
     public boolean validPassword(String password)
@@ -290,12 +288,11 @@ public class BankAutomated
         return lowerCharCount > 0 && upperCharCount > 0 && numCount > 0 && specialCount > 0;
     }
 
-    /*
+    /**
      * Creates a new customer account
-     * @param String email The email of the customer
-     * @param String password The password of the customer
+     * @param email The email of the customer
+     * @param password The password of the customer
      * @return CA The customer account if it was created successfully, null otherwise
-     * NOTE: DO NOT TOUCH THIS METHOD
      *
      */
     public CA loginAccount(String email, String password)
@@ -304,7 +301,7 @@ public class BankAutomated
 
         // Multithreaded Stream
         CA customer = customerHash.get(email);
-        if (customer != null && password.equals(customer.password)) {
+        if (customer != null && password.equals(customer.getPassword())) {
             return customer;
         }
 
@@ -312,10 +309,10 @@ public class BankAutomated
         return null;
     }
 
-    /*
+    /**
      * Checks if the string contains numbers only
-     * @param string str The string to check
-     * @return boolean True if the string contains numbers only, false otherwise
+     * @param str The string to check
+     * @return true if the string contains numbers only, false otherwise
      * 
      */
     public boolean onlyNumeric(String str)
@@ -331,10 +328,10 @@ public class BankAutomated
         return true;
     }
 
-    /*
+    /**
      * Checks if the string contains numbers only (allows up to one decimal point for doubles)
-     * @param String str The string to check
-     * @return boolean True if the string contains numbers only, false otherwise
+     * @param str The string to check
+     * @return true if the string contains numbers only, false otherwise
      * 
      */
     public boolean onlyNumericDouble(String str) {
@@ -353,10 +350,10 @@ public class BankAutomated
         return true;
     }
 
-    /*
+    /**
      * Checks if the ccv is valid
-     * @param String ccv The ccv to check
-     * @return boolean True if the ccv is valid, false otherwise
+     * @param cvv The ccv to check
+     * @return true if the ccv is valid, false otherwise
      *
      */
     public boolean validCVV(String cvv)
@@ -369,12 +366,12 @@ public class BankAutomated
         return false;
     }
 
-    /*
+    /**
      * Checks if the date of birth is valid
-     * @param String month The month of the date of birth
-     * @param String day The day of the date of birth
-     * @param String year The year of the date of birth
-     * @return boolean True if the date of birth is valid, false otherwise
+     * @param month The month of the date of birth
+     * @param day The day of the date of birth
+     * @param year The year of the date of birth
+     * @return true if the date of birth is valid, false otherwise
      * 
      */
     public boolean validDOB(String month, String day, String year)
@@ -403,10 +400,10 @@ public class BankAutomated
         }
     }
 
-    /*
+    /**
      * Checks if the credit card number is valid
-     * @param String cardNum The credit card number
-     * @return boolean True if the card number is valid, false otherwise
+     * @param cardNum The credit card number
+     * @return true if the card number is valid, false otherwise
      * 
      */
     public boolean validCard(String cardNum) {
@@ -447,22 +444,22 @@ public class BankAutomated
         return valid;
     }
 
-    /*
+    /**
      * This function creates a new customer account, and returns the new account if it was created successfully.
      * If the account was not created successfully, then it returns null.
      * The account is not created successfully if the email is already in use, if the email is not valid, if the password is not valid,
      * or if the card number is not valid.
-     * @param String firstName: The first name of the customer
-     * @param String lastName: The last name of the customer
-     * @param String phoneNum: The phone number of the customer
-     * @param String address: The address of the customer
-     * @param String gender: Gender of the customer
-     * @param String dob: Date of birth of the customer
-     * @param String email: Email of the customer
-     * @param String password: Password of the customer
-     * @param String cardNum: Card number of the customer
-     * @param String cardExpiry: Expiry date of the card
-     * @param String cvv: CVV of the card
+     * @param firstName The first name of the customer
+     * @param lastName The last name of the customer
+     * @param phoneNum The phone number of the customer
+     * @param address The address of the customer
+     * @param gender Gender of the customer
+     * @param dob Date of birth of the customer
+     * @param email Email of the customer
+     * @param password Password of the customer
+     * @param cardNum Card number of the customer
+     * @param cardExpiry Expiry date of the card
+     * @param cvv CVV of the card
      * @return CA The new customer account if it was created successfully, null otherwise
      * 
      */
@@ -485,7 +482,7 @@ public class BankAutomated
         return customer;
     }
 
-    /*
+    /**
      * This function does the same as the previous one; however, it is used for the stressTest testing in order to
      * create a million customer objects at once. The function takes in the same parameters except card number, which
      * it sets to the empty string in order to create a million customer objects without having to assign a new card
@@ -510,9 +507,9 @@ public class BankAutomated
         return customer;
     }
 
-    /*
+    /**
      * Adds a report to the customer's report list and the admin's report list
-     * @param CA customer The customer who made the report
+     * @param customer The customer who made the report
      * Returns the report created
      */
     public Report makeReport(CA customer, String description)
@@ -532,12 +529,11 @@ public class BankAutomated
         return report;
     }
 
-    /*
+    /**
      * This function allows a customer to make a request. It returns true if the request was made successfully, and false otherwise.
      * Allowing the customer to make a request about a technical issue, a maintenance issue, or a customer service issue.
-     * @param CA customer The customer who made the request
-     * @param String type The type of request
-     * @return boolean True if the request was made successfully, false otherwise
+     * @param customer The customer who made the request
+     * @param type The type of request
      * 
      */
     public void makeRequest(CA customer, String type, String str) {
@@ -574,12 +570,12 @@ public class BankAutomated
 
     }
 
-    /*
+    /**
      * Allows users to transfer money between their chequing and savings accounts
-     * @param double transferAmount: amount of money to transfer
-     * @param String fromAccount: account to transfer money from
-     * @param CA customer: customer object
-     * @return int 0 if transfer is successful, 1 if transfer is unsuccessful, 2 if amount is too small
+     * @param transferAmount amount of money to transfer
+     * @param fromAccount account to transfer money from
+     * @param customer customer object
+     * @return 0 if transfer is successful, 1 if transfer is unsuccessful, 2 if amount is too small
      * 
      */
     public int transferFunds(double transferAmount, String fromAccount, CA customer) {
@@ -633,14 +629,13 @@ public class BankAutomated
 
     }
 
-    /*
+    /**
      * Allows users to transfer money to other users of the bank (if they have an account)
-     * @param double amount: amount of money to transfer
-     * @param String receiverEmail: email of the receiver
-     * @param CA customer: the customer who is sending the money
-     * @param String accountFrom: the account the money is being sent from
-     * @return int 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if receiver is not in BCS,
-     * @return int 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5)
+     * @param amount amount of money to transfer
+     * @param receiverEmail email of the receiver
+     * @param customer the customer who is sending the money
+     * @param accountFrom the account the money is being sent from
+     * @return 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if receiver is not in BCS, 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5)
      * 
      */
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
@@ -679,7 +674,7 @@ public class BankAutomated
             int idSender = rand.nextInt(500);
             int idReceiver = rand.nextInt(500);
             if (receiverAccount == null) {
-                Transaction transaction = new Transaction(customer.email, receiverEmail, amount, idSender);
+                Transaction transaction = new Transaction(customer.getEmail(), receiverEmail, amount, idSender);
                 if (accountFrom.equals("Chequing"))
                 {
                     transaction.setAccountFrom("Chequing");
@@ -700,12 +695,12 @@ public class BankAutomated
             }
             else
             {
-                Transaction senderTransaction = new Transaction(customer.email, receiverEmail, amount, idSender);
+                Transaction senderTransaction = new Transaction(customer.getEmail(), receiverEmail, amount, idSender);
                 if (accountFrom.equals("Chequing"))
                 {
                     senderTransaction.setAccountFrom("Chequing");
 
-                    Transaction receiverTransaction = new Transaction(customer.email, receiverEmail, amount, idReceiver);
+                    Transaction receiverTransaction = new Transaction(customer.getEmail(), receiverEmail, amount, idReceiver);
                     senderTransaction.setSenderRemaining(customer.getChequing() - amount);
                     receiverTransaction.setReceiverRemaining(customer.getChequing() + amount);
 
@@ -718,7 +713,7 @@ public class BankAutomated
                 {
                     senderTransaction.setAccountFrom("Savings");
 
-                    Transaction receiverTransaction = new Transaction(customer.email, receiverEmail, amount, idReceiver);
+                    Transaction receiverTransaction = new Transaction(customer.getEmail(), receiverEmail, amount, idReceiver);
                     senderTransaction.setSenderRemaining(customer.getSavings() - amount);
                     receiverTransaction.setReceiverRemaining(customer.getChequing() + amount);
 
@@ -735,14 +730,13 @@ public class BankAutomated
     }
 
 
-    /*
+    /**
      * This function allows users to transfer money to another user's account using their bank number
-     * @param double amount: amount of money to transfer
-     * @param String receiverAcc: bank number of the receiver
-     * @param CA customer: the customer who is sending the money
-     * @param String accountFrom: the account the money is being sent from
-     * @return int 0 if successful, 1 if receiver account is invalid, 2 if insufficient funds, 3 if receiver is not in BCS,
-     * @return 5 if amount is less than 0.5
+     * @param amount amount of money to transfer
+     * @param receiverAcc bank number of the receiver
+     * @param customer the customer who is sending the money
+     * @param accountFrom the account the money is being sent from
+     * @return int 0 if successful, 1 if receiver account is invalid, 2 if insufficient funds, 3 if receiver is not in BCS, 5 if amount is less than 0.5
      * 
      */
     public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom)
@@ -790,14 +784,14 @@ public class BankAutomated
 
         // Subtract the amount from the customer's account and add it to the receiver's account (chequing / savings)
         if (accountFrom.equals("Chequing")) {
-            Transaction transaction = new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,idSender);
+            Transaction transaction = new Transaction(customer.getFirstName() + " " + customer.getLastName(), receiverAcc, amount,idSender);
             transaction.setAccountFrom("Chequing");
             transaction.setSenderRemaining(customer.getChequing() - amount);
 
             customer.setChequing(customer.getChequing() - amount);
             customer.addChequing(transaction);
         } else if (accountFrom.equals("Savings")) {
-            Transaction transaction = new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,idSender);
+            Transaction transaction = new Transaction(customer.getFirstName() + " " + customer.getLastName(), receiverAcc, amount,idSender);
             transaction.setAccountFrom("Savings");
             transaction.setSenderRemaining(customer.getSavings() - amount);
 
@@ -805,7 +799,7 @@ public class BankAutomated
             customer.addSaving(transaction);
         }// Add the amount to the receiver's account (chequing auto-deposit)
         if (receiver != null){
-            Transaction receiverTrans = new Transaction(customer.firstName + " " + customer.lastName, receiverAcc, amount,idReceiver);
+            Transaction receiverTrans = new Transaction(customer.getFirstName() + " " + customer.getLastName(), receiverAcc, amount,idReceiver);
             receiverTrans.setReceiverRemaining(customer.getChequing() + amount);
 
             receiver.setChequing(receiver.getChequing() + amount);
@@ -820,7 +814,7 @@ public class BankAutomated
         }
     }
 
-    /*
+    /**
      * This method is used to return a list of addresses for the customer to 
      * choose from when visiting a branch.
      * 
@@ -838,7 +832,7 @@ public class BankAutomated
         return locationList; 
     }
 
-    /*
+    /**
      * This method is used for logout. It is used to save the customer accounts to a file.
      * It will save the customer accounts to a file called People.ser, DO NOT TOUCH THIS METHOD.
      * 
@@ -847,7 +841,7 @@ public class BankAutomated
 
         long startTime = System.currentTimeMillis();
 
-        System.out.println("Uploading customer objects");
+        System.out.println("Logging customer out...\nUploading customer objects...");
 
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 

@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the Register page
+/**
+ * This class is the graphical implementation of the Register/Sign-up page. Users can input their details in order
+ * to create an account for themselves. A customer object using all the user's details is created in this page.
+ */
 public class RegisterPage extends JFrame implements ActionListener
 {
     // Constants
@@ -35,11 +38,10 @@ public class RegisterPage extends JFrame implements ActionListener
     private final JTextField telNumField;
     private final JTextField addressField;
 
-    /*
-     * RegisterPage Constructor
-     * @param logic BankAutomated object
-     * @param login LoginPage object
-     * 
+    /**
+     * RegisterPage Constructor, this page sets all the frame specifications (e.g., creating buttons and text fields)
+     * @param logic BankAutomated object, to process the validity of the data the user inputted and for logout
+     * @param login LoginPage object, to be sent back to if the user wants/the register is successful
      */
     public RegisterPage(BankAutomated logic, LoginPage login)
     {
@@ -301,10 +303,9 @@ public class RegisterPage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * Method to paint the background of the frame
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -325,10 +326,11 @@ public class RegisterPage extends JFrame implements ActionListener
         g2.drawString("S I G N   U P", WIDTH/3-155, 110);
     }
 
-    /*
-     * Method to handle the action events
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Login" button is clicked, it sends
+     * the customer back to the login page. When "Register" is selected, BA verifies all the data inputted and a message
+     * is printed if anything is invalid. Otherwise, the customer is told that the account creation was successful.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -439,7 +441,7 @@ public class RegisterPage extends JFrame implements ActionListener
                 return;
             }
 
-            // Validate the date of birth day
+            // Validate the date of birthday
             if (selectDay.getSelectedIndex() == 0)
             {
                 JOptionPane.showMessageDialog(this, "Date of Birth is required.");

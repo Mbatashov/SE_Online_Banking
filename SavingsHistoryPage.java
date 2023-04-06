@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-// This class is for the Savings History page
+/**
+ * This class is the graphical implementation of the customer's savings account transaction history
+ * It displays the last 6 transactions the customer did with their savings account.
+ */
 public class SavingsHistoryPage extends JFrame implements ActionListener
 {
     // Constants
@@ -20,12 +23,14 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
     // GUI Components for SavingsHistoryPage
     private final JButton backToHome;
 
-    /*
-     * SavingsHistoryPage Constructor
-     * @param home HomePage object
-     * @param BA BankAutomated object
-     * @param customer CA object
-     * 
+    /**
+     * SavingsHistoryPage Constructor. This method creates all the frame specifications for when the customer
+     * clicks on their savings account (i.e., buttons, display setup, etc.). It retrieves the customer's latest
+     * 6 savings transaction and formats and displays them.
+     * @param home HomePage object to return to when the user wants to
+     * @param BA BankAutomated object to process the logout if the user terminates the program
+     * @param customer CA object, the customer that is logged in
+     *
      */
     public SavingsHistoryPage(HomePage home, BankAutomated BA, CA customer)
     {
@@ -33,8 +38,8 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
         this.setTitle("Savings History");
         this.setLayout(null);
         this.home = home;
-        this.customer = customer;
         this.BA = BA;
+        this.customer = customer;
 
         // GUI Components
         Font labels = new Font("Raleway", Font.PLAIN, 22);
@@ -253,7 +258,6 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
                 }
             }
         }
-
         // If there are no transactions
         else
         {
@@ -303,10 +307,9 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    /*
-     * Paints the background of the frame
-     * @param g the graphics object
-     * 
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
+     * @param g Graphics object
      */
     public void paint(Graphics g)
     {
@@ -328,10 +331,10 @@ public class SavingsHistoryPage extends JFrame implements ActionListener
         
     }
 
-    /*
-     * Action listener for the back to home button
-     * @param e the action event
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). When the "Back To Home" button is clicked, it sends
+     * the customer back to their homepage.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)

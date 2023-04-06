@@ -5,7 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-// This class is for the home page
+/**
+ * This class is the graphical implementation for the customer's homepage, which is displayed when the customer logs in
+ * or when they leave the homepage and select to go back to it. This page shows the customer their account details.
+ * All use cases besides registering and logging in begin at this page
+ */
 public class HomePage extends JFrame implements ActionListener
 {
     // Constants
@@ -30,12 +34,14 @@ public class HomePage extends JFrame implements ActionListener
     CA customer;
     LoginPage previous;
 
-    /*
-     * HomePage Constructor
-     * @param previous LoginPage object
-     * @param BA BankAutomated object
-     * @param customer CA object
-     * 
+    /**
+     * HomePage Constructor. This creates all the frame specification for the homepage of the customer which displays
+     * when the customer logs in. This screen shows the customer's accounts balance, their bank number, and gives
+     * them multiple options to select from (e.g., transfer, settings, logout, etc.).
+     * @param previous LoginPage object for the user to return to if they log out from the homepage
+     * @param BA BankAutomated object to handle all the logic and be passed on to the pages that stem from homepage
+     *           (e.g., transfer pages).
+     * @param customer CA object, the customer that is logged in
      */
     public HomePage(LoginPage previous, BankAutomated BA, CA customer)
     {
@@ -44,7 +50,7 @@ public class HomePage extends JFrame implements ActionListener
         this.setLayout(null);
         
         // local variables
-        custName = customer.firstName;
+        custName = customer.getFirstName();
         double cheqAmount = customer.getChequing();
         double savAmount = customer.getSavings();
        
@@ -209,12 +215,18 @@ public class HomePage extends JFrame implements ActionListener
 
         // GUI Components for thank you label
         JLabel thanks = new JLabel("Thank you for using BCS.");
-        thanks.setBackground(Color.white);
-        accLabel.setBorder(emptyBorder);
         thanks.setForeground(new Color(96, 96, 96));
         thanks.setFont(new Font("Arial", Font.PLAIN, 15));
         thanks.setBounds(530, 575, 400, 20);
         this.add(thanks);
+
+        // GUI Components for the bank account number label
+        String toDisplay = "Bank Account Number: " + customer.getBankNumber();
+        JLabel bankNum = new JLabel(toDisplay);
+        bankNum.setForeground(new Color(96, 96, 96));
+        bankNum.setFont(new Font("Arial", Font.PLAIN, 15));
+        bankNum.setBounds(25, 575, 400, 20);
+        this.add(bankNum);
 
         // Window listener, logout when window is closed
         this.addWindowListener(new WindowEventHandler() {
@@ -242,10 +254,9 @@ public class HomePage extends JFrame implements ActionListener
 
     }
 
-    /*
-     * Method to paint the background of the frame
+    /**
+     * paint method, overrides the JFrame paint method in order to allow for custom graphical design
      * @param g Graphics object
-     * 
      */
     public void paint(Graphics g)
     {
@@ -268,10 +279,10 @@ public class HomePage extends JFrame implements ActionListener
     }
 
 
-    /*
-     * Method to handle button clicks
-     * @param e ActionEvent object
-     * 
+    /**
+     * actionPerformed method (implementing ActionListener). It displays different options depending on what the user
+     * clicks on in the homepage, and it controls which page to display next depending on that.
+     * @param e ActionEvent object, which listens and keeps track of any button clicks
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -353,7 +364,7 @@ public class HomePage extends JFrame implements ActionListener
             else if (response == 1)
             {
                 this.setVisible(false);
-                MakeReportPage reportPage = new MakeReportPage(BA,this, customer);
+                MakeReportPage reportPage = new MakeReportPage(this, BA, customer);
                 reportPage.setVisible(true);
             }
         }

@@ -1,5 +1,11 @@
+/**
+ * Main class, it contains the main method and initializes the system to its Login Page.
+ */
 public class BankSystem
 {
+    /**
+     * main method, creates a new LoginPage frame for users to start using the bank system
+     */
     public static void main(String[] args)
     {
         try {

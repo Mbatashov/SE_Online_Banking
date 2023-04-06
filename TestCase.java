@@ -835,9 +835,9 @@ public class TestCase {
                 "Male", "01/01/1990", "test@gmail.com", "Hello@World1",
                 "4417123456789113", "01/01/2027", "555");
 
-        dummy.chequing=500;
+        dummy.setChequing(500);
         dummy.setSavings(1000);
-        dummy.bankNumber = "12345";
+        dummy.setBankNumber("12345");
 
         // Test getters for constructor attributes
         assertEquals("John", dummy.getFirstName());
