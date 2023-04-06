@@ -929,6 +929,13 @@ public class TestCase {
 
         // Test setter and getters for reports
         Report reportTest = new Report(dummy, admin, "test");
+        assertEquals(reportTest.getAdmin(), admin);
+        
+        AD a = new AD("Mojo", "Jojo", "abc@tmu.ca", "6471112222", 0);
+        
+        reportTest.setAdmin(a);
+        assertEquals(reportTest.getAdmin(), a);
+        
 
         assertEquals("Jane", reportTest.getCustomer().getFirstName());
         assertEquals("Smith", reportTest.getCustomer().getLastName());
