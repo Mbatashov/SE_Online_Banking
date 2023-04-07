@@ -10,6 +10,51 @@ import static org.junit.Assert.*;
 public class TestCase {
     CA dummy;
 
+    @Test
+    public void saveloadTest(){
+        BankAutomated BA = new BankAutomated(false);
+
+        BA.createAccountTest("test", "dummy", "416-792-1234", "test street",
+                            "Male", "01/01/1990", "test@gmail.com", "Hello@World1", "01/01/2027", "555");
+
+        BA.logout();
+
+        BA = new BankAutomated();
+
+        assertEquals(BA.customerAccounts.size(), 1);
+
+        BankAutomated BA_test_two = new BankAutomated(false);
+
+        int batchSize = 1000;
+
+        // Split the workload into 1000 threads, race condition handled by hash map inside createAccount
+        IntStream.range(0, 10)
+
+            // Each thread work simultaneously
+            .parallel()
+
+            // Each thread do:
+            .forEach(batch -> {
+
+                // start and end for each batch
+                int start = batch * batchSize;
+                int end = start + batchSize;
+
+                // Do work:
+                for (int i = start; i < end; i++) {
+                    String email = i + "@gmail.com";
+                    BA_test_two.createAccountTest("test", "dummy", "416-792-1234", "test street",
+                            "Male", "01/01/1990", email, "Hello@World1", "01/01/2027", "555");
+                }
+
+            });
+
+        BA_test_two.logout();
+        BA = new BankAutomated();
+
+        assertEquals(BA.customerAccounts.size(), 10000);
+
+    }
     /* Test 1
      * Stress test for createAccount and login
      */
@@ -43,7 +88,7 @@ public class TestCase {
                 }
 
             });
-
+        
         long endTime = System.currentTimeMillis();
         double timePassedSeconds = (endTime - startTime);
 
