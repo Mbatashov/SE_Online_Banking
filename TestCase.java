@@ -1,5 +1,4 @@
 import org.junit.Test;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
@@ -21,11 +20,19 @@ public class TestCase {
         BA.createAccountTest("test", "dummy", "416-792-1234", "test street",
                             "Male", "01/01/1990", "test@gmail.com", "Hello@World1", "01/01/2027", "555");
 
+        // Save to file
         BA.logout();
 
+        // Load from file
         BA = new BankAutomated();
 
+        // Test 1
+        // Check if the account is loaded correctly, correct amount is 0
         assertEquals(BA.customerAccounts.size(), 1);
+
+        // Test 2
+        // Check if the account is loaded correctly, correct amount is 0
+        assertNotEquals(BA.customerAccounts.size(), 2);
 
         BankAutomated BA_test_two = new BankAutomated(false);
 
@@ -53,9 +60,14 @@ public class TestCase {
 
             });
 
+        // Save to file
         BA_test_two.logout();
+
+        // Load from file
         BA = new BankAutomated();
 
+        // Test 3
+        // Check if the account is loaded correctly, correct amount is 0
         assertEquals(BA.customerAccounts.size(), 10000);
 
     }
