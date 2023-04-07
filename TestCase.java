@@ -10,6 +10,10 @@ import static org.junit.Assert.*;
 public class TestCase {
     CA dummy;
 
+    /* Test 0
+     * Test case for saving and loading from file
+     * 
+     */
     @Test
     public void saveloadTest(){
         BankAutomated BA = new BankAutomated(false);
