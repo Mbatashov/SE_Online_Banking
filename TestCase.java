@@ -1,4 +1,5 @@
 import org.junit.Test;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
@@ -69,6 +70,8 @@ public class TestCase {
         // Test 3
         // Check if the account is loaded correctly, correct amount is 0
         assertEquals(BA.customerAccounts.size(), 10000);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "Save/Load test", JOptionPane.INFORMATION_MESSAGE);
 
     }
     /* Test 1
