@@ -1,15 +1,78 @@
 import org.junit.Test;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
-
 import static org.junit.Assert.*;
 
 // Test cases for each of the functions used, including the BankAutomated functions and setters and getters.
 public class TestCase {
     CA dummy;
 
+    /* Test 0
+     * Test case for saving and loading from file
+     * 
+     */
+    @Test
+    public void saveloadTest(){
+        BankAutomated BA = new BankAutomated(false);
+
+        BA.createAccountTest("test", "dummy", "416-792-1234", "test street",
+                            "Male", "01/01/1990", "test@gmail.com", "Hello@World1", "01/01/2027", "555");
+
+        // Save to file
+        BA.logout();
+
+        // Load from file
+        BA = new BankAutomated();
+
+        // Test 1
+        // Check if the account is loaded correctly, correct amount is 0
+        assertEquals(BA.customerAccounts.size(), 1);
+
+        // Test 2
+        // Check if the account is loaded correctly, correct amount is 0
+        assertNotEquals(BA.customerAccounts.size(), 2);
+
+        BankAutomated BA_test_two = new BankAutomated(false);
+
+        int batchSize = 1000;
+
+        // Split the workload into 1000 threads, race condition handled by hash map inside createAccount
+        IntStream.range(0, 1000)
+
+            // Each thread work simultaneously
+            .parallel()
+
+            // Each thread do:
+            .forEach(batch -> {
+
+                // start and end for each batch
+                int start = batch * batchSize;
+                int end = start + batchSize;
+
+                // Do work:
+                for (int i = start; i < end; i++) {
+                    String email = i + "@gmail.com";
+                    BA_test_two.createAccountTest("test", "dummy", "416-792-1234", "test street",
+                            "Male", "01/01/1990", email, "Hello@World1", "01/01/2027", "555");
+                }
+
+            });
+
+        // Save to file
+        BA_test_two.logout();
+
+        // Load from file
+        BA = new BankAutomated();
+
+        // Test 3
+        // Check if the account is loaded correctly, correct amount is 0
+        assertEquals(BA.customerAccounts.size(), 1_000_000);
+
+        JOptionPane.showMessageDialog(null, "Test cases passed", "Save/Load test", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+    
     /* Test 1
      * Stress test for createAccount and login
      */
@@ -43,7 +106,7 @@ public class TestCase {
                 }
 
             });
-
+        
         long endTime = System.currentTimeMillis();
         double timePassedSeconds = (endTime - startTime);
 
