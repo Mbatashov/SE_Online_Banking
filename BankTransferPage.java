@@ -265,4 +265,3 @@ public class BankTransferPage extends JFrame implements ActionListener
         }
     }
 }
-
