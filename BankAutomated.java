@@ -20,7 +20,8 @@ public class BankAutomated
     ArrayList<MT> maintenanceTeam = new ArrayList<>();
     ArrayList<CSR> customerService = new ArrayList<>();
     
-    
+    private ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
     /**
      * Constructor for BankAutomated to be used for the TestCase (for the JUnit test cases)
      * This prevents the people.ser file from interfering with the test case results
@@ -89,11 +90,12 @@ public class BankAutomated
 
         // Load customer account data from the "People.ser" serialized file
         try (FileInputStream accountsInput = new FileInputStream("People.ser");
-             BufferedInputStream bufferedIn = new BufferedInputStream(accountsInput);
-             ObjectInputStream accountObject = new ObjectInputStream(bufferedIn)) {
+            BufferedInputStream bufferedIn = new BufferedInputStream(accountsInput, 8192);
+            ObjectInputStream accountObject = new ObjectInputStream(bufferedIn)) {
 
-            // Read all the CA objects from the serialized file into a list
             List<CA> accounts = new ArrayList<>();
+
+            // Read all accounts from the file
             while (true) {
                 try {
                     CA account = (CA) accountObject.readObject();
@@ -103,35 +105,19 @@ public class BankAutomated
                 }
             }
 
-            // Submit each account to the executor for processing
-            List<Future<Void>> futures = new ArrayList<>();
+            // Process each account
             for (CA account : accounts) {
-                ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-                futures.add(executor.submit(() -> {
-                    customerAccounts.add(account);
-                    customerHash.put(account.getEmail().toLowerCase(), account);
-                    return null;
-                }));
+                customerAccounts.add(account);
+                customerHash.put(account.getEmail().toLowerCase(), account);
             }
 
-            // Wait for all tasks to complete and handle any exceptions
-            futures.forEach(future -> {
-                try {
-                    future.get();
-                } catch (InterruptedException | ExecutionException ex) {
-                    ex.printStackTrace();
-                }
-            });
-
         } catch (FileNotFoundException ex) {
-            // usually means nothing is inside
             System.out.println("File is empty");
         } catch (IOException ex) {
             // System.out.println("nothing inside");
             // usually means the file is corrupted or nothing inside
             // ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
-            // the CA object that was serialized was changed after it had been serialized
             clearPeopleFile();
         }
 
@@ -856,58 +842,33 @@ public class BankAutomated
 
         System.out.println("Logging customer out...\nUploading customer objects...");
 
-        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
-        // Create a Callable that writes each customer account to the file
-        Callable<Void> task = () -> {
-
-            // Try-with-resources to automatically close the streams
+        // Submit a task to the executor to write the customer accounts to the file
+        List<CA> accountsToWrite = new ArrayList<>(customerAccounts);
+        Future<Void> future = executor.submit(() -> {
             try (FileOutputStream accountsFile = new FileOutputStream("People.ser");
-                
-                // BufferedOutputStream is used to improve performance 
                 BufferedOutputStream bufferedOut = new BufferedOutputStream(accountsFile);
-
-                // ObjectOutputStream is used to write objects to the file
                 ObjectOutputStream accountObject = new ObjectOutputStream(bufferedOut)) {
-
-                // Write each customer account to the file
-                customerAccounts.forEach(account -> {
-                    try {
-                        accountObject.writeObject(account);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                });
+                for (CA account : accountsToWrite) {
+                    accountObject.writeObject(account);
+                }
                 return null;
-
-            // Catch any exceptions that may occur
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return null;
             }
-        };
-
-        // Submit the task to the executor for each available processor
-        List<Future<Void>> futures = new ArrayList<>();
-        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
-            futures.add(executor.submit(task));
-        }
-
-        // Wait for all tasks to complete and shutdown the executor
-        futures.forEach(future -> {
-            try {
-                future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
-            }
         });
+
+        // Wait for the task to complete and shutdown the executor
+        try {
+            future.get();
+        } catch (InterruptedException | ExecutionException ex) {
+            ex.printStackTrace();
+        }
+        executor.shutdown();
 
         long endTime = System.currentTimeMillis();
         double timePassedSeconds = (endTime - startTime) / 1000.0;
 
         System.out.println("Uploaded " + customerAccounts.size() + " customer objects. In: " + timePassedSeconds + "s");
-
-        executor.shutdown();
-
     }
 }

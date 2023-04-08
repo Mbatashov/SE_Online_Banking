@@ -1,9 +1,7 @@
 import org.junit.Test;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
-
 import static org.junit.Assert.*;
 
 // Test cases for each of the functions used, including the BankAutomated functions and setters and getters.
@@ -40,7 +38,7 @@ public class TestCase {
         int batchSize = 1000;
 
         // Split the workload into 1000 threads, race condition handled by hash map inside createAccount
-        IntStream.range(0, 10)
+        IntStream.range(0, 1000)
 
             // Each thread work simultaneously
             .parallel()
@@ -69,11 +67,12 @@ public class TestCase {
 
         // Test 3
         // Check if the account is loaded correctly, correct amount is 0
-        assertEquals(BA.customerAccounts.size(), 10000);
+        assertEquals(BA.customerAccounts.size(), 1_000_000);
 
         JOptionPane.showMessageDialog(null, "Test cases passed", "Save/Load test", JOptionPane.INFORMATION_MESSAGE);
 
     }
+    
     /* Test 1
      * Stress test for createAccount and login
      */
