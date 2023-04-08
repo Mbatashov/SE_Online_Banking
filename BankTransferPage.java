@@ -35,7 +35,6 @@ public class BankTransferPage extends JFrame implements ActionListener
      * @param home HomePage object
      * @param customer CA object
      * @param login LoginPage object
-     * 
      */
     public BankTransferPage(BankAutomated BA, HomePage home, CA customer, LoginPage login)
     {
@@ -236,7 +235,6 @@ public class BankTransferPage extends JFrame implements ActionListener
             // Transfer was successful (external transfer)
             else if (result == 3)
             {
-
                 // Print success message and send user back to home page
                 JOptionPane.showMessageDialog(this, "SUCCESS: You transferred $" + amount +
                         " to user with account number " + accountNum + ".\n This is an external transfer (i.e., user is not a part of BCS).");
