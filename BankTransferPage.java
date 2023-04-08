@@ -263,8 +263,6 @@ public class BankTransferPage extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "An error occurred.");
             }
         }
-
     }
-    
 }
 
