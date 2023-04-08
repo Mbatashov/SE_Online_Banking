@@ -228,6 +228,10 @@ public class BankTransferPage extends JFrame implements ActionListener
             {
                 JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer is $0.5");
             }
+            else if (result == 6)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: You cannot make a bank transfer to yourself. Try transfer funds instead.");
+            }
 
             // Transfer was successful (external transfer)
             else if (result == 3)

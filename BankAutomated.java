@@ -634,13 +634,18 @@ public class BankAutomated
      * @param receiverEmail email of the receiver
      * @param customer the customer who is sending the money
      * @param accountFrom the account the money is being sent from
-     * @return 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if receiver is not in BCS, 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5)
+     * @return 0 if successful, 1 if receiver does not have an account, 2 if insufficient funds, 3 if receiver is not in BCS, 4 if amount is greater than 1000, return 5 if amount is too small (less than 0.5), return 6 if etransfer is to the customers account (etransfer to themselves)
      * 
      */
     public int etransfer(double amount, String receiverEmail, CA customer, String accountFrom) {
         if (amount < 0.5)
         {
             return 5;
+        }
+
+        if (receiverEmail.equalsIgnoreCase(customer.getEmail()))
+        {
+            return 6;
         }
 
         CA receiverAccount = customerHash.get(receiverEmail);
@@ -735,7 +740,7 @@ public class BankAutomated
      * @param receiverAcc bank number of the receiver
      * @param customer the customer who is sending the money
      * @param accountFrom the account the money is being sent from
-     * @return int 0 if successful, 1 if receiver account is invalid, 2 if insufficient funds, 3 if receiver is not in BCS, 5 if amount is less than 0.5
+     * @return int 0 if successful, 1 if receiver account is invalid, 2 if insufficient funds, 3 if receiver is not in BCS, 5 if amount is less than 0.5, 6 if they try to make a bank transfer to themselves
      * 
      */
     public int bankTransfer(double amount, String receiverAcc, CA customer, String accountFrom)
@@ -743,6 +748,11 @@ public class BankAutomated
         if (amount < 0.5)
         {
             return 5;
+        }
+
+        if (receiverAcc.equals(customer.getBankNumber()))
+        {
+            return 6;
         }
 
 

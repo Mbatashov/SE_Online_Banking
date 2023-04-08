@@ -252,6 +252,12 @@ public class ETransferPage extends JFrame implements ActionListener
                 JOptionPane.showMessageDialog(this, "ERROR: Minimum transfer amount is $0.5");
             }
 
+            // Customer tries to etransfer themselves
+            else if (result == 6)
+            {
+                JOptionPane.showMessageDialog(this, "ERROR: You cannot e-transfer to yourself. Try transfer funds instead.");
+            }
+
             // Success (internal transfer)
             else if (result == 0)
             {
