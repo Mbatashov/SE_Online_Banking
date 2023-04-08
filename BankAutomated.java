@@ -757,20 +757,16 @@ public class BankAutomated
 
 
         // Check if receiver account is valid
-        if (receiverAcc.length() != 5) {
-
+        if (receiverAcc.length() != 5 || !onlyNumeric(receiverAcc)) {
             return 1;
-
+        }
         // Check if customer has sufficient funds in chequing
-        } else if (accountFrom.equals("Chequing") && amount > customer.getChequing()) {
-
+        else if (accountFrom.equals("Chequing") && amount > customer.getChequing()) {
             return 2;
-
+        }
         // Check if customer has sufficient funds in savings
-        } else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
-
+        else if (accountFrom.equals("Savings") && amount > customer.getSavings()) {
             return 2;
-
         }
     
         CA receiver = null;
@@ -781,9 +777,7 @@ public class BankAutomated
             System.out.println(cust.getBankNumber());
 
             if (cust.getBankNumber().equals(receiverAcc)) {
-
                 receiver = cust;
-
             }
         }
 
