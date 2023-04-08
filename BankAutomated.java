@@ -334,7 +334,12 @@ public class BankAutomated
                 return false;
             }
         }
-        return true;
+
+        if (str.charAt(str.length()-1) == '.')
+        {
+            return false;
+        }
+        else return !str.equals(".");
     }
 
     /**
