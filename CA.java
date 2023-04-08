@@ -463,7 +463,7 @@ public class CA extends People
      */
     public void addChequing(Transaction chequingTransaction)
     {
-        chequingHist.add(chequingTransaction);
+        chequingHist.add(0, chequingTransaction);
     }
 
     /**
@@ -483,7 +483,7 @@ public class CA extends People
      */
     public void addSaving(Transaction savingTransaction) {
 
-        savingsHist.add(savingTransaction);
+        savingsHist.add(0, savingTransaction);
 
     }
 
