@@ -19,7 +19,7 @@ Gender: (Select your Gender)
 Email: (This accepts any valid email address eg. anything@gmail.com)
 Password: (Accepts any combination of letters and numbers (please remember your chosen password))
 Phone Number: (Accepts any 10 digit number)
-Address: (Accepts any address e.g., 167 Church Street)
+Address: (Accepts any address e.g., Yonge Street)
 
 After all information is entered correctly you can click the black sign up after the address box. If the information passes
 all the validation checks your account will be created and will be redirected to the home page.
