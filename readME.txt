@@ -1,4 +1,4 @@
-Hello and Welcome to BCS the only bank you will ever need as a Computer Scientist.
+Hello and Welcome to BCS, the only bank you will ever need as a Computer Scientist.
 This readme will tell you exactly how to use this application from setting up an account to making your first bank transfer.
 
 Starting off to start the program you will need to run the BankSystem.java file the minimum screen resolution the program
