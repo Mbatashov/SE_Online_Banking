@@ -287,7 +287,7 @@ public class BankAutomated
         System.out.println("Logging in customer with email: " + email);
 
         // Multithreaded Stream
-        CA customer = customerHash.get(email);
+        CA customer = customerHash.get(email.toLowerCase());
         if (customer != null && password.equals(customer.getPassword())) {
             return customer;
         }
