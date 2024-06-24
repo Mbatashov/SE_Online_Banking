@@ -1,15 +1,20 @@
+/**
+ * Main class, it contains the main method and initializes the system to its Login Page.
+ */
 public class BankSystem
 {
+    /**
+     * main method, creates a new LoginPage frame for users to start using the bank system
+     * @param args the main method argument
+     */
     public static void main(String[] args)
     {
-        try
-        {
+        try {
             BankAutomated BA = new BankAutomated();
-            CA test= BA.createAccount("Mo", "N", "6667771111", "Yonge Street", "Male",
-                                "01/02/2003", "this2@gmail.com", "Hello@World1",
-                            "4417123456789113", "0521", "111");
-            new HomePage(new LoginPage(BA), BA, test);
-            //new LoginPage(BA);
+            //Remove the comment at the beginning of the line below to reset the system (delete all saved customers)
+            //BA.clearPeopleFile(); System.exit(0);
+            //If previous line was used to reset the system, comment it out again to allow LoginPage to be created
+            new LoginPage(BA);
         }
         catch (Exception e)
         {
